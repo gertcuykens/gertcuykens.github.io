@@ -36,7 +36,14 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
 export CLICOLOR=1
-export PYTHONNOUSERSITE=1
 export VISUAL="vim"
 export EDITOR="vim"
+export PYTHONNOUSERSITE=1
+export PYTHONUNBUFFERED=1
+
+# path=("${HOME}/bin" $path)
+# export path
+
+# curl -L https://iterm2.com/shell_integration/zsh -o ~/.iterm2_shell_integration.zsh
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" && export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
 
