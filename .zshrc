@@ -14,7 +14,7 @@ setopt histignorealldups sharehistory prompt_subst
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
-PROMPT='%~%F{blue}$(branch)%F{none} %# '
+PROMPT=' %~%F{blue}$(branch)%F{none} %# '
 
 source ~/.config/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.config/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
