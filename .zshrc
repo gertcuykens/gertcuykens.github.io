@@ -45,3 +45,6 @@ export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
 # path=("${HOME}/bin" $path)
 # export path
 
+# undo => Ctrl-U
+# stty -ixon => disable Ctrl-S / Ctrl-Q
+
