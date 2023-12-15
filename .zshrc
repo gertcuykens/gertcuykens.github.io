@@ -45,6 +45,15 @@ export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
 # path=("${HOME}/bin" $path)
 # export path
 
+[ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 # undo => Ctrl-U
 # stty -ixon => disable Ctrl-S / Ctrl-Q
+
+# :h
+# Ctrl-] link
+# Ctrl-T topic
+# Ctrl-O older
+# Ctrl-I newer
 
