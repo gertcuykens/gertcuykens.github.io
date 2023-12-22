@@ -20,3 +20,5 @@ cd ~
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
 
+curl -fLO https://gert.ovh/.vimrc
+
