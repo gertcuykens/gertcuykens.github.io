@@ -16,6 +16,7 @@ let g:airline#extensions#tabline#enabled = 1
 let loaded_netrw = 1
 let loaded_netrwPlugin = 1
 filetype plugin on
+colorscheme codedark
 syntax on
 
 function! FzfDir(bufnr)
@@ -23,7 +24,6 @@ function! FzfDir(bufnr)
     execute 'cd ' . bufname(a:bufnr)    
     execute 'bd' . a:bufnr
     execute 'Files'
-    " call fzf#vim#files(bufname(a:bufnr))
   endif
 endfunction
 
@@ -39,9 +39,11 @@ autocmd BufEnter * call FzfDir(bufnr('%'))
 " let g:maplocalleader = '\\'
 " <C-V> <S-I>
 " nnoremap <SPACE> <Nop>
+" call fzf#vim#files(bufname(a:bufnr))
 " printf '\e]0;Title\e\\'
 
 " :h
+" ^d options
 " ^] link
 " ^t topic
 " ^o older

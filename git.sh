@@ -5,7 +5,10 @@ tar xf lazygit.tar.gz lazygit
 install lazygit /usr/local/bin
 
 git config --global diff.tool vimdiff
+git config --global mergetool.prompt false
+git config --global mergetool.keepBackup false
 git config --global merge.tool vimdiff
+git config --global merge.conflictstyle diff3
 git config --global merge.ff only
 git config --global pull.ff only
 git config --global core.excludesfile ~/.gitignore
