@@ -13,25 +13,30 @@ set autochdir
 let g:fzf_layout = {'window': 'enew'}
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
-let loaded_netrw = 1
-let loaded_netrwPlugin = 1
+let g:netrw_silent = 1
 filetype plugin on
 colorscheme codedark
 syntax on
 
 function! FzfDir(bufnr)
   if getftype(bufname(a:bufnr)) == 'dir'
-    execute 'cd ' . bufname(a:bufnr)    
+    execute 'cd ' . bufname(a:bufnr) 
     execute 'bd' . a:bufnr
     execute 'Files'
   endif
 endfunction
 
-autocmd BufEnter * call FzfDir(bufnr('%'))
+" augroup PbCopy
+"   autocmd!
+"   autocmd TextYankPost * execute 'silent !echo -n ' . shellescape(@", 1) . ' | nc -q 0 localhost 2000'
+" augroup END
+
+" autocmd BufEnter * call FzfDir(bufnr('%'))
 
 " au FilterWritePre * if &diff | colorscheme xyz | endif
 " au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-" vnoremap <Leader>c "+y
+" let loaded_netrw = 1
+" let loaded_netrwPlugin = 1
 " let g:fzf_layout = { 'tmux': '-p90%,60%' }
 " set showcmd
 " set autoindent?
@@ -39,6 +44,7 @@ autocmd BufEnter * call FzfDir(bufnr('%'))
 " let g:maplocalleader = '\\'
 " <C-V> <S-I>
 " nnoremap <SPACE> <Nop>
+" vnoremap <Leader>c "+y
 " call fzf#vim#files(bufname(a:bufnr))
 " printf '\e]0;Title\e\\'
 
