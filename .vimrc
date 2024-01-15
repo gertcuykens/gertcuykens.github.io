@@ -1,4 +1,5 @@
 set nocompatible
+set noesckeys
 set hidden
 set laststatus=0
 set showtabline=0
