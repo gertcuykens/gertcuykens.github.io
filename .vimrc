@@ -1,8 +1,8 @@
 set nocompatible
-set noesckeys
 set hidden
 set laststatus=0
 set showtabline=0
+set ttimeoutlen=0
 set mouse=a
 set noshowmode
 set hlsearch
@@ -19,7 +19,7 @@ filetype plugin on
 colorscheme codedark
 syntax on
 
-function! FzfDir(bufnr)
+function FzfDir(bufnr)
   if getftype(bufname(a:bufnr)) == 'dir'
     execute 'cd ' . bufname(a:bufnr) 
     execute 'bd' . a:bufnr
@@ -27,11 +27,17 @@ function! FzfDir(bufnr)
   endif
 endfunction
 
-" augroup PbCopy
-"   autocmd!
-"   autocmd TextYankPost * execute 'silent !echo -n ' . shellescape(@", 1) . ' | nc -q 0 localhost 2000'
-" augroup END
+function PbCopy() abort
+  let yanked_text = @@
+  if yanked_text =~ '\S'
+    let escaped_text = shellescape(yanked_text, 1)
+    execute 'silent !echo -n ' . escaped_text . ' | nc -q 0 localhost 2000' | redraw!
+  endif
+endfunction
 
+command PbCopy call PbCopy()
+ 
+" autocmd TextYankPost * call PbCopy()
 " autocmd BufEnter * call FzfDir(bufnr('%'))
 
 " au FilterWritePre * if &diff | colorscheme xyz | endif
