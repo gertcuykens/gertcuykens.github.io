@@ -5,5 +5,5 @@ git clone https://github.com/zsh-users/zsh-history-substring-search.git ~/.confi
 git clone https://github.com/zsh-users/zsh-completions.git ~/.config/zsh-completions
 curl https://raw.githubusercontent.com/ziglang/shell-completions/master/_zig -s -o ~/.config/zsh-completions/src/_zig
 chsh -s /bin/zsh
-curl -fLO https://gert.ovh/.zshrc
+curl -fsSLO https://gert.ovh/.zshrc
 
