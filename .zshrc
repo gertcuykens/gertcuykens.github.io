@@ -73,6 +73,7 @@ export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
 export BAT_STYLE="plain"
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
+export TZ="Europe/Brussels"
 # export NNN_PLUG='p:preview-tui;f:fzcd'
 # export NNN_FIFO='/tmp/nnn.fifo'
 # export NNN_FCOLORS=''
