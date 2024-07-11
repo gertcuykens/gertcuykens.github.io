@@ -90,6 +90,8 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -500'"
 [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh && export path=("${HOME}/.fzf/bin" $path)
 
+colorscheme codedark
+
 # undo => Ctrl-U
 # stty -ixon => disable Ctrl-S / Ctrl-Q
 
