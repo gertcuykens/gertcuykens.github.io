@@ -1,6 +1,11 @@
 #!/bin/zsh
 set -eEuxo pipefail
 
+rm -rf ~/.local/share/fonts
+mkdir -p ~/.local/share/fonts
+cd ~/.local/share/fonts
+curl -fsSLO https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/DroidSansMono/DroidSansMNerdFont-Regular.otf
+
 rm -rf ~/.vim/pack/gert/start
 mkdir -p ~/.vim/pack/gert/start
 cd ~/.vim/pack/gert/start
