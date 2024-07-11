@@ -1,9 +1,15 @@
-#!/bin/zsh
+#!/bin/bash
 set -euxo pipefail
 
 apt install zsh zsh-doc
 chsh -s /bin/zsh
 curl -fsSLO https://gert.ovh/.zshrc
+
+rm -rf ~/.config/zsh-autosuggestions
+rm -rf ~/.config/zsh-syntax-highlighting
+rm -rf ~/.config/zsh-history-substring-search
+rm -rf ~/.config/zsh-completions
+rm -f ~/.config/zsh-completions/src/_zig
 
 git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.config/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.config/zsh-syntax-highlighting
