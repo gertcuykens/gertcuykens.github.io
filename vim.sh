@@ -1,5 +1,7 @@
 #!/bin/zsh
 set -euxo pipefail
+
+rm -rf ~/.vim/pack/gert/start
 mkdir -p ~/.vim/pack/gert/start
 cd ~/.vim/pack/gert/start
 
@@ -16,6 +18,8 @@ vim -u NONE -c "helptags airline/doc" -c q
 vim -u NONE -c "helptags fugitive/doc" -c q
 vim -u NONE -c "helptags jedi/doc" -c q
 
+
+rm -rf ~/.fzf
 cd ~
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
