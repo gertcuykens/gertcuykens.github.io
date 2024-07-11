@@ -18,11 +18,10 @@ vim -u NONE -c "helptags airline/doc" -c q
 vim -u NONE -c "helptags fugitive/doc" -c q
 vim -u NONE -c "helptags jedi/doc" -c q
 
+curl -fsSLO https://gert.ovh/.vimrc
 
 rm -rf ~/.fzf
 cd ~
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
-
-curl -fsSLO https://gert.ovh/.vimrc
 
