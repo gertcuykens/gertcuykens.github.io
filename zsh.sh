@@ -1,7 +1,8 @@
 #!/bin/bash
 set -euxo pipefail
 
-apt install zsh zsh-doc
+# apt install zsh zsh-doc
+
 chsh -s /bin/zsh
 curl -fsSLO https://gert.ovh/.zshrc
 

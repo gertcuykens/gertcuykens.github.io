@@ -1,6 +1,8 @@
 #!/bin/zsh
 set -eEuxo pipefail
 
+# apt install vim vim-doc
+
 rm -rf ~/.local/share/fonts
 mkdir -p ~/.local/share/fonts
 cd ~/.local/share/fonts
