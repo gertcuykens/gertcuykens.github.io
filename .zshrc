@@ -71,9 +71,9 @@ export PYTHONNOUSERSITE=1
 export PYTHONUNBUFFERED=1
 export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
 export BAT_STYLE="plain"
-export LANG="en_US.UTF-8"
-export LANGUAGE="en_US.UTF-8"
-export LC_ALL="en_US.UTF-8"
+export LANG="C.UTF-8"
+export LANGUAGE="C.UTF-8"
+export LC_ALL="C.UTF-8"
 export TZ="Europe/Brussels"
 # export NNN_PLUG='p:preview-tui;f:fzcd'
 # export NNN_FIFO='/tmp/nnn.fifo'
@@ -89,7 +89,7 @@ export FZF_ALT_C_COMMAND='find . \( \
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -500'"
 
 [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh && export path=("${HOME}/.fzf/bin" $path)
+[ -f ~/.fzf/bin/fzf ] && export path=("${HOME}/.fzf/bin" $path) && source <(fzf --zsh)
 
 # undo => Ctrl-U
 # stty -ixon => disable Ctrl-S / Ctrl-Q

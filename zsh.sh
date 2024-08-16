@@ -21,5 +21,5 @@ curl -fsSL https://raw.githubusercontent.com/ziglang/shell-completions/master/_z
 rm -rf ~/.fzf
 cd ~
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install --all
+~/.fzf/install --bin
 
