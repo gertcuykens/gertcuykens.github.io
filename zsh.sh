@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 set -eEuxo pipefail
 
 # apt install zsh zsh-doc
