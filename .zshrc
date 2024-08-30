@@ -39,6 +39,14 @@ f(){
   fi
 }
 
+# function psql() {
+#   if [ -t 0 ]; then
+#     docker exec -it postgres psql "$@"
+#   else
+#     docker exec -i postgres psql "$@"
+#   fi
+# }
+
 setopt histignorealldups sharehistory prompt_subst
 HISTSIZE=1000
 SAVEHIST=1000
