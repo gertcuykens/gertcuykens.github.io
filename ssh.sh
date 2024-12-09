@@ -10,3 +10,5 @@ ssh-keygen -t ed25519 -C "root@a"
 # add auth
 # add scan
 
+# openssl x509 -inform der -in certificate.cer -out certificate.pem
+

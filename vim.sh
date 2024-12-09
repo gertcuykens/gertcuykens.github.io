@@ -25,5 +25,6 @@ vim -u NONE -c "helptags airline/doc" -c q
 vim -u NONE -c "helptags fugitive/doc" -c q
 # vim -u NONE -c "helptags jedi/doc" -c q
 
+cd ~
 curl -fsSLO https://gert.ovh/.vimrc
 

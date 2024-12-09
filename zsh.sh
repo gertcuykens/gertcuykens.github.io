@@ -3,6 +3,7 @@ set -eEuxo pipefail
 
 # apt install zsh zsh-doc
 
+cd ~
 chsh -s /bin/zsh
 curl -fsSLO https://gert.ovh/.zshrc
 
