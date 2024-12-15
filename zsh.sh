@@ -18,6 +18,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.config/zsh
 git clone https://github.com/zsh-users/zsh-history-substring-search.git ~/.config/zsh-history-substring-search
 git clone https://github.com/zsh-users/zsh-completions.git ~/.config/zsh-completions
 curl -fsSL https://raw.githubusercontent.com/ziglang/shell-completions/master/_zig -o ~/.config/zsh-completions/src/_zig
+# ruff generate-shell-completion zsh > ~/.config/zsh-completions/src/_ruff
 
 rm -rf ~/.fzf
 cd ~
