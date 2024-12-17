@@ -99,6 +99,7 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -500'"
 [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
 [ -f ~/.fzf/bin/fzf ] && export path=("${HOME}/.fzf/bin" $path) && source <(fzf --zsh)
 [ -f ~/.cargo/env ] && export path=("${HOME}/.cargo/bin" $path) && source ~/.cargo/env
+[ -f ~/.local/bin/env ] && source ~/.local/bin/env
 
 # undo => Ctrl-U
 # stty -ixon => disable Ctrl-S / Ctrl-Q
