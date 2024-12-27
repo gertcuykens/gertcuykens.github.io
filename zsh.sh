@@ -2,9 +2,9 @@
 set -eEuxo pipefail
 
 # apt install zsh zsh-doc
+# chsh -s /bin/zsh root
 
 cd ~
-chsh -s /bin/zsh
 curl -fsSLO https://gert.ovh/.zshrc
 
 rm -rf ~/.config/zsh-autosuggestions
@@ -18,10 +18,10 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.config/zsh
 git clone https://github.com/zsh-users/zsh-history-substring-search.git ~/.config/zsh-history-substring-search
 git clone https://github.com/zsh-users/zsh-completions.git ~/.config/zsh-completions
 curl -fsSL https://raw.githubusercontent.com/ziglang/shell-completions/master/_zig -o ~/.config/zsh-completions/src/_zig
-# ruff generate-shell-completion zsh > ~/.config/zsh-completions/src/_ruff
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uvx ruff generate-shell-completion zsh > ~/.config/zsh-completions/src/_ruff
 
 rm -rf ~/.fzf
-cd ~
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install --bin
 
