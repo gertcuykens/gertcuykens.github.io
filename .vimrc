@@ -5,12 +5,14 @@ set showtabline=0
 set ttimeoutlen=0
 set mouse=a
 set noshowmode
+set incsearch
 set hlsearch
 set rtp+=~/.fzf
 set encoding=utf-8
 set clipboard=unnamed
 set backspace=indent,eol,start
 set autochdir
+set incsearch
 let g:fzf_layout = {'window': 'enew'}
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
