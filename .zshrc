@@ -39,12 +39,20 @@ f(){
   fi
 }
 
-function psql() {
-    if [ -t 0 ]; then
-        docker run -it --rm -v /run/postgresql:/run/postgresql postgres psql "$@"
-    else
-        docker run -i --rm -v /run/postgresql:/run/postgresql postgres psql "$@"
-    fi
+# function psql() {
+#     if [ -t 0 ]; then
+#         docker run -it --rm -v /run/postgresql:/run/postgresql postgres psql "$@"
+#     else
+#         docker run -i --rm -v /run/postgresql:/run/postgresql postgres psql "$@"
+#     fi
+# }
+
+tmux() {
+  if [ $# -eq 0 ]; then
+    command tmux new -A -s default
+  else
+    command tmux "$@"
+  fi
 }
 
 setopt histignorealldups sharehistory prompt_subst

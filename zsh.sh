@@ -7,7 +7,7 @@ set -eEuxo pipefail
 curl -fsSL https://astral.sh/uv/install.sh | sh
 curl -fsSL https://rclone.org/install.sh | bash
 
-curl -fsSL https://github.com/sharkdp/bat/releases/download/v0.24.0/bat_0.24.0_arm64.deb -o ~/bat.dev
+curl -fsSL https://github.com/sharkdp/bat/releases/download/v0.25.0/bat_0.25.0_amd64.deb -o ~/bat.deb
 dpkg -i ~/bat.deb
 
 curl -fsSL https://github.com/restic/restic/releases/download/v0.17.3/restic_0.17.3_linux_arm64.bz2 -o /usr/local/bin/restic.bz2
