@@ -1,8 +1,8 @@
 #!/bin/zsh
 
-branch() {
+_b() {
   # git rev-parse --abbrev-ref HEAD 2>/dev/null
-  b="$(git symbolic-ref --short HEAD 2> /dev/null)"
+  local b="$(git symbolic-ref --short HEAD 2>/dev/null)"
   if [[ "${b}" != "" ]]; then
     echo " ${b}"
   else
@@ -21,11 +21,15 @@ branch() {
 
 c() {
   local d="${1:-.}"
-  cd $(find "$d" \( \
+  local c=$(find "$d" \( \
     -name ".git" -o \
+    -name ".venv" -o \
     -name "__pycache__" -o \
     -name "node_modules" \
-  \) -prune -o -type d -print | fzf --preview="tree -C {} | head -500")
+  \) -prune -o -type d -print 2>/dev/null | fzf --preview="tree -C {} -I '.git|.venv|__pycache__|node_modules' | head -500")
+  if [ -n "$c" ]; then
+    cd "$c"
+  fi
 }
 
 f(){
@@ -33,9 +37,14 @@ f(){
   if [[ -f "$d" ]]; then
     echo $1 | fzf --preview="bat --color=always --style=plain --line-range=:500 {}" --bind "enter:become(vim {})"
   elif [[ -d "$d/.git" ]]; then
-    git -C "$d" ls-files | fzf --preview="bat --color=always --style=plain --line-range=:500 $d/{}" --bind "enter:become(vim $d/{})"
+    git -C "$d" ls-files -co --exclude-standard | fzf --preview="bat --color=always --style=plain --line-range=:500 $d/{}" --bind "enter:become(vim $d/{})"
   else
-    find "$d" -type f -print | fzf --preview="bat --color=always --style=plain --line-range=:500 {}" --bind "enter:become(vim {})"
+    find "$d" \( \
+      -name ".git" -o \
+      -name ".venv" -o \
+      -name "__pycache__" -o \
+      -name "node_modules" \
+    \) -prune -o -type f -print 2>/dev/null | fzf --preview="bat --color=always --style=plain --line-range=:500 {}" --bind "enter:become(vim {})"
   fi
 }
 
@@ -59,7 +68,7 @@ setopt histignorealldups sharehistory prompt_subst
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
-PROMPT=' %n@%m %~%F{blue}$(branch)%F{none} %# '
+PROMPT=' %n@%m %~%F{blue}$(_b)%F{none} %# '
 
 source ~/.config/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.config/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -103,6 +112,8 @@ export FZF_ALT_C_COMMAND='find . \( \
     -name "node_modules" \
   \) -prune -o -type d -print'
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -500'"
+export MOZ_ENABLE_WAYLAND=1
+export OZONE_PLATFORM=wayland
 
 [ -f ~/.fzf/bin/fzf ] && export path=("${HOME}/.fzf/bin" $path) && source <(fzf --zsh)
 [ -f ~/.cargo/env ] && export path=("${HOME}/.cargo/bin" $path) && source ~/.cargo/env
