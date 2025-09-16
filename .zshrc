@@ -34,9 +34,7 @@ c() {
 
 f(){
   local d="${1:-.}"
-  if [[ -f "$d" ]]; then
-    echo $1 | fzf --preview="bat --color=always --style=plain --line-range=:500 {}" --bind "enter:become(vim {})"
-  elif [[ -d "$d/.git" ]]; then
+  if [[ -d "$d/.git" ]]; then
     git -C "$d" ls-files -co --exclude-standard | fzf --preview="bat --color=always --style=plain --line-range=:500 $d/{}" --bind "enter:become(vim $d/{})"
   else
     find "$d" \( \
