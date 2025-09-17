@@ -43,7 +43,7 @@ timedatectl
 pacman -Syu nvidia-open nvidia-utils linux-headers mesa
 pacman -Syu ntfs-3g
 pacman -Syu gptfdisk
-pacman -S sway swaylock swayidle ttf-input-nerd ghostty firefox pipewire-jack playerctl brightnessctl wl-clipboard wev rtkit jq git git-zsh-completion 
+pacman -S sway swaylock swayidle xdg-desktop-portal-wlr ttf-input-nerd ghostty firefox pipewire-jack playerctl brightnessctl wl-clipboard wev rtkit jq git git-zsh-completion 
 pacman -S make pkg-config debugedit fakeroot
 
 echo 1 > /sys/module/kernel/parameters/consoleblank

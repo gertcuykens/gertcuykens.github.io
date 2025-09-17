@@ -26,7 +26,7 @@ c() {
     -name ".venv" -o \
     -name "__pycache__" -o \
     -name "node_modules" \
-  \) -prune -o -type d -print 2>/dev/null | fzf --preview="tree -C {} -I '.git|.venv|__pycache__|node_modules' | head -500")
+  \) -prune -o -type d -print 2>/dev/null | fzf --info=inline --preview="tree -C {} -I '.git|.venv|__pycache__|node_modules' | head -500")
   if [ -n "$c" ]; then
     cd "$c"
   fi
@@ -35,14 +35,22 @@ c() {
 f(){
   local d="${1:-.}"
   if [[ -d "$d/.git" ]]; then
-    git -C "$d" ls-files -co --exclude-standard | fzf --preview="bat --color=always --style=plain --line-range=:500 $d/{}" --bind "enter:become(vim $d/{})"
+    git -C "$d" ls-files -co --exclude-standard | fzf --info=inline --preview="bat --color=always --style=plain --line-range=:500 $d/{}" --bind "enter:become(vim $d/{})"
   else
     find "$d" \( \
       -name ".git" -o \
       -name ".venv" -o \
       -name "__pycache__" -o \
       -name "node_modules" \
-    \) -prune -o -type f -print 2>/dev/null | fzf --preview="bat --color=always --style=plain --line-range=:500 {}" --bind "enter:become(vim {})"
+    \) -prune -o -type f -print 2>/dev/null | fzf --info=inline --preview="bat --color=always --style=plain --line-range=:500 {}" --bind "enter:become(vim {})"
+  fi
+}
+
+tmux() {
+  if [ $# -eq 0 ]; then
+    command tmux new -A -s default
+  else
+    command tmux "$@"
   fi
 }
 
@@ -53,14 +61,6 @@ f(){
 #         docker run -i --rm -v /run/postgresql:/run/postgresql postgres psql "$@"
 #     fi
 # }
-
-tmux() {
-  if [ $# -eq 0 ]; then
-    command tmux new -A -s default
-  else
-    command tmux "$@"
-  fi
-}
 
 setopt histignorealldups sharehistory prompt_subst
 HISTSIZE=1000
@@ -103,15 +103,18 @@ export TZ="Europe/Brussels"
 # export NNN_FCOLORS=''
 # export FZF_DEFAULT_COMMAND=''
 # export FZF_CTRL_T_COMMAND=''
+export FZF_DEFAULT_OPTS="--info=inline"
 export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}' --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 export FZF_ALT_C_COMMAND='find . \( \
     -name ".git" -o \
+    -name ".venv" -o \
     -name "__pycache__" -o \
     -name "node_modules" \
   \) -prune -o -type d -print'
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -500'"
 export MOZ_ENABLE_WAYLAND=1
 export OZONE_PLATFORM=wayland
+export NATS_URL="tls://nats.mnq.fr-par.scaleway.com:4222"
 
 [ -f ~/.fzf/bin/fzf ] && export path=("${HOME}/.fzf/bin" $path) && source <(fzf --zsh)
 [ -f ~/.cargo/env ] && export path=("${HOME}/.cargo/bin" $path) && source ~/.cargo/env

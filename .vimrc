@@ -12,11 +12,13 @@ set encoding=utf-8
 set clipboard=unnamed
 set backspace=indent,eol,start
 set autochdir
-set incsearch
+let $FZF_DEFAULT_OPTS = '--info=inline'
 let g:fzf_layout = {'window': 'enew'}
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:loaded_netrwPlugin = 1
 let g:netrw_silent = 1
+let g:netrw_banner = 0
 filetype plugin on
 colorscheme codedark
 syntax on
@@ -40,7 +42,7 @@ endfunction
 command PbCopy call PbCopy()
  
 " autocmd TextYankPost * call PbCopy()
-" autocmd BufEnter * call FzfDir(bufnr('%'))
+autocmd BufEnter * call FzfDir(bufnr('%'))
 
 " au FilterWritePre * if &diff | colorscheme xyz | endif
 " au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
