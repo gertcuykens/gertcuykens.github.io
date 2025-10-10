@@ -135,8 +135,8 @@ export FZF_ALT_C_COMMAND='find . \( \
     -name "node_modules" \
   \) -prune -o -type d -print'
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -500'"
-export MOZ_ENABLE_WAYLAND=1
-export OZONE_PLATFORM=wayland
+# export MOZ_ENABLE_WAYLAND=1
+# export OZONE_PLATFORM=wayland
 export NATS_URL="tls://nats.mnq.fr-par.scaleway.com:4222"
 
 [ -f ~/.fzf/bin/fzf ] && export path=("${HOME}/.fzf/bin" $path) && source <(fzf --zsh)
