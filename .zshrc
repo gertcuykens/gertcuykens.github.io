@@ -26,7 +26,7 @@ c() {
     -name ".venv" -o \
     -name "__pycache__" -o \
     -name "node_modules" \
-  \) -prune -o -type d -print 2>/dev/null | fzf --info=inline --preview="tree -C {} -I '.git|.venv|__pycache__|node_modules' | head -500")
+  \) -prune -o -type d -print 2>/dev/null | fzf --info=inline --prompt "$d"/ --preview="tree -C {} -I '.git|.venv|__pycache__|node_modules' | head -500")
   if [ -n "$c" ]; then
     cd "$c"
   fi
@@ -35,14 +35,14 @@ c() {
 f(){
   local d="${1:-.}"
   if [[ -d "$d/.git" ]]; then
-    git -C "$d" ls-files -co --exclude-standard | fzf --info=inline --preview="bat --color=always --style=plain --line-range=:500 $d/{}" --bind "enter:become(vim $d/{})"
+    git -C "$d" ls-files -co --exclude-standard | fzf --info=inline --prompt "$d"/ --preview="bat --color=always --style=plain --line-range=:500 $d/{}" --bind "enter:become(vim $d/{})"
   else
     find "$d" \( \
       -name ".git" -o \
       -name ".venv" -o \
       -name "__pycache__" -o \
       -name "node_modules" \
-    \) -prune -o -type f -print 2>/dev/null | fzf --info=inline --preview="bat --color=always --style=plain --line-range=:500 {}" --bind "enter:become(vim {})"
+    \) -prune -o -type f -print 2>/dev/null | fzf --info=inline --prompt "$d"/ --preview="bat --color=always --style=plain --line-range=:500 {}" --bind "enter:become(vim {})"
   fi
 }
 
@@ -52,6 +52,28 @@ tmux() {
   else
     command tmux "$@"
   fi
+}
+
+png() {
+  # local data=$(openssl base64 -in "$1" | tr -d '\n\r')
+  # local data=$(/usr/bin/base64 -w0 $1)
+  local data=$(/usr/bin/base64 < "$1")
+  data="${data//[[:space:]]/}"
+
+  local pos=0
+  local size=4096
+
+  while [ $pos -lt ${#data} ]; do
+    # `a=T` - Transfer image
+    # `f=100` - PNG
+    printf "\\e_Ga=T,f=100,"
+    local chunk="${data:$pos:$size}"
+    pos=$(($pos + $size))
+    [ $pos -lt ${#data} ] && printf "m=1"
+    [ ${#chunk} -gt 0 ] && printf ";%s" "$chunk"
+    printf "\\e\\\\"
+  done
+  printf "\n"
 }
 
 # function psql() {
@@ -86,6 +108,7 @@ alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
+alias chrome="open -a 'Google Chrome'"
 
 export CLICOLOR=1
 export VISUAL="vim"
