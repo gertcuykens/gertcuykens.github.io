@@ -88,7 +88,7 @@ setopt histignorealldups sharehistory prompt_subst
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
-PROMPT=' %n@%m %~%F{blue}$(_b)%F{none} %# '
+PROMPT='%n@%m %~%F{blue}$(_b)%F{none} %# '
 
 source ~/.config/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.config/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -140,7 +140,7 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -500'"
 export NATS_URL="tls://nats.mnq.fr-par.scaleway.com:4222"
 
 [ -f ~/.fzf/bin/fzf ] && export path=("${HOME}/.fzf/bin" $path) && source <(fzf --zsh)
-[ -f ~/.cargo/env ] && export path=("${HOME}/.cargo/bin" $path) && source ~/.cargo/env
+# [ -f ~/.cargo/env ] && export path=("${HOME}/.cargo/bin" $path) && source ~/.cargo/env
 [ -f ~/.local/bin/env ] && source ~/.local/bin/env
 
 # undo => Ctrl-U
