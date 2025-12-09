@@ -19,30 +19,29 @@ _b() {
 #   esac
 # }
 
-c() {
+f() {
   local d="${1:-.}"
-  local c=$(find "$d" \( \
-    -name ".git" -o \
-    -name ".venv" -o \
-    -name "__pycache__" -o \
-    -name "node_modules" \
-  \) -prune -o -type d -print 2>/dev/null | fzf --info=inline --prompt "$d"/ --preview="tree -C {} -I '.git|.venv|__pycache__|node_modules' | head -500")
-  if [ -n "$c" ]; then
-    cd "$c"
-  fi
-}
-
-f(){
-  local d="${1:-.}"
-  if [[ -d "$d/.git" ]]; then
-    git -C "$d" ls-files -co --exclude-standard | fzf --info=inline --prompt "$d"/ --preview="bat --color=always --style=plain --line-range=:500 $d/{}" --bind "enter:become(vim $d/{})"
-  else
-    find "$d" \( \
-      -name ".git" -o \
-      -name ".venv" -o \
-      -name "__pycache__" -o \
-      -name "node_modules" \
-    \) -prune -o -type f -print 2>/dev/null | fzf --info=inline --prompt "$d"/ --preview="bat --color=always --style=plain --line-range=:500 {}" --bind "enter:become(vim {})"
+  [[ "$d" != */ ]] && d="$d/"
+  local p=$( (echo "$d"; fd . "$d" --full-path --follow --hidden \
+    --exclude .git \
+    --exclude .venv \
+    --exclude __pycache__ \
+    --exclude node_modules) \
+    | fzf --no-sort --info=inline --ansi --prompt "$d" \
+      --preview='
+        if [[ -d {} ]]; then
+          tree -N -C {} -I ".git|.venv|__pycache__|node_modules" | head -500
+        else
+          bat --color=always --style=plain --line-range=:500 {}
+        fi') 
+  if [[ -n $p ]]; then
+    if [[ -d $p ]]; then
+      cd "$p"
+    elif [[ $p == *.png ]]; then
+      png "$p"
+    else
+      vim "$p"
+    fi
   fi
 }
 
@@ -125,18 +124,17 @@ export TZ="Europe/Brussels"
 # export NNN_PLUG='p:preview-tui;f:fzcd'
 # export NNN_FIFO='/tmp/nnn.fifo'
 # export NNN_FCOLORS=''
-# export FZF_DEFAULT_COMMAND='fd --type file --color=always --follow --hidden --exclude .git'
+export FZF_DEFAULT_COMMAND=''
+export FZF_DEFAULT_OPTS='--no-sort --info=inline --ansi'
 # export FZF_CTRL_T_COMMAND=''
-export FZF_DEFAULT_OPTS="--info=inline --ansi"
-export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}' --bind 'ctrl-/:change-preview-window(down|hidden|)'"
-export FZF_ALT_C_COMMAND='find . \( \
-    -name ".git" -o \
-    -name ".venv" -o \
-    -name "__pycache__" -o \
-    -name "node_modules" \
-  \) -prune -o -type d -print'
-export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -500'"
-# fd --type file --color=always | tree --fromfile -N
+# export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}' --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+# export FZF_ALT_C_COMMAND='find . \( \
+#     -name ".git" -o \
+#     -name ".venv" -o \
+#     -name "__pycache__" -o \
+#     -name "node_modules" \
+#   \) -prune -o -type d -print'
+# export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -500'"
 # export MOZ_ENABLE_WAYLAND=1
 # export OZONE_PLATFORM=wayland
 export NATS_URL="tls://nats.mnq.fr-par.scaleway.com:4222"
@@ -147,4 +145,53 @@ export NATS_URL="tls://nats.mnq.fr-par.scaleway.com:4222"
 
 # undo => Ctrl-U
 # stty -ixon => disable Ctrl-S / Ctrl-Q
+
+###############################################################################
+
+# fd --type file --color=always | tree --fromfile -N
+
+# local c=$(find "$d" \( \
+#   -name ".git" -o \
+#   -name ".venv" -o \
+#   -name "__pycache__" -o \
+#   -name "node_modules" \
+# \) -prune -o -type d -print 2>/dev/null 
+
+        # elif [[ {} == *.png ]]; then
+        #   png="{}"
+        #   if [ -f "$file" ]; then
+        #     data=$(/usr/bin/base64 < "$png")
+        #     data="${data//[[:space:]]/}"
+        #     pos=0
+        #     size=4096
+        #     while [ $pos -lt ${#data} ]; do
+        #       printf "\e_Ga=T,f=100,"
+        #       chunk="${data:$pos:$size}"
+        #       pos=$(($pos + $size))
+        #       [ $pos -lt ${#data} ] && printf "m=1"
+        #       [ ${#chunk} -gt 0 ] && printf ";%s" "$chunk"
+        #       printf "\e\\"
+        #     done
+        #     printf "\n"
+        #   fi
+
+
+# --bind "enter:become(vim {} < /dev/tty > /dev/tty)")
+
+# export FZF_DEFAULT_COMMAND='fd --type file --color=always --follow --hidden --exclude .git'
+# export FZF_DEFAULT_OPTS='--info=inline --ansi --preview="bat --color=always --style=plain --line-range=:500 {}" --bind="enter:become(vim {})"'
+
+# f(){
+#   local d="${1:-.}"
+#   if [[ -d "$d/.git" ]]; then
+#     git -C "$d" ls-files -co --exclude-standard | fzf --info=inline --ansi --prompt "$d"/ --preview="bat --color=always --style=plain --line-range=:500 $d/{}" --bind "enter:become(vim $d/{})"
+#   else
+#     find "$d" \( \
+#       -name ".git" -o \
+#       -name ".venv" -o \
+#       -name "__pycache__" -o \
+#       -name "node_modules" \
+#     \) -prune -o -type f -print 2>/dev/null | fzf --info=inline --ansi --prompt "$d"/ --preview="bat --color=always --style=plain --line-range=:500 {}" --bind "enter:become(vim {})"
+#   fi
+# }
 
