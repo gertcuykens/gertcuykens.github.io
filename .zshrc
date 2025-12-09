@@ -121,11 +121,24 @@ export LANG="C.UTF-8"
 export LANGUAGE="C.UTF-8"
 export LC_ALL="C.UTF-8"
 export TZ="Europe/Brussels"
-# export NNN_PLUG='p:preview-tui;f:fzcd'
-# export NNN_FIFO='/tmp/nnn.fifo'
-# export NNN_FCOLORS=''
 export FZF_DEFAULT_COMMAND=''
 export FZF_DEFAULT_OPTS='--no-sort --info=inline --ansi'
+# export FZF_CTRL_T_COMMAND=''
+# export FZF_CTRL_T_OPTS=''
+# export FZF_ALT_C_COMMAND=''
+# export FZF_ALT_C_OPTS=''
+# export MOZ_ENABLE_WAYLAND=1
+# export OZONE_PLATFORM=wayland
+export NATS_URL="tls://nats.mnq.fr-par.scaleway.com:4222"
+
+[ -f ~/.fzf/bin/fzf ] && export path=("${HOME}/.fzf/bin" $path) && source <(fzf --zsh)
+[ -f ~/.local/bin/env ] && source ~/.local/bin/env
+
+# undo => Ctrl-U
+# stty -ixon => disable Ctrl-S / Ctrl-Q
+
+###############################################################################
+
 # export FZF_CTRL_T_COMMAND=''
 # export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}' --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 # export FZF_ALT_C_COMMAND='find . \( \
@@ -135,18 +148,12 @@ export FZF_DEFAULT_OPTS='--no-sort --info=inline --ansi'
 #     -name "node_modules" \
 #   \) -prune -o -type d -print'
 # export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -500'"
-# export MOZ_ENABLE_WAYLAND=1
-# export OZONE_PLATFORM=wayland
-export NATS_URL="tls://nats.mnq.fr-par.scaleway.com:4222"
 
-[ -f ~/.fzf/bin/fzf ] && export path=("${HOME}/.fzf/bin" $path) && source <(fzf --zsh)
 # [ -f ~/.cargo/env ] && export path=("${HOME}/.cargo/bin" $path) && source ~/.cargo/env
-[ -f ~/.local/bin/env ] && source ~/.local/bin/env
 
-# undo => Ctrl-U
-# stty -ixon => disable Ctrl-S / Ctrl-Q
-
-###############################################################################
+# export NNN_PLUG='p:preview-tui;f:fzcd'
+# export NNN_FIFO='/tmp/nnn.fifo'
+# export NNN_FCOLORS=''
 
 # fd --type file --color=always | tree --fromfile -N
 
