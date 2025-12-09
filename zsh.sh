@@ -1,10 +1,16 @@
 #!/bin/zsh
 set -eEuxo pipefail
 
-# apt install zsh bzip2
+# apt install zsh vim git bzip2 universal-ctags
 # chsh -s /bin/zsh root
 
 # infocmp -x xterm-ghostty | ssh root@... -- tic -x -
+
+rm -rf ~/.local/share/fonts
+mkdir -p ~/.local/share/fonts
+cd ~/.local/share/fonts
+wget https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/DroidSansMono/DroidSansMNerdFont-Regular.otf
+# curl -fsSLO https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/DroidSansMono/DroidSansMNerdFont-Regular.otf
 
 wget https://github.com/sharkdp/bat/releases/download/v0.26.0/bat_0.26.0_amd64.deb
 dpkg -i bat_0.26.0_amd64.deb
@@ -18,6 +24,7 @@ bunzip2 /usr/local/bin/restic.bz2
 
 rm -rf ~/.fzf
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+# git -C ~/.fzf pull
 ~/.fzf/install --bin
 
 rm -rf ~/.config/zsh-autosuggestions

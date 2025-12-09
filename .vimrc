@@ -7,43 +7,32 @@ set mouse=a
 set noshowmode
 set incsearch
 set hlsearch
-set rtp+=~/.fzf
 set encoding=utf-8
 set clipboard=unnamed
 set backspace=indent,eol,start
 set autochdir
+set rtp+=~/.fzf
 let $FZF_DEFAULT_OPTS = '--info=inline'
 let g:fzf_layout = {'window': 'enew'}
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:loaded_netrwPlugin = 1
-let g:netrw_silent = 1
-let g:netrw_banner = 0
 filetype plugin on
 colorscheme codedark
 syntax on
 
-function FzfDir(bufnr)
-  if getftype(bufname(a:bufnr)) == 'dir'
-    execute 'cd ' . bufname(a:bufnr) 
-    execute 'bd' . a:bufnr
-    execute 'Files'
-  endif
-endfunction
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" function FzfDir(bufnr)
+"   if getftype(bufname(a:bufnr)) == 'dir'
+"     execute 'cd ' . bufname(a:bufnr) 
+"     execute 'bd' . a:bufnr
+"     execute 'Files'
+"   endif
+" endfunction
 
-function PbCopy() abort
-  let yanked_text = @@
-  if yanked_text =~ '\S'
-    let escaped_text = shellescape(yanked_text, 1)
-    execute 'silent !echo -n ' . escaped_text . ' | nc -q 0 localhost 2000' | redraw!
-  endif
-endfunction
+" autocmd BufEnter * call FzfDir(bufnr('%'))
 
-command PbCopy call PbCopy()
- 
-" autocmd TextYankPost * call PbCopy()
-autocmd BufEnter * call FzfDir(bufnr('%'))
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " au FilterWritePre * if &diff | colorscheme xyz | endif
 " au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 " let loaded_netrw = 1
@@ -59,16 +48,61 @@ autocmd BufEnter * call FzfDir(bufnr('%'))
 " call fzf#vim#files(bufname(a:bufnr))
 " printf '\e]0;Title\e\\'
 
-" :h
-" ^d options
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" :marks
 " ^] link
 " ^t topic
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" :jumps
 " ^o older
 " ^i newer
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" :changes
+" g,
+" g;
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" :tags
+" !ctags -R .
+
+" ^d complete options
+
+" ^p complete previous txt
+" ^n complete next txt
+
+" :set omnifunc?
+" ^x ^o
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" :set spelllang=en_us
+" :set spell / nospell
+" ]s / [s
+" z=
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" :h
 
 " ^o normal mode
 " v V ^v visual mode
 
 " u undo
 " ^r redo
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" let g:netrw_silent = 1
+" let g:netrw_banner = 0
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" function PbCopy() abort
+"   let yanked_text = @@
+"   if yanked_text =~ '\S'
+"     let escaped_text = shellescape(yanked_text, 1)
+"     execute 'silent !echo -n ' . escaped_text . ' | nc -q 0 localhost 2000' | redraw!
+"   endif
+" endfunction
+
+" command PbCopy call PbCopy()
+" autocmd TextYankPost * call PbCopy()
 
