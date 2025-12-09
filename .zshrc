@@ -55,6 +55,7 @@ tmux() {
 }
 
 png() {
+  # https://sw.kovidgoyal.net/kitty/graphics-protocol
   # local data=$(openssl base64 -in "$1" | tr -d '\n\r')
   # local data=$(/usr/bin/base64 -w0 $1)
   local data=$(/usr/bin/base64 < "$1")
@@ -124,9 +125,9 @@ export TZ="Europe/Brussels"
 # export NNN_PLUG='p:preview-tui;f:fzcd'
 # export NNN_FIFO='/tmp/nnn.fifo'
 # export NNN_FCOLORS=''
-# export FZF_DEFAULT_COMMAND=''
+# export FZF_DEFAULT_COMMAND='fd --type file --color=always --follow --hidden --exclude .git'
 # export FZF_CTRL_T_COMMAND=''
-export FZF_DEFAULT_OPTS="--info=inline"
+export FZF_DEFAULT_OPTS="--info=inline --ansi"
 export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}' --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 export FZF_ALT_C_COMMAND='find . \( \
     -name ".git" -o \
@@ -135,6 +136,7 @@ export FZF_ALT_C_COMMAND='find . \( \
     -name "node_modules" \
   \) -prune -o -type d -print'
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -500'"
+# fd --type file --color=always | tree --fromfile -N
 # export MOZ_ENABLE_WAYLAND=1
 # export OZONE_PLATFORM=wayland
 export NATS_URL="tls://nats.mnq.fr-par.scaleway.com:4222"

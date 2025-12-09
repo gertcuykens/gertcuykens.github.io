@@ -12,6 +12,12 @@ cd ~/.local/share/fonts
 wget https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/DroidSansMono/DroidSansMNerdFont-Regular.otf
 # curl -fsSLO https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/DroidSansMono/DroidSansMNerdFont-Regular.otf
 
+wget https://github.com/sharkdp/fd/releases/download/v10.3.0/fd_10.3.0_amd64.deb
+wget -i fd_10.3.0_amd64.deb
+
+wget https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep_14.1.1-1_amd64.deb
+dpkg -i ripgrep_14.1.1-1_amd64.deb
+
 wget https://github.com/sharkdp/bat/releases/download/v0.26.0/bat_0.26.0_amd64.deb
 dpkg -i bat_0.26.0_amd64.deb
 
