@@ -50,13 +50,24 @@ syntax on
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " :marks
-" ^] link
-" ^t topic
+" ma
+" 'a
+
+" ma-z local
+" mA-Z global
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" :tags :tnext :tprev :tfirst :tlast
+" ^] go to
+" ^t go back to tag
+
+" !ctags -R .
+" !ctags --list-languages
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " :jumps
-" ^o older
-" ^i newer
+" ^o out older
+" ^i in new
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " :changes
@@ -64,26 +75,42 @@ syntax on
 " g;
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" :tags
-" !ctags -R .
+" :set omnifunc?
+" ^x ^o
 
 " ^d complete options
 
 " ^p complete previous txt
 " ^n complete next txt
 
-" :set omnifunc?
-" ^x ^o
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" :set spelllang=en_us
-" :set spell / nospell
-" ]s / [s
+" :set spelllang?
+" :set spelllang=en
+" :set spell | nospell
+" ]s | [s
 " z=
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" :h
+" :echo &runtimepath
+" :echo globpath(&runtimepath, "spell/*.spl")
+" :mkspell ~/.vim/spell en
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" :helptags $VIMRUNTIME/doc
+" :help tag
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" _ last used variable
+" $ env variable
+" @a-z registers
+" g: s: b: w: t: scope
+" function! MyFunc()
+"   let myvar = 1
+" endfunction
+
+" let &number = 1 
+" set number
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ^o normal mode
 " v V ^v visual mode
 
