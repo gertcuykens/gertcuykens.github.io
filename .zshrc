@@ -17,7 +17,8 @@ fn() {
     --exclude .venv \
     --exclude __pycache__ \
     --exclude node_modules) \
-    | fzf --no-sort --info=inline --ansi --prompt "$d > " \
+    | fzf --no-sort --info=inline --ansi \
+      --prompt "$d > " \
       --query="${1}" \
       --preview='
         if [[ -d {} ]]; then
@@ -38,12 +39,11 @@ fn() {
 
 fr() {
   local d="${2:-.}"
-  : | fzf \
+  : | fzf --no-sort --info=inline --ansi --disabled \
     --bind "start:reload:rg --vimgrep --color=always --smart-case --max-count 50 \"${1}\" \"$d\" || true" \
     --bind "change:reload:rg --vimgrep --color=always --smart-case --max-count 50 {q} \"$d\"  || true" \
     --bind 'enter:become(vim {1} +{2})' \
     --delimiter ':' \
-    --ansi --disabled --no-sort --info=inline \
     --prompt="$d > " \
     --query="${1}" \
     --preview='bat --color=always --style=plain --line-range=:500 {1}'
