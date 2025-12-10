@@ -52,10 +52,10 @@ fr() {
     --bind "change:reload:rg --vimgrep --color=always --smart-case {q} \"$d\"  || true" \
     --bind 'enter:become(vim {1} +{2})' \
     --delimiter ':' \
-    --ansi \
-    --disabled \
+    --ansi --disabled --no-sort --info=inline \
     --prompt="$d > " \
-    --query="${1}"
+    --query="${1}" \
+    --preview='bat --color=always --style=plain --line-range=:500 {1}'
 }
 
 tmux() {
