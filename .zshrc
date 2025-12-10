@@ -10,15 +10,6 @@ _b() {
   fi
 }
 
-# _fzf_comprun() {
-#   local c=$1
-#   shift
-#   case "$c" in
-#     cd) fzf "$@" --preview 'tree -C {} | head -500';;
-#     *) fzf "$@";;
-#   esac
-# }
-
 fn() {
   local d="${2:-.}"
   local p=$( (echo "$d"; fd . "$d" --full-path --follow --hidden \
@@ -48,8 +39,8 @@ fn() {
 fr() {
   local d="${2:-.}"
   : | fzf \
-    --bind "start:reload:rg --vimgrep --color=always --smart-case \"${1}\" \"$d\" || true" \
-    --bind "change:reload:rg --vimgrep --color=always --smart-case {q} \"$d\"  || true" \
+    --bind "start:reload:rg --vimgrep --color=always --smart-case --max-count 50 \"${1}\" \"$d\" || true" \
+    --bind "change:reload:rg --vimgrep --color=always --smart-case --max-count 50 {q} \"$d\"  || true" \
     --bind 'enter:become(vim {1} +{2})' \
     --delimiter ':' \
     --ansi --disabled --no-sort --info=inline \
@@ -88,14 +79,6 @@ png() {
   done
   printf "\n"
 }
-
-# function psql() {
-#     if [ -t 0 ]; then
-#         docker run -it --rm -v /run/postgresql:/run/postgresql postgres psql "$@"
-#     else
-#         docker run -i --rm -v /run/postgresql:/run/postgresql postgres psql "$@"
-#     fi
-# }
 
 setopt histignorealldups sharehistory prompt_subst
 HISTSIZE=1000
@@ -149,6 +132,25 @@ export NATS_URL="tls://nats.mnq.fr-par.scaleway.com:4222"
 
 # undo => Ctrl-U
 # stty -ixon => disable Ctrl-S / Ctrl-Q
+
+###############################################################################
+
+# _fzf_comprun() {
+#   local c=$1
+#   shift
+#   case "$c" in
+#     cd) fzf "$@" --preview 'tree -C {} | head -500';;
+#     *) fzf "$@";;
+#   esac
+# }
+
+# function psql() {
+#     if [ -t 0 ]; then
+#         docker run -it --rm -v /run/postgresql:/run/postgresql postgres psql "$@"
+#     else
+#         docker run -i --rm -v /run/postgresql:/run/postgresql postgres psql "$@"
+#     fi
+# }
 
 ###############################################################################
 
