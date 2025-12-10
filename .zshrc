@@ -46,12 +46,17 @@ f() {
 }
 
 fr() {
+  local d="${2:-.}"
+  [[ "$d" != */ ]] && d="$d/"
   : | fzf \
-    --bind "start:reload:rg --line-number --column --no-heading --color=always --smart-case \"${1}\" || true" \
-    --bind 'change:reload:rg --line-number --column --no-heading --color=always --smart-case {q} || true' \
+    --bind "start:reload:rg --line-number --column --no-heading --color=always --smart-case \"${1}\" \"$d\" || true" \
+    --bind "change:reload:rg --line-number --column --no-heading --color=always --smart-case {q} \"$d\"  || true" \
     --bind 'enter:become(vim {1} +{2})' \
     --delimiter ':' \
-    --ansi --disabled
+    --ansi \
+    --disabled \
+    --prompt="${d} > " \
+    --query="${1}"
 }
 
 tmux() {
