@@ -20,14 +20,14 @@ _b() {
 # }
 
 f() {
-  local d="${1:-.}"
-  [[ "$d" != */ ]] && d="$d/"
+  local d="${2:-.}"
   local p=$( (echo "$d"; fd . "$d" --full-path --follow --hidden \
     --exclude .git \
     --exclude .venv \
     --exclude __pycache__ \
     --exclude node_modules) \
-    | fzf --no-sort --info=inline --ansi --prompt "$d" \
+    | fzf --no-sort --info=inline --ansi --prompt "$d > " \
+      --query="${1}" \
       --preview='
         if [[ -d {} ]]; then
           tree -N -C {} -I ".git|.venv|__pycache__|node_modules" | head -500
@@ -47,7 +47,6 @@ f() {
 
 fr() {
   local d="${2:-.}"
-  [[ "$d" != */ ]] && d="$d/"
   : | fzf \
     --bind "start:reload:rg --line-number --column --no-heading --color=always --smart-case \"${1}\" \"$d\" || true" \
     --bind "change:reload:rg --line-number --column --no-heading --color=always --smart-case {q} \"$d\"  || true" \
@@ -55,7 +54,7 @@ fr() {
     --delimiter ':' \
     --ansi \
     --disabled \
-    --prompt="${d} > " \
+    --prompt="$d > " \
     --query="${1}"
 }
 
@@ -152,6 +151,8 @@ export NATS_URL="tls://nats.mnq.fr-par.scaleway.com:4222"
 # stty -ixon => disable Ctrl-S / Ctrl-Q
 
 ###############################################################################
+
+# [[ "$d" != */ ]] && d="$d/"
 
 # export FZF_CTRL_T_COMMAND=''
 # export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}' --bind 'ctrl-/:change-preview-window(down|hidden|)'"
