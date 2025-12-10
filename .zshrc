@@ -19,7 +19,7 @@ _b() {
 #   esac
 # }
 
-f() {
+fn() {
   local d="${2:-.}"
   local p=$( (echo "$d"; fd . "$d" --full-path --follow --hidden \
     --exclude .git \
@@ -48,8 +48,8 @@ f() {
 fr() {
   local d="${2:-.}"
   : | fzf \
-    --bind "start:reload:rg --line-number --column --no-heading --color=always --smart-case \"${1}\" \"$d\" || true" \
-    --bind "change:reload:rg --line-number --column --no-heading --color=always --smart-case {q} \"$d\"  || true" \
+    --bind "start:reload:rg --vimgrep --color=always --smart-case \"${1}\" \"$d\" || true" \
+    --bind "change:reload:rg --vimgrep --color=always --smart-case {q} \"$d\"  || true" \
     --bind 'enter:become(vim {1} +{2})' \
     --delimiter ':' \
     --ansi \
