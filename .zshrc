@@ -45,6 +45,15 @@ f() {
   fi
 }
 
+fr() {
+  : | fzf \
+    --bind "start:reload:rg --line-number --column --no-heading --color=always --smart-case \"${1}\" || true" \
+    --bind 'change:reload:rg --line-number --column --no-heading --color=always --smart-case {q} || true' \
+    --bind 'enter:become(vim {1} +{2})' \
+    --delimiter ':' \
+    --ansi --disabled
+}
+
 tmux() {
   if [ $# -eq 0 ]; then
     command tmux new -A -s default
