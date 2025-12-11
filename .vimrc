@@ -114,10 +114,13 @@ syntax on
 " set number
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" z folds
+" :set foldmethod=manual
+" zf zfap
+" zo zc za
+" zM zR
+
 " zz zt zb reposition
-" z<Enter> z+ z- moves text
-" zd zo zc operate on folds
+" z z+ z- moves text
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " g moves
