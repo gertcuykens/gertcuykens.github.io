@@ -1,22 +1,21 @@
 set nocompatible
 set hidden
-set laststatus = 0
-set showtabline = 0
-set ttimeoutlen = 0
-set mouse = a
+set laststatus=0
+set showtabline=0
+set ttimeoutlen=0
+set mouse=a
 set noshowmode
 set incsearch
 set hlsearch
-set encoding = utf-8
-set clipboard = unnamed
-set backspace = indent, eol, start
+set encoding=utf-8
+set clipboard=unnamed
+set backspace=indent,eol,start
 set autochdir
-set rtp += ~/.fzf
-let $FZF_DEFAULT_OPTS = '--info=inline'
-let g:fzf_layout = {'window': 'enew'}
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:loaded_netrwPlugin = 1
+set rtp+=~/.fzf
+let g:fzf_layout={'window': 'enew'}
+let g:airline_powerline_fonts=1
+let g:airline#extensions#tabline#enabled=1
+let g:loaded_netrwPlugin=1
 filetype plugin on
 colorscheme codedark
 syntax on
@@ -106,11 +105,11 @@ syntax on
 " @a-z registers
 " g: s: b: w: t: scope
 " function! MyFunc()
-"   let myvar = 1
+"   let myvar=1
 " endfunction
 
-" let &number = 1 
-" set number = 1
+" let &number=1 
+" set number=1
 " set number?
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
