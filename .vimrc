@@ -1,17 +1,17 @@
 set nocompatible
 set hidden
-set laststatus=0
-set showtabline=0
-set ttimeoutlen=0
-set mouse=a
+set laststatus = 0
+set showtabline = 0
+set ttimeoutlen = 0
+set mouse = a
 set noshowmode
 set incsearch
 set hlsearch
-set encoding=utf-8
-set clipboard=unnamed
-set backspace=indent,eol,start
+set encoding = utf-8
+set clipboard = unnamed
+set backspace = indent, eol, start
 set autochdir
-set rtp+=~/.fzf
+set rtp += ~/.fzf
 let $FZF_DEFAULT_OPTS = '--info=inline'
 let g:fzf_layout = {'window': 'enew'}
 let g:airline_powerline_fonts = 1
@@ -87,14 +87,13 @@ syntax on
 " ^n complete next txt
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" :set spelllang?
 " :set spelllang=en
 " :set spell | nospell
 " ]s | [s
 " z=
 
 " :echo &runtimepath
-" :echo globpath(&runtimepath, "spell/*.spl")
+" :echo globpath(&runtimepath, 'spell/*.spl')
 " :mkspell ~/.vim/spell en
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -111,7 +110,8 @@ syntax on
 " endfunction
 
 " let &number = 1 
-" set number
+" set number = 1
+" set number?
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " :set foldmethod=manual
