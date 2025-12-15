@@ -15,3 +15,6 @@ apt update
 apt policy postgresql
 apt install postgresql
 
+# apt install postgresql-18-pgvector
+# CREATE EXTENSION vector;
+
