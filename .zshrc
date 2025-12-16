@@ -41,15 +41,15 @@ fdf() {
 rgf() {
   local d="${2:-.}"
   : | fzf --no-sort --info=inline --ansi --disabled \
-    --bind "start:reload:rg --vimgrep --color=always --line-number --no-heading --smart-case \"${1}\" \"$d\" || true" \
-    --bind "change:reload:rg --vimgrep --color=always --line-number --no-heading --smart-case {q} \"$d\"  || true" \
+    --bind "start:reload:rg --with-filename --color=always --line-number --no-heading --smart-case \"${1}\" \"$d\" || true" \
+    --bind "change:reload:rg --with-filename --color=always --line-number --no-heading --smart-case {q} \"$d\"  || true" \
     --bind "enter:become(vim {1} +{2})" \
     --delimiter ':' \
     --nth 3.. \
     --prompt="$d > " \
     --query="${1}" \
-    --preview="bat --color=always --style=plain --line-range=:500 --highlight-line={2} {1}"
-    # --preview-window=follow
+    --preview="bat --color=always --style=plain --line-range=:500 --highlight-line={2} {1}" \
+    --preview-window=follow
 }
 
 gr() {
