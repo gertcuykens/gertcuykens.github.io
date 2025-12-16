@@ -49,6 +49,10 @@ fr() {
     --preview='bat --color=always --style=plain --line-range=:500 {1}'
 }
 
+gr() {
+  git grep --line-number . | fzf --delimiter : --nth 3.. --bind 'enter:become(vim {1} +{2})'
+}
+
 tmux() {
   if [ $# -eq 0 ]; then
     command tmux new -A -s default
