@@ -17,7 +17,7 @@ fn() {
     --exclude .venv \
     --exclude __pycache__ \
     --exclude node_modules) \
-    | fzf --no-sort --info=inline --ansi \
+    | fzf --no-sort --info=inline \
       --prompt "$d > " \
       --query="${1}" \
       --preview='
@@ -118,19 +118,14 @@ export LANGUAGE="C.UTF-8"
 export LC_ALL="C.UTF-8"
 export TZ="Europe/Brussels"
 export FZF_DEFAULT_COMMAND='sh -c '\''(echo .; fd . . --full-path --follow --hidden --exclude .git --exclude .venv --exclude __pycache__ --exclude node_modules)'\'''
-export FZF_DEFAULT_OPTS='--no-sort --info=inline --ansi --preview='"'"'
+export FZF_DEFAULT_OPTS='--no-sort --info=inline --preview='"'"'
 if [[ -d {} ]]; then
   tree -N -C {} -I ".git|.venv|__pycache__|node_modules" | head -500
 else
   bat --color=always --style=plain --line-range=:500 {}
 fi
 '"'"''
-# export FZF_DEFAULT_COMMAND=''
-# export FZF_DEFAULT_OPTS='--no-sort --info=inline --ansi'
-# export FZF_CTRL_T_COMMAND=''
-# export FZF_CTRL_T_OPTS=''
-# export FZF_ALT_C_COMMAND=''
-# export FZF_ALT_C_OPTS=''
+export FZF_CTRL_R_OPTS='--no-sort --info=inline --no-preview'
 # export MOZ_ENABLE_WAYLAND=1
 # export OZONE_PLATFORM=wayland
 export NATS_URL="tls://nats.mnq.fr-par.scaleway.com:4222"
