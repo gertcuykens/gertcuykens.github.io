@@ -103,10 +103,12 @@ SAVEHIST=1000
 HISTFILE=~/.zsh_history
 PROMPT='%n@%m %~%F{blue}$(_b)%F{none} %# '
 
+fpath=(~/.config/zsh-completions/src $fpath)
 source ~/.config/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.config/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.config/zsh-history-substring-search/zsh-history-substring-search.zsh
-fpath=(~/.config/zsh-completions/src $fpath)
+[ -f ~/.local/bin/env ] && source ~/.local/bin/env
+[ -f ~/.local/bin/fzf ] && source <(fzf --zsh)
 
 bindkey -e
 bindkey ${terminfo[kcuu1]} history-substring-search-up
@@ -136,9 +138,6 @@ export TZ="Europe/Brussels"
 # export MOZ_ENABLE_WAYLAND=1
 # export OZONE_PLATFORM=wayland
 export NATS_URL="tls://nats.mnq.fr-par.scaleway.com:4222"
-
-[ -f ~/.fzf/bin/fzf ] && export path=("${HOME}/.fzf/bin" $path) && source <(fzf --zsh)
-[ -f ~/.local/bin/env ] && source ~/.local/bin/env
 
 # undo => Ctrl-U
 # stty -ixon => disable Ctrl-S / Ctrl-Q
