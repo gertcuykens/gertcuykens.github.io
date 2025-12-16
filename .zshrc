@@ -10,7 +10,7 @@ _b() {
   fi
 }
 
-fn() {
+fdf() {
   local d="${2:-.}"
   [[ "$d" != */ ]] && d="$d/"
   local p=$( (echo "$d"; fd . "$d" --full-path --follow --hidden \
@@ -38,7 +38,7 @@ fn() {
   fi
 }
 
-fr() {
+rgf() {
   local d="${2:-.}"
   : | fzf --no-sort --info=inline --ansi --disabled \
     --bind "start:reload:rg --vimgrep --color=always --line-number --no-heading --smart-case \"${1}\" \"$d\" || true" \
