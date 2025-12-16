@@ -12,6 +12,7 @@ _b() {
 
 fn() {
   local d="${2:-.}"
+  [[ "$d" != */ ]] && d="$d/"
   local p=$( (echo "$d"; fd . "$d" --full-path --follow --hidden \
     --exclude .git \
     --exclude .venv \
@@ -40,17 +41,29 @@ fn() {
 fr() {
   local d="${2:-.}"
   : | fzf --no-sort --info=inline --ansi --disabled \
-    --bind "start:reload:rg --vimgrep --color=always --smart-case --max-count 50 \"${1}\" \"$d\" || true" \
-    --bind "change:reload:rg --vimgrep --color=always --smart-case --max-count 50 {q} \"$d\"  || true" \
-    --bind 'enter:become(vim {1} +{2})' \
+    --bind "start:reload:rg --vimgrep --color=always --line-number --no-heading --smart-case \"${1}\" \"$d\" || true" \
+    --bind "change:reload:rg --vimgrep --color=always --line-number --no-heading --smart-case {q} \"$d\"  || true" \
+    --bind "enter:become(vim {1} +{2})" \
     --delimiter ':' \
+    --nth 3.. \
     --prompt="$d > " \
     --query="${1}" \
-    --preview='bat --color=always --style=plain --line-range=:500 {1}'
+    --preview="bat --color=always --style=plain --line-range=:500 --highlight-line={2} {1}"
+    # --preview-window=follow
 }
 
 gr() {
-  git grep --line-number . | fzf --delimiter : --nth 3.. --bind 'enter:become(vim {1} +{2})'
+  local d="${2:-.}"
+  [[ "$d" != */ ]] && d="$d/"
+  : | fzf --no-sort --info=inline --ansi --disabled \
+    --bind "start:reload:git -C \"$d\" grep --color=always --line-number \"${1}\" || true" \
+    --bind "change:reload:git -C \"$d\" grep --color=always --line-number {q} || true" \
+    --bind "enter:become(vim \"$d\"{1} +{2})" \
+    --delimiter : \
+    --nth 3.. \
+    --prompt="$d > " \
+    --query="${1}" \
+    --preview="bat --color=always --style=plain --line-range=:500 --highlight-line={2} \"$d\"{1}"
 }
 
 tmux() {
@@ -115,21 +128,11 @@ export VISUAL="vim"
 export EDITOR="vim"
 export PYTHONNOUSERSITE=1
 export PYTHONUNBUFFERED=1
-export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
 export BAT_STYLE="plain"
 export LANG="C.UTF-8"
 export LANGUAGE="C.UTF-8"
 export LC_ALL="C.UTF-8"
 export TZ="Europe/Brussels"
-export FZF_DEFAULT_COMMAND='sh -c '\''(echo .; fd . . --full-path --follow --hidden --exclude .git --exclude .venv --exclude __pycache__ --exclude node_modules)'\'''
-export FZF_DEFAULT_OPTS='--no-sort --info=inline --preview='\''
-if [[ -d {} ]]; then
-  tree -N -C {} -I ".git|.venv|__pycache__|node_modules" | head -500
-else
-  bat --color=always --style=plain --line-range=:500 {}
-fi
-'\'''
-export FZF_CTRL_R_OPTS='--no-sort --info=inline --no-preview'
 # export MOZ_ENABLE_WAYLAND=1
 # export OZONE_PLATFORM=wayland
 export NATS_URL="tls://nats.mnq.fr-par.scaleway.com:4222"
@@ -141,6 +144,18 @@ export NATS_URL="tls://nats.mnq.fr-par.scaleway.com:4222"
 # stty -ixon => disable Ctrl-S / Ctrl-Q
 
 ###############################################################################
+
+# export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
+
+# export FZF_DEFAULT_COMMAND='sh -c '\''(echo .; fd . . --full-path --follow --hidden --exclude .git --exclude .venv --exclude __pycache__ --exclude node_modules)'\'''
+# export FZF_DEFAULT_OPTS='--no-sort --info=inline --preview='\''
+# if [[ -d {} ]]; then
+#   tree -N -C {} -I ".git|.venv|__pycache__|node_modules" | head -500
+# else
+#   bat --color=always --style=plain --line-range=:500 {}
+# fi
+# '\'''
+# export FZF_CTRL_R_OPTS='--no-sort --info=inline --no-preview'
 
 # _fzf_comprun() {
 #   local c=$1
