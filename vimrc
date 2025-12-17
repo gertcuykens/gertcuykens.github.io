@@ -11,6 +11,8 @@ set encoding=utf-8
 set clipboard=unnamed
 set backspace=indent,eol,start
 set autochdir
+set list
+set listchars=trail:·,tab:»·,extends:›,precedes:‹,nbsp:␣
 set packpath^=~/.local/share/vim
 let g:fzf_layout={'window': 'enew'}
 let g:airline_powerline_fonts=1
@@ -23,7 +25,7 @@ syntax on
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " function FzfDir(bufnr)
 "   if getftype(bufname(a:bufnr)) == 'dir'
-"     execute 'cd ' . bufname(a:bufnr) 
+"     execute 'cd ' . bufname(a:bufnr)
 "     execute 'bd' . a:bufnr
 "     execute 'Files'
 "   endif
@@ -108,7 +110,7 @@ syntax on
 "   let myvar=1
 " endfunction
 
-" let &number=1 
+" let &number=1
 " set number=1
 " set number?
 " echo &number
