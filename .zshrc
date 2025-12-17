@@ -11,7 +11,6 @@ export LC_ALL="C.UTF-8"
 export TZ="Europe/Brussels"
 # export MOZ_ENABLE_WAYLAND=1
 # export OZONE_PLATFORM=wayland
-export NATS_URL="tls://nats.mnq.fr-par.scaleway.com:4222"
 export SHELL_SESSION_DISABLE=1
 
 setopt histignorealldups sharehistory prompt_subst

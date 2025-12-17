@@ -17,6 +17,5 @@ vim -u NONE -c "helptags fugitive/doc" -c q
 rm -rf ~/.config/vim
 mkdir -p ~/.config/vim
 cd ~/.config/vim
-# wget https://gert.ovh/.config/vim/vimrc
 curl -fsSLO https://gert.ovh/.config/vim/vimrc
 
