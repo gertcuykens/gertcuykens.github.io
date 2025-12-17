@@ -26,16 +26,17 @@ curl -fsSL https://rclone.org/install.sh | bash
 rm -rf ~/.config/zsh-autosuggestions
 rm -rf ~/.config/zsh-syntax-highlighting
 rm -rf ~/.config/zsh-history-substring-search
-rm -rf ~/.config/zsh-completions
 
-git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions.git ~/.config/zsh-autosuggestions
-git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.config/zsh-syntax-highlighting
-git clone --depth 1 https://github.com/zsh-users/zsh-history-substring-search.git ~/.config/zsh-history-substring-search
-git clone --depth 1 https://github.com/zsh-users/zsh-completions.git ~/.config/zsh-completions
+git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions.git ~/.local/share/zsh/autosuggestions
+git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.local/share/zsh/syntax-highlighting
+git clone --depth 1 https://github.com/zsh-users/zsh-history-substring-search.git ~/.local/share/zsh/history-substring-search
 
-curl -fsSLo /usr/local/share/zsh/site-functions/_zig https://raw.githubusercontent.com/ziglang/shell-completions/master/_zig
+git clone --depth 1 https://github.com/zsh-users/zsh-completions.git
+cp zsh-completions/src/* ~/.local/share/zsh/site-functions
+rm -rf zsh-completions
+
+curl -fsSLo ~/.local/share/zsh/site-functions/_zig https://raw.githubusercontent.com/ziglang/shell-completions/master/_zig
 # curl -fsSLo /usr/local/share/zsh/site-functions/_cht https://cheat.sh/:zsh
-uvx ruff generate-shell-completion zsh > /usr/local/share/zsh/site-functions/_ruff
 
 curl -fsSLo ~/.zshrc https://gert.ovh/.zshrc
 

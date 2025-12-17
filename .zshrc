@@ -117,7 +117,6 @@ SAVEHIST=1000
 HISTFILE=~/.zsh_history
 PROMPT='%n@%m %~%F{blue}$(_b)%F{none} %# '
 
-fpath=(~/.config/zsh-completions/src $fpath)
 fpath=(~/.local/share/zsh/site-functions $fpath)
 source ~/.config/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.config/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
