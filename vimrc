@@ -11,6 +11,7 @@ set encoding=utf-8
 set clipboard=unnamed
 set backspace=indent,eol,start
 set autochdir
+set packpath^=~/.local/share/vim
 let g:fzf_layout={'window': 'enew'}
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
@@ -110,6 +111,7 @@ syntax on
 " let &number=1 
 " set number=1
 " set number?
+" echo &number
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " :set foldmethod=manual
