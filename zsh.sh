@@ -21,13 +21,7 @@ dpkg -i ripgrep_14.1.1-1_amd64.deb
 wget https://github.com/sharkdp/bat/releases/download/v0.26.0/bat_0.26.0_amd64.deb
 dpkg -i bat_0.26.0_amd64.deb
 
-curl -fsSL https://astral.sh/uv/install.sh | sh
-
 curl -fsSL https://rclone.org/install.sh | bash
-
-curl -fsSL https://github.com/restic/restic/releases/download/v0.17.3/restic_0.17.3_linux_arm64.bz2 -o /usr/local/bin/restic.bz2
-bunzip2 /usr/local/bin/restic.bz2
-restic generate --zsh-completion /usr/local/share/zsh/site-functions/_restic
 
 rm -rf ~/.config/zsh-autosuggestions
 rm -rf ~/.config/zsh-syntax-highlighting
