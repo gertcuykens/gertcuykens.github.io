@@ -151,3 +151,8 @@ syntax on
 " command PbCopy call PbCopy()
 " autocmd TextYankPost * call PbCopy()
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" if filereadable(expand("~/.config/vim/vimrc"))
+"   source ~/.config/vim/vimrc
+" endif
+
