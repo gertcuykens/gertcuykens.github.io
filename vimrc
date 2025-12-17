@@ -11,7 +11,6 @@ set encoding=utf-8
 set clipboard=unnamed
 set backspace=indent,eol,start
 set autochdir
-set rtp+=~/.fzf
 let g:fzf_layout={'window': 'enew'}
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
@@ -155,4 +154,6 @@ syntax on
 " if filereadable(expand("~/.config/vim/vimrc"))
 "   source ~/.config/vim/vimrc
 " endif
+
+" set rtp+=~/.fzf
 
