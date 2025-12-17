@@ -23,10 +23,6 @@ dpkg -i bat_0.26.0_amd64.deb
 
 curl -fsSL https://rclone.org/install.sh | bash
 
-rm -rf ~/.config/zsh-autosuggestions
-rm -rf ~/.config/zsh-syntax-highlighting
-rm -rf ~/.config/zsh-history-substring-search
-
 git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions.git ~/.local/share/zsh/autosuggestions
 git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.local/share/zsh/syntax-highlighting
 git clone --depth 1 https://github.com/zsh-users/zsh-history-substring-search.git ~/.local/share/zsh/history-substring-search
