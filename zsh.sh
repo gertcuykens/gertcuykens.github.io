@@ -27,11 +27,7 @@ curl -fsSL https://rclone.org/install.sh | bash
 
 curl -fsSL https://github.com/restic/restic/releases/download/v0.17.3/restic_0.17.3_linux_arm64.bz2 -o /usr/local/bin/restic.bz2
 bunzip2 /usr/local/bin/restic.bz2
-
-rm -rf ~/.fzf
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-# git -C ~/.fzf pull
-~/.fzf/install --bin
+restic generate --zsh-completion /usr/local/share/zsh/site-functions/_restic
 
 rm -rf ~/.config/zsh-autosuggestions
 rm -rf ~/.config/zsh-syntax-highlighting
@@ -43,10 +39,9 @@ git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.
 git clone --depth 1 https://github.com/zsh-users/zsh-history-substring-search.git ~/.config/zsh-history-substring-search
 git clone --depth 1 https://github.com/zsh-users/zsh-completions.git ~/.config/zsh-completions
 
-curl -fsSL https://raw.githubusercontent.com/ziglang/shell-completions/master/_zig -o /usr/local/share/zsh/site-functions/_zig
-curl -fsSL https://cheat.sh/:zsh -o /usr/local/share/zsh/site-functions/_cht
+curl -fsSLo /usr/local/share/zsh/site-functions/_zig https://raw.githubusercontent.com/ziglang/shell-completions/master/_zig
+# curl -fsSLo /usr/local/share/zsh/site-functions/_cht https://cheat.sh/:zsh
 uvx ruff generate-shell-completion zsh > /usr/local/share/zsh/site-functions/_ruff
-restic generate --zsh-completion /usr/local/share/zsh/site-functions/_restic
 
-curl -fsSL https://gert.ovh/.zshrc -o ~/.zshrc
+curl -fsSLo ~/.zshrc https://gert.ovh/.zshrc
 
