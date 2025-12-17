@@ -45,3 +45,8 @@ uvx ruff generate-shell-completion zsh > /usr/local/share/zsh/site-functions/_ru
 
 curl -fsSLo ~/.zshrc https://gert.ovh/.zshrc
 
+# typeset -U fpath
+# type python3
+# whence -av python3
+# command -v python3
+

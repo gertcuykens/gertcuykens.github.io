@@ -1,4 +1,19 @@
 #!/bin/zsh
+export CLICOLOR=1
+export VISUAL="vim"
+export EDITOR="vim"
+export PYTHONNOUSERSITE=1
+export PYTHONUNBUFFERED=1
+export BAT_STYLE="plain"
+export LANG="C.UTF-8"
+export LANGUAGE="C.UTF-8"
+export LC_ALL="C.UTF-8"
+export TZ="Europe/Brussels"
+# export MOZ_ENABLE_WAYLAND=1
+# export OZONE_PLATFORM=wayland
+export NATS_URL="tls://nats.mnq.fr-par.scaleway.com:4222"
+
+setopt histignorealldups sharehistory prompt_subst
 
 _b() {
   # git rev-parse --abbrev-ref HEAD 2>/dev/null
@@ -97,13 +112,13 @@ png() {
   printf "\n"
 }
 
-setopt histignorealldups sharehistory prompt_subst
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
 PROMPT='%n@%m %~%F{blue}$(_b)%F{none} %# '
 
 fpath=(~/.config/zsh-completions/src $fpath)
+fpath=(~/.local/share/zsh/site-functions $fpath)
 source ~/.config/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.config/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.config/zsh-history-substring-search/zsh-history-substring-search.zsh
@@ -124,20 +139,6 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias chrome="open -a 'Google Chrome'"
-
-export CLICOLOR=1
-export VISUAL="vim"
-export EDITOR="vim"
-export PYTHONNOUSERSITE=1
-export PYTHONUNBUFFERED=1
-export BAT_STYLE="plain"
-export LANG="C.UTF-8"
-export LANGUAGE="C.UTF-8"
-export LC_ALL="C.UTF-8"
-export TZ="Europe/Brussels"
-# export MOZ_ENABLE_WAYLAND=1
-# export OZONE_PLATFORM=wayland
-export NATS_URL="tls://nats.mnq.fr-par.scaleway.com:4222"
 
 # undo => Ctrl-U
 # stty -ixon => disable Ctrl-S / Ctrl-Q
