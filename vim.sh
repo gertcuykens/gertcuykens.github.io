@@ -1,9 +1,9 @@
 #!/bin/zsh
 set -eEuxo pipefail
 
-rm -rf ~/.vim/pack/gert/start
-mkdir -p ~/.vim/pack/gert/start
-cd ~/.vim/pack/gert/start
+rm -rf ~/.local/share/vim/
+mkdir -p ~/.local/share/vim/pack/gert/start
+cd ~/.local/share/vim/pack/gert/start
 
 git clone --depth 1 https://tpope.io/vim/commentary
 git clone --depth 1 https://github.com/vim-airline/vim-airline airline
