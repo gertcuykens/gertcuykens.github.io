@@ -36,6 +36,7 @@ cp zsh-completions/src/* ~/.local/share/zsh/site-functions
 rm -rf zsh-completions
 
 curl -fsSLo ~/.local/share/zsh/site-functions/_zig https://raw.githubusercontent.com/ziglang/shell-completions/master/_zig
+
 # curl -fsSLo /usr/local/share/zsh/site-functions/_cht https://cheat.sh/:zsh
 
 curl -fsSLo ~/.zshrc https://gert.ovh/.zshrc
