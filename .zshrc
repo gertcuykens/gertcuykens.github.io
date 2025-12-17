@@ -120,13 +120,8 @@ PROMPT='%n@%m %~%F{blue}$(_b)%F{none} %# '
 fpath=(~/.local/share/zsh/site-functions $fpath)
 source ~/.local/share/zsh/autosuggestions/zsh-autosuggestions.zsh
 source ~/.local/share/zsh/syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.local/share/zsh/history-substring-search/zsh-history-substring-search.zsh
 [ -f ~/.local/bin/env ] && source ~/.local/bin/env
 [ -f ~/.local/bin/fzf ] && source <(fzf --zsh)
-
-bindkey -e
-bindkey ${terminfo[kcuu1]} history-substring-search-up
-bindkey ${terminfo[kcud1]} history-substring-search-down
 
 zmodload zsh/complist
 autoload -Uz compinit && compinit
@@ -143,6 +138,11 @@ alias chrome="open -a 'Google Chrome'"
 # stty -ixon => disable Ctrl-S / Ctrl-Q
 
 ###############################################################################
+
+# source ~/.local/share/zsh/history-substring-search/zsh-history-substring-search.zsh
+# bindkey -e
+# bindkey ${terminfo[kcuu1]} history-substring-search-up
+# bindkey ${terminfo[kcud1]} history-substring-search-down
 
 # export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
 
