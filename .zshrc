@@ -118,9 +118,9 @@ HISTFILE=~/.zsh_history
 PROMPT='%n@%m %~%F{blue}$(_b)%F{none} %# '
 
 fpath=(~/.local/share/zsh/site-functions $fpath)
-source ~/.config/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.config/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.config/zsh-history-substring-search/zsh-history-substring-search.zsh
+source ~/.local/share/zsh/autosuggestions/zsh-autosuggestions.zsh
+source ~/.local/share/zsh/syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.local/share/zsh/history-substring-search/zsh-history-substring-search.zsh
 [ -f ~/.local/bin/env ] && source ~/.local/bin/env
 [ -f ~/.local/bin/fzf ] && source <(fzf --zsh)
 
