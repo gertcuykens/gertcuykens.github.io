@@ -12,6 +12,7 @@ export TZ="Europe/Brussels"
 # export MOZ_ENABLE_WAYLAND=1
 # export OZONE_PLATFORM=wayland
 export NATS_URL="tls://nats.mnq.fr-par.scaleway.com:4222"
+export SHELL_SESSION_DISABLE=1
 
 setopt histignorealldups sharehistory prompt_subst
 
@@ -114,7 +115,7 @@ png() {
 
 HISTSIZE=1000
 SAVEHIST=1000
-HISTFILE=~/.zsh_history
+HISTFILE=~/.local/state/zsh/history
 PROMPT='%n@%m %~%F{blue}$(_b)%F{none} %# '
 
 fpath=(~/.local/share/zsh/site-functions $fpath)
@@ -124,7 +125,10 @@ source ~/.local/share/zsh/syntax-highlighting/zsh-syntax-highlighting.zsh
 [ -f ~/.local/bin/fzf ] && source <(fzf --zsh)
 
 zmodload zsh/complist
-autoload -Uz compinit && compinit
+autoload -Uz compinit && compinit -d "~/.cache/zsh/zcompdump"
+
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "~/.cache/zsh/zcompcache"
 
 alias ls='ls --color=auto'
 alias dir='dir --color=auto'
