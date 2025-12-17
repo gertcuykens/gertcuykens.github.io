@@ -14,14 +14,9 @@ vim -u NONE -c "helptags commentary/doc" -c q
 vim -u NONE -c "helptags airline/doc" -c q
 vim -u NONE -c "helptags fugitive/doc" -c q
 
+rm -rf ~/.config/vim
 mkdir -p ~/.config/vim
 cd ~/.config/vim
 wget https://gert.ovh/vimrc
-
 # curl -fsSLO https://gert.ovh/.vimrc
-# git -C ~/.vim/pack/gert/start/commentary pull
-# git -C ~/.vim/pack/gert/start/airline pull
-# git -C ~/.vim/pack/gert/start/fzf pull
-# git -C ~/.vim/pack/gert/start/fugitive pull
-# git -C ~/.vim/pack/gert/start/code pull
 
