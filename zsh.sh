@@ -1,10 +1,23 @@
 #!/bin/zsh
 set -eEuxo pipefail
 
-# apt install zsh vim git bzip2 universal-ctags curl
-# chsh -s /bin/zsh root
+# https://wiki.debian.org/SourcesList
+# /etc/apt/sources.list.d/debian.sources
+# Types: deb deb-src
+# URIs: http://deb.debian.org/debian
+# Suites: trixie trixie-updates trixie-security
+# Components: main non-free-firmware
+# Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+
+# apt update
+# apt upgrade
+# apt install zsh vim curl git universal-ctags gnupg bzip2 ca-certificates && update-ca-certificates
+# apt autoremove --purge
+# apt clean
 
 # infocmp -x xterm-ghostty | ssh root@... -- tic -x -
+
+# chsh -s /bin/zsh root
 
 # mkdir -p ~/.cache/zsh
 # mkdir -p ~/.config/zsh
@@ -12,15 +25,10 @@ set -eEuxo pipefail
 # mkdir -p ~/.local/share/zsh/site-functions
 # mkdir -p ~/.local/state/zsh
 
-# .zshenv before login basic environment exports for every zsh process
-# .zprofile after login
-# .zshrc interactive shell
-
 rm -rf ~/.local/share/fonts
 mkdir -p ~/.local/share/fonts
 cd ~/.local/share/fonts
-wget https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/DroidSansMono/DroidSansMNerdFont-Regular.otf
-# curl -fsSLO https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/DroidSansMono/DroidSansMNerdFont-Regular.otf
+curl -fsSLO https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/DroidSansMono/DroidSansMNerdFont-Regular.otf
 
 curl -fsSLO https://github.com/sharkdp/fd/releases/download/v10.3.0/fd_10.3.0_amd64.deb
 dpkg -i fd.deb
@@ -51,4 +59,12 @@ curl -fsSLo ~/.zshrc https://gert.ovh/.zshrc
 # type python3
 # whence -av python3
 # command -v python3
+
+# rm -rf /var/lib/apt/lists/*
+# rm -rf /tmp/*
+# rm -rf /var/tmp/*
+
+# .zshenv before login basic environment exports for every zsh process
+# .zprofile after login
+# .zshrc interactive shell
 

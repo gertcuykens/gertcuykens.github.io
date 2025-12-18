@@ -1,11 +1,7 @@
 #!/bin/zsh
 set -eEuxo pipefail
 
-# apt install curl ca-certificates
-# install -d /usr/share/postgresql-common/pgdg
-# curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc
-
-wget -4O /etc/apt/keyrings/postgresql.asc https://www.postgresql.org/media/keys/ACCC4CF8.asc
+curl -fsSLo /etc/apt/keyrings/postgresql.asc https://www.postgresql.org/media/keys/ACCC4CF8.asc
 
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/postgresql.asc] https://apt.postgresql.org/pub/repos/apt $(. /etc/os-release && echo "$VERSION_CODENAME")-pgdg main" > /etc/apt/sources.list.d/postgresql.list
 
@@ -15,6 +11,8 @@ apt update
 apt policy postgresql
 apt install postgresql
 
+# apt install python3-psutil
+# apt install postgresql-plpython3-17
 # apt install postgresql-18-pgvector
 # CREATE EXTENSION vector;
 

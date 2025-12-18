@@ -1,6 +1,6 @@
 # ~/.config/ghostty/config
-
-font-size = 18
+font-family = "JetBrains Mono, Symbols Nerd Font Mono"
+font-size = 16
 mouse-hide-while-typing = true
 
 # keybind ctrl+v paste
