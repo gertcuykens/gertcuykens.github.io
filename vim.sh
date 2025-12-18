@@ -1,7 +1,7 @@
 #!/bin/zsh
 set -eEuxo pipefail
 
-rm -rf ~/.local/share/vim/
+rm -rf ~/.local/share/vim
 mkdir -p ~/.local/share/vim/pack/gert/start
 cd ~/.local/share/vim/pack/gert/start
 
@@ -14,8 +14,7 @@ vim -u NONE -c "helptags commentary/doc" -c q
 vim -u NONE -c "helptags airline/doc" -c q
 vim -u NONE -c "helptags fugitive/doc" -c q
 
-rm -rf ~/.config/vim
+cd ~
 mkdir -p ~/.config/vim
-cd ~/.config/vim
-curl -fsSLO https://gert.ovh/.config/vim/vimrc
+curl -fsSLo ~/.config/vim/vimrc https://gert.ovh/.config/vim/vimrc
 
