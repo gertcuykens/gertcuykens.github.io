@@ -2,6 +2,11 @@ CTRL-T: Paste the selected file path(s) into the command line.
 CTRL-R: Fuzzy search and select from your shell history.
 ALT-C: Change directory to a selected directory.
 
+curl -fsSLo fzf.tgz https://github.com/junegunn/fzf/releases/download/v0.67.0/fzf-0.67.0-darwin_arm64.tar.gz
+tar -xzf fzf.tgz fzf
+sudo install -m 0755 fzf /usr/local/bin
+rm -f fzf.tgz fzf
+
 # source ~/.local/share/zsh/history-substring-search/zsh-history-substring-search.zsh
 # bindkey -e
 # bindkey ${terminfo[kcuu1]} history-substring-search-up
