@@ -62,8 +62,17 @@ rgf() {
     --nth 3.. \
     --prompt="$d > " \
     --query="${1}" \
-    --preview="bat --color=always --style=plain --line-range=:500 --highlight-line={2} {1}" \
-    --preview-window=follow
+    --preview='
+      FILE={1}
+      LINE=$(echo {2} | grep -o "^[0-9]*$")
+      if [[ -n "$LINE" ]]; then
+        START=$((LINE>5 ? LINE-5 : 1))
+        END=$((LINE+5))
+        bat --color=always --style=plain --line-range $START:$END --highlight-line=$LINE "$FILE"
+      else
+        bat --color=always --style=plain "$FILE"
+      fi' \
+    --preview-window=up:11
 }
 
 gr() {
@@ -77,7 +86,17 @@ gr() {
     --nth 3.. \
     --prompt="$d > " \
     --query="${1}" \
-    --preview="bat --color=always --style=plain --line-range=:500 --highlight-line={2} \"$d\"{1}"
+    --preview='
+      FILE={1}
+      LINE=$(echo {2} | grep -o "^[0-9]*$")
+      if [[ -n "$LINE" ]]; then
+        START=$((LINE>5 ? LINE-5 : 1))
+        END=$((LINE+5))
+        bat --color=always --style=plain --line-range $START:$END --highlight-line=$LINE "$FILE"
+      else
+        bat --color=always --style=plain "$FILE"
+      fi' \
+    --preview-window=up:11
 }
 
 tmux() {
