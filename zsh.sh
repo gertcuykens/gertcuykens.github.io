@@ -15,6 +15,7 @@ git clone --depth 1 https://github.com/zsh-users/zsh-completions.git ~/zsh-compl
 cp ~/zsh-completions/src/* ~/.local/share/zsh/site-functions
 rm -rf ~/zsh-completions
 
+fzf --zsh > ~/.local/share/zsh/site-functions/_fzf
 curl -fsSLo ~/.local/share/zsh/site-functions/_zig https://raw.githubusercontent.com/ziglang/shell-completions/master/_zig
 curl -fsSLo ~/.local/bin/env https://gert.ovh/.local/bin/env
 curl -fsSLo ~/.zshrc https://gert.ovh/.zshrc

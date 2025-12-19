@@ -31,6 +31,11 @@ curl -fsSLo ~/bat.deb https://github.com/sharkdp/bat/releases/download/v0.26.0/b
 dpkg -i ~/bat.deb
 rm ~/bat.deb
 
+curl -fsSLo ~/fzf.tgz https://github.com/junegunn/fzf/releases/download/v0.67.0/fzf-0.67.0-linux_amd64.tar.gz
+tar -xzf ~/fzf.tgz fzf
+install -D -m 0755 fzf /usr/local/bin/fzf
+rm -f ~/fzf.tgz ~/fzf
+
 # typeset -U fpath
 # type python3
 # whence -av python3

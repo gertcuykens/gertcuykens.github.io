@@ -120,7 +120,6 @@ fpath=(~/.local/share/zsh/site-functions $fpath)
 source ~/.local/share/zsh/autosuggestions/zsh-autosuggestions.zsh
 source ~/.local/share/zsh/syntax-highlighting/zsh-syntax-highlighting.zsh
 [ -f ~/.local/bin/env ] && source ~/.local/bin/env
-[ -f ~/.local/bin/fzf ] && source <(fzf --zsh)
 
 zmodload zsh/complist
 autoload -Uz compinit && compinit -d "~/.cache/zsh/zcompdump"
