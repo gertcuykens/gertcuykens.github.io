@@ -11,7 +11,7 @@ set -eEuxo pipefail
 
 # apt update
 # apt upgrade
-# apt install zsh vim curl git universal-ctags gnupg bzip2 ca-certificates && update-ca-certificates
+# apt install zsh vim curl git universal-ctags tree gnupg bzip2 ca-certificates && update-ca-certificates
 # apt autoremove --purge
 # apt clean
 
