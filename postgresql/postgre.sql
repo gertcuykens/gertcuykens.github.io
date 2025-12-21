@@ -72,3 +72,41 @@ WHERE key IS NOT NULL AND key <> ''
 ORDER BY pg_column_size(key) DESC
 LIMIT 10;
 
+-------------------------------------------------------------------------------
+
+ALTER DATABASE mydb SET log_statement = 'all';
+ALTER DATABASE mydb SET log_statement = 'none';
+ALTER DATABASE mydb SET log_min_duration_statement = 1000;
+
+-- postgresql.auto.conf
+ALTER SYSTEM SET log_statement = 'none';
+ALTER SYSTEM RESET ALL
+SELECT pg_reload_conf();
+
+SHOW log_statement;
+SELECT * FROM pg_catalog.pg_settings WHERE name = 'log_statement';
+
+-------------------------------------------------------------------------------
+
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+DROP EXTENSION IF EXISTS pg_stat_statements;
+
+SELECT
+    left(regexp_replace(query, '\s+', ' ', 'g'), 80) || '…' AS short_query,
+    to_char(calls, 'FM999,999,999') AS calls,
+    to_char((total_exec_time/1000) * interval '1 second', 'HH24:MI:SS.MS') AS total_time,
+    to_char((mean_exec_time/1000) * interval '1 second', 'MI:SS.MS') AS avg_time,
+    to_char(rows, 'FM999,999,999') AS rows
+FROM pg_stat_statements
+WHERE dbid = (SELECT oid FROM pg_database WHERE datname = 'mydb')
+ORDER BY total_exec_time DESC
+LIMIT 20;
+
+-------------------------------------------------------------------------------
+
+EXPLAIN (ANALYZE, BUFFERS)
+CREATE INDEX CONCURRENTLY idx_pos_order_line_sale_order_origin_id ON pos_order_line (sale_order_origin_id);
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
