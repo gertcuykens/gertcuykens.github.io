@@ -90,6 +90,7 @@ SELECT * FROM pg_catalog.pg_settings WHERE name = 'log_statement';
 
 CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
 DROP EXTENSION IF EXISTS pg_stat_statements;
+SELECT pg_stat_statements_reset();
 
 SELECT
     left(regexp_replace(query, '\s+', ' ', 'g'), 80) || '…' AS short_query,
@@ -105,8 +106,52 @@ LIMIT 20;
 -------------------------------------------------------------------------------
 
 EXPLAIN (ANALYZE, BUFFERS)
-CREATE INDEX CONCURRENTLY idx_pos_order_line_sale_order_origin_id ON pos_order_line (sale_order_origin_id);
+CREATE INDEX CONCURRENTLY idx_mytable_id ON mytable (id);
 
 -------------------------------------------------------------------------------
+
+-- tsvector : text search vector
+-- tsquery : text search query
+-- to_tsvector : function that converts text into a text search vector
+-- to_tsquery | plainto_tsquery : functions that convert text into a text search query
+
+-- & = AND
+-- | = OR
+-- ! = NOT
+-- :A-D weights
+-- :* prefix search (postgr:* → “postgre”, “postgres”, etc.)
+
+CREATE TABLE articles (
+  id            bigserial PRIMARY KEY,
+  title         text,
+  tags          text,
+  body          text,
+  vector tsvector GENERATED ALWAYS AS (
+    setweight(to_tsvector('english', coalesce(title, '')), 'A') ||
+    setweight(to_tsvector('english', coalesce(tags,  '')), 'B') ||
+    setweight(to_tsvector('english', coalesce(body,  '')), 'D')
+  ) STORED
+);
+
+CREATE INDEX idx_articles_tsvector
+  ON articles
+  USING gin (vector);
+
+WITH search AS (
+  SELECT plainto_tsquery('english', 'postgres graph search') AS query
+)
+
+SELECT
+  id,
+  title,
+  ts_rank_cd(  -- text rank coverage density
+    vector,
+    search.query,
+    ARRAY[1.0, 0.6, 0.3, 0.1]  -- weights for A, B, C, D
+  ) AS rank
+FROM articles, search
+WHERE vector @@ search.query
+ORDER BY rank DESC;
+
 -------------------------------------------------------------------------------
 
