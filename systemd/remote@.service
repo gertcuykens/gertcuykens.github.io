@@ -1,0 +1,44 @@
+# cp remote@.service /etc/systemd/system
+# systemctl daemon-reload
+# systemctl enable --now remote@office.service
+
+[Unit]
+Description=Reverse SSH tunnel (%i)
+After=network.target
+
+[Service]
+Type=simple
+
+EnvironmentFile=/etc/systemd/system/ssh-gateway@%i.env
+
+ExecStart=/usr/bin/ssh -NT \
+  -o StrictHostKeyChecking=no \
+  -o PasswordAuthentication=no \
+  -o ExitOnForwardFailure=yes \
+  -o TCPKeepAlive=yes \
+  -o ServerAliveInterval=60 \
+  -R ${GATEWAY_PORT}:localhost:22 ${GATEWAY_USER}@${GATEWAY_HOST}
+
+RestartSec=5s
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+# /etc/systemd/system/ssh-gateway@office.env
+# GATEWAY_PORT=...
+# GATEWAY_HOST=...
+# GATEWAY_USER=...
+
+# /etc/ssh/sshd_config
+# GatewayPorts yes
+# AllowAgentForwarding yes
+# AllowTcpForwarding yes
+
+# ssh -R 80:localhost:8080 ...@...  Remote server port 80 has accces to client port 8080
+# ssh -L 8080:...:443 ...@...  Client port 8080 has acces to remote server port 443
+
+# ssh -D 1080 ...@...  SOCKS proxy
+# curl --socks5-hostname 127.0.0.1:1080 https://...
+# Environment="X=localhost"  ${X}
+
