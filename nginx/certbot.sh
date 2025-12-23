@@ -1,8 +1,6 @@
 #!/bin/zsh
 set -eEuxo pipefail
 
-# wget -4O- https://astral.sh/uv/install.sh | sh
-
 uvx --with=certbot-nginx certbot certonly -n --agree-tos -m gert.cuykens@... --webroot -w /var/lib/letsencrypt --cert-name default -d ...,...
 nginx -t
 nginx -s reload

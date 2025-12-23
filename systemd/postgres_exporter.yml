@@ -1,0 +1,34 @@
+pg_stat_statements:
+  query: "SELECT userid, dbid, queryid, query, calls, total_time FROM pg_stat_statements"
+  master: true
+  metrics:
+  - userid:
+    usage: "LABEL"
+    description: "User ID"
+  - dbid:
+    usage: "LABEL"
+    description: "Database ID"
+  - queryid:
+    usage: "LABEL"
+    description: "Query ID"
+  - query:
+    usage: "LABEL"
+    description: "Normalized query"
+  - calls:
+    usage: "COUNTER"
+    description: "Number of times executed"
+  - total_time:
+    usage: "GAUGE"
+    description: "Total time spent on query"
+
+pg_database_size:
+  query: "SELECT datname, pg_database_size(datname) AS size_bytes FROM pg_database"
+  master: true
+  metrics:
+  - datname:
+    usage: "LABEL"
+    description: "Database name"
+  - size_bytes:
+    usage: "GAUGE"
+    description: "Size of the database in bytes"
+

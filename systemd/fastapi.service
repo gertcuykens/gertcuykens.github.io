@@ -1,0 +1,26 @@
+# cp /root/system/health.service /etc/systemd/system
+# systemctl daemon-reload
+# systemctl enable health.service
+# systemctl start health.service
+# systemctl status health.service
+# systemd-analyze verify health.service
+# journalctl -xeu health.service
+
+[Unit]
+Description=Health Check
+Documentation=https://fastapi.tiangolo.com
+After=network.target
+
+[Service]
+User=fast
+Group=api
+Type=simple
+WorkingDirectory=/home/api/healthcheck
+ExecStart=/home/api/.local/bin/uv run uvicorn app.main:app --app-dir . --host 127.0.0.1 --port 8008
+Restart=always
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+

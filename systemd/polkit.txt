@@ -1,0 +1,22 @@
+// cp /root/sysem/polkit.txt /etc/polkit-1/rules.d/40-allow-restart-service.rules
+// systemctl restart polkit
+
+polkit.addRule(function(action, subject) {
+    // throw "Action ID = " + action.id;
+    // polkit.log("Action ID: " + action.id);
+    // polkit.log(JSON.stringify(action));
+    if (
+        (action.id == "org.freedesktop.systemd1.manage-units" || action.id == "org.freedesktop.systemd1.manage-unit-files")
+        && subject.isInGroup("api")
+    ) {
+        return polkit.Result.YES;
+    }
+    // ( action.lookup("unit") == "logistics.service" || action.lookup("unit") == "api.service" )
+});
+
+// polkit.addRule(function(action, subject) {
+//     if (subject.isInGroup("api")) {
+//         return polkit.Result.YES;
+//     }
+// });
+

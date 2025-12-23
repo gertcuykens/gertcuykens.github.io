@@ -1,0 +1,26 @@
+# cp alertmanager.service /etc/systemd/system
+# systemctl daemon-reload
+# systemctl enable alertmanager.service
+# systemctl start alertmanager.service
+# systemctl status alertmanager.service
+# systemd-analyze verify alertmanager.service
+# journalctl -xeu alertmanager.service
+# curl -sS http://localhost:9090/metrics
+
+[Unit]
+Description=Prometheus Alert Manager
+Documentation=https://github.com/prometheus/alertmanager
+After=network.target
+
+[Service]
+User=root
+Group=root
+ExecStart=/usr/local/bin/alertmanager --web.listen-address=127.0.0.1:9093 --web.external-url="https://alerts..." --log.level=info --config.file=/root/system/alertmanager.yml
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+
+# curl -sSLO https://github.com/prometheus/alertmanager/releases/download/v0.30.0/alertmanager-0.30.0.linux-amd64.tar.gz
+

@@ -1,0 +1,26 @@
+# cp backup.timer /etc/systemd/system
+# cp backup.service /etc/systemd/system
+# systemctl daemon-reload
+# systemctl enable backup.timer
+# systemctl start backup.timer
+# systemctl status backup.timer
+# systemctl list-timers
+# systemd-analyze verify backup.timer
+# journalctl -u backup.timer
+# timedatectl list-timezones
+# timedatectl set-timezone Europe/Brussels
+# loginctl enable-linger
+# ~/.config/systemd/user
+
+[Unit]
+Description=Backup
+
+[Timer]
+OnCalendar=*-*-* 02:00:00 Europe/Brussels
+# OnBootSec=1min
+# OnUnitActiveSec=5min
+# Persistent=true
+
+[Install]
+WantedBy=timers.target
+

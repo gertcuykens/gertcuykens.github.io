@@ -10,6 +10,6 @@ done
 # LocalCommand ~/pbcopy.sh
 
 # GatewayPorts yes
-# ssh -NT clubit -R 2000:localhost:2000 
+# ssh -NT ... -R 2000:localhost:2000 
 # echo "hhhhhhhh" | nc localhost 2000
 

@@ -1,0 +1,12 @@
+[Unit]
+Description=Backup
+
+[Service]
+User=root
+Group=root
+Type=oneshot
+# ExecStart=/bin/echo "Hello World!"
+ExecStart=/root/backup/backup.sh
+StandardOutput=journal
+StandardError=journal
+

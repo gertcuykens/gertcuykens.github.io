@@ -1,0 +1,103 @@
+# promtool check rules prometheus.rules.yml
+groups:
+- name: node-metrics
+  rules:
+  - record: node:cpu:percent
+    expr: 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)
+    labels:
+      type: gauge
+
+  - record: node:memory:percent
+    expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100
+    labels:
+      type: gauge
+
+  - record: node:disk:percent
+    expr: (1 - (node_filesystem_avail_bytes{mountpoint="/", fstype!~"tmpfs|overlay"} / node_filesystem_size_bytes{mountpoint="/", fstype!~"tmpfs|overlay"})) * 100
+    labels:
+      type: gauge
+
+  - record: node:network:mb
+    expr: (rate(node_network_receive_bytes_total[5m]) + rate(node_network_transmit_bytes_total[5m])) / (1024*1024)
+    labels:
+      type: gauge
+
+  - record: node:network:latency
+    expr: rate(http_request_duration_seconds_sum[5m]) / rate(http_request_duration_seconds_count[5m])
+    labels:
+      type: gauge
+
+- name: node-alerts
+  rules:
+  - alert: node:cpu
+    expr: node:cpu:percent > 80
+    for: 5m
+    labels:
+      severity: critical
+      type: gauge
+    annotations:
+      summary: "High CPU Usage"
+      description: "CPU usage is above 80%."
+  - alert: node:memory
+    expr: node:memory:percent > 80
+    for: 5m
+    labels:
+      severity: critical
+      type: gauge
+    annotations:
+      summary: "High Memory Usage"
+      description: "Memory usage is above 80%."
+  - alert: node:disk
+    expr: node:disk:percent > 80
+    for: 5m
+    labels:
+      severity: critical
+      type: gauge
+    annotations:
+      summary: "High Disk Usage"
+      description: "Disk usage is above 80%."
+  - alert: node:network
+    expr: node:network:mb > 10
+    for: 5m
+    labels:
+      severity: critical
+      type: gauge
+    annotations:
+      summary: "High Network Load"
+      description: "Network load is above 10 MB/s."
+  - alert: node:server
+    expr: up == 0
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Instance {{ $labels.instance }} is down"
+      description: "Instance {{ $labels.instance }} has been down for more than 1 minute."
+
+- name: odoo-alerts
+  rules:
+  - alert: odoo:server
+    expr: odoo_up == 0
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Odoo is down"
+      description: "The Odoo server has been unresponsive for more than 1 minute."
+  - alert: odoo:slow
+    expr: rate(odoo_check_duration_seconds_sum[5m]) / rate(odoo_check_duration_seconds_count[5m]) > 1
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Odoo is slow"
+      description: "Odoo health check is taking more than 1 second on average."
+  - alert: odoo:users
+    expr: odoo_user_count == 0
+    for: 10m
+    labels:
+      severity: info
+    annotations:
+      summary: "No active users in Odoo"
+      description: "There are no active users in Odoo for the last 10 minutes — might indicate config or data issues."
+

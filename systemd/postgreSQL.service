@@ -1,0 +1,33 @@
+# cp /root/postgres.service /etc/systemd/system
+# systemctl daemon-reload
+# systemctl enable postgres.service
+# systemctl start postgres.service
+# systemctl status postgres.service
+# systemd-analyze verify postgres.service
+# journalctl -u postgres.service
+
+[Unit]
+Description=SSH Tunnel for PostgreSQL
+After=network.target
+Wants=network-online.target
+
+[Service]
+Restart=on-failure
+User=root
+Group=999
+RuntimeDirectory=postgresql
+RuntimeDirectoryMode=3770
+StandardOutput=journal
+StandardError=journal
+ExecStart=/usr/bin/ssh -L /run/postgresql/.s.PGSQL.5432:/run/postgresql/.s.PGSQL.5432 -N postgres@...
+ExecStartPost=/bin/bash -c 'while [ ! -e /run/postgresql/.s.PGSQL.5432 ]; do sleep 1; done && /bin/chmod 770 /run/postgresql/.s.PGSQL.5432'
+
+[Install]
+WantedBy=multi-user.target
+
+# Environment="SSH_AUTH_SOCK=/run/user/1000/keyring/ssh"
+# ExecStart=/usr/bin/ssh -L 5432:localhost:5432 -N root@gert.ovh
+# ExecStartPre=/bin/rm -f /run/postgresql/.s.PGSQL.5432
+# ExecStopPost=/bin/rm -f /run/postgresql/.s.PGSQL.5432
+# ExecStartPost=/bin/chmod 777 /run/postgresql/.s.PGSQL.5432
+

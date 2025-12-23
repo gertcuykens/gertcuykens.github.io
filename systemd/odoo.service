@@ -1,0 +1,26 @@
+# cp /root/system/odoo.service /etc/systemd/system
+# systemctl daemon-reload
+# systemctl enable odoo.service
+# systemctl start odoo.service
+# systemctl status odoo.service
+# systemd-analyze verify odoo.service
+# journalctl -u odoo.service
+
+[Unit]
+Description=Odoo
+Documentation=https://www.odoo.com/documentation
+After=network.target
+
+[Service]
+User=odoo
+Group=odoo
+Type=simple
+WorkingDirectory=/home/odoo/19
+ExecStart=/home/odoo/.local/bin/uv run ./odoo-bin -c /home/odoo/odoo.conf
+Restart=always
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+
