@@ -138,6 +138,8 @@ PROMPT='%n@%m %~%F{blue}$(_b)%F{none} %# '
 fpath=(~/.local/share/zsh/site-functions $fpath)
 source ~/.local/share/zsh/autosuggestions/zsh-autosuggestions.zsh
 source ~/.local/share/zsh/syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.local/share/zsh/key-bindings.zsh
+source ~/.local/share/zsh/completion.zsh
 [ -f ~/.local/bin/env ] && source ~/.local/bin/env
 
 zmodload zsh/complist

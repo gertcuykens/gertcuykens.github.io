@@ -12,6 +12,8 @@ apt install docker-ce docker-ce-cli containerd.io
 
 echo '{"log-driver": "journald"}' > /etc/docker/daemon.json
 
+systemctl restart docker.service
+
 # function psql() {
 #     if [ -t 0 ]; then
 #         docker run -it --rm -v /run/postgresql:/run/postgresql postgres psql "$@"
