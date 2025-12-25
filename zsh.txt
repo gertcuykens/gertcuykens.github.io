@@ -7,6 +7,8 @@ tar -xzf fzf.tgz fzf
 sudo install -m 0755 fzf /usr/local/bin
 rm -f fzf.tgz fzf
 
+lsof -nP -iTCP:5432 -sTCP:LISTEN
+
 # source ~/.local/share/zsh/history-substring-search/zsh-history-substring-search.zsh
 # bindkey -e
 # bindkey ${terminfo[kcuu1]} history-substring-search-up
