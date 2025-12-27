@@ -48,6 +48,13 @@ rm -f ~/fzf.tgz ~/fzf
 
 smartctl --scan
 smartctl -a /dev/nvme0
+nvme list
 nvme smart-log /dev/nvme0 -H
 nvme error-log /dev/nvme0
+
+lsblk
+mdadm --detail /dev/md1
+echo check > /sys/block/md1/md/sync_action # repair
+cat /sys/block/md1/md/mismatch_cnt
+cat /proc/mdstat
 
