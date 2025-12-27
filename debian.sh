@@ -12,7 +12,7 @@ set -eEuxo pipefail
 # apt update
 # apt upgrade
 # apt install ca-certificates && update-ca-certificates
-# apt install zsh vim curl git universal-ctags tree gnupg bzip2
+# apt install zsh vim curl git universal-ctags tree gnupg bzip2 smartmontools nvme-cli
 # apt autoremove --purge
 # apt clean
 
@@ -45,4 +45,9 @@ rm -f ~/fzf.tgz ~/fzf
 # rm -rf /var/lib/apt/lists/*
 # rm -rf /tmp/*
 # rm -rf /var/tmp/*
+
+smartctl --scan
+smartctl -a /dev/nvme0
+nvme smart-log /dev/nvme0 -H
+nvme error-log /dev/nvme0
 
