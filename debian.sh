@@ -58,3 +58,6 @@ echo check > /sys/block/md1/md/sync_action # repair
 cat /sys/block/md1/md/mismatch_cnt
 cat /proc/mdstat
 
+xfs_info / | grep ftype
+xfs_scrub -v -n /
+
