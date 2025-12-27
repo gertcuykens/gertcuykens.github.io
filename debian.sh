@@ -61,3 +61,5 @@ cat /proc/mdstat
 xfs_info / | grep ftype
 xfs_scrub -v -n /
 
+e2fsck -f /dev/md1
+
