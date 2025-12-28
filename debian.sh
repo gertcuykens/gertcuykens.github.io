@@ -63,3 +63,7 @@ xfs_scrub -v -n /
 
 e2fsck -f /dev/md1
 
+ip addr show ...
+lspci -vv -s ...
+ls -l /sys/class/net/.../device
+
