@@ -21,12 +21,11 @@ curl -fsSLo ~/.local/share/zsh/completion.zsh https://raw.githubusercontent.com/
 # site-functions                                                              #
 ###############################################################################
 
+rm -rf ~/.local/share/zsh/site-functions
+
 git clone --depth 1 https://github.com/zsh-users/zsh-completions.git ~/zsh-completions
 cp ~/zsh-completions/src/* ~/.local/share/zsh/site-functions
 rm -rf ~/zsh-completions
-
-fzf --zsh > ~/.local/share/zsh/site-functions/_fzf
-restic generate --zsh-completion ~/.local/share/zsh/site-functions/_restic
 
 curl -fsSLo ~/.local/share/zsh/site-functions/_zig https://raw.githubusercontent.com/ziglang/shell-completions/master/_zig
 

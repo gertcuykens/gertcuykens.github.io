@@ -36,11 +36,13 @@ curl -fsSLo ~/fzf.tgz https://github.com/junegunn/fzf/releases/download/v0.67.0/
 tar -xzf ~/fzf.tgz fzf
 install -D -m 0755 fzf /usr/local/bin
 rm -f ~/fzf.tgz ~/fzf
+fzf --zsh > /usr/share/zsh/vendor-completions/_fzf
 
 curl -fsSLo ~/restic.bz2 https://github.com/restic/restic/releases/download/v0.18.1/restic_0.18.1_linux_amd64.bz2
 bunzip2 ~/restic.bz2
 install -D -m 0755 restic /usr/local/bin
 rm ~/restic
+restic generate --zsh-completion /usr/share/zsh/vendor-completions/_restic
 
 # curl -fsSL https://rclone.org/install.sh | zsh
 
