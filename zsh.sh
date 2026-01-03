@@ -22,6 +22,7 @@ curl -fsSLo ~/.local/share/zsh/completion.zsh https://raw.githubusercontent.com/
 ###############################################################################
 
 rm -rf ~/.local/share/zsh/site-functions
+mkdir -p ~/.local/share/zsh/site-functions
 
 git clone --depth 1 https://github.com/zsh-users/zsh-completions.git ~/zsh-completions
 cp ~/zsh-completions/src/* ~/.local/share/zsh/site-functions
