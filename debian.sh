@@ -37,6 +37,13 @@ tar -xzf ~/fzf.tgz fzf
 install -D -m 0755 fzf /usr/local/bin
 rm -f ~/fzf.tgz ~/fzf
 
+curl -fsSLo ~/restic.bz2 https://github.com/restic/restic/releases/download/v0.18.1/restic_0.18.1_linux_amd64.bz2
+bunzip2 ~/restic.bz2
+install -D -m 0755 restic /usr/local/bin
+rm ~/restic
+
+# curl -fsSL https://rclone.org/install.sh | zsh
+
 # typeset -U fpath
 # type python3
 # whence -av python3

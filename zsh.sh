@@ -26,6 +26,8 @@ cp ~/zsh-completions/src/* ~/.local/share/zsh/site-functions
 rm -rf ~/zsh-completions
 
 fzf --zsh > ~/.local/share/zsh/site-functions/_fzf
+restic generate --zsh-completion ~/.local/share/zsh/site-functions/_restic
+
 curl -fsSLo ~/.local/share/zsh/site-functions/_zig https://raw.githubusercontent.com/ziglang/shell-completions/master/_zig
 
 ###############################################################################
