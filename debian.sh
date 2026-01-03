@@ -46,25 +46,25 @@ rm -f ~/fzf.tgz ~/fzf
 # rm -rf /tmp/*
 # rm -rf /var/tmp/*
 
-smartctl --scan
-smartctl -a /dev/nvme0
-nvme list
-nvme smart-log /dev/nvme0 -H
-nvme error-log /dev/nvme0
+# smartctl --scan
+# smartctl -a /dev/nvme0
+# nvme list
+# nvme smart-log /dev/nvme0 -H
+# nvme error-log /dev/nvme0
 
-lsblk
-mdadm --detail /dev/md1
-echo check > /sys/block/md1/md/sync_action # repair
-cat /sys/block/md1/md/mismatch_cnt
-cat /proc/mdstat
+# lsblk
+# mdadm --detail /dev/md1
+# echo check > /sys/block/md1/md/sync_action # repair
+# cat /sys/block/md1/md/mismatch_cnt
+# cat /proc/mdstat
 
-xfs_info / | grep ftype
-xfs_scrub -v -n /
+# xfs_info / | grep ftype
+# xfs_scrub -v -n /
 
-e2fsck -f /dev/md1
+# e2fsck -f /dev/md1
 
-ip addr show ...
-lspci -vv -s ...
-ls -l /sys/class/net/.../device
-ls -l /sys/firmware/efi
+# ip addr show ...
+# lspci -vv -s ...
+# ls -l /sys/class/net/.../device
+# ls -l /sys/firmware/efi
 

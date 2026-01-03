@@ -32,7 +32,7 @@ diff -u /etc/...conf /tmp/pkg/etc/...conf
 apt rdepends sysvinit-utils
 debsums -c -e  # -c: changed files, -e: config files
 
-fd . /etc -t f --full-path --follow --hidden \
+fd . /etc -t f --full-path --hidden \
     --exclude .git \
     --exclude .venv \
     --exclude __pycache__ \
