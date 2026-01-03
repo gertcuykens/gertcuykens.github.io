@@ -24,11 +24,11 @@ curl -fsSLo ~/fd.deb https://github.com/sharkdp/fd/releases/download/v10.3.0/fd_
 dpkg -i ~/fd.deb
 rm ~/fd.deb
 
-curl -fsSLo ~/ripgrep.deb https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep_15.1.0-1_amd64.deb | dpkg -i -
+curl -fsSLo ~/ripgrep.deb https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep_15.1.0-1_amd64.deb
 dpkg -i ~/ripgrep.deb
 rm ~/ripgrep.deb
 
-curl -fsSLo ~/bat.deb https://github.com/sharkdp/bat/releases/download/v0.26.0/bat_0.26.1_amd64.deb | dpkg -i -
+curl -fsSLo ~/bat.deb https://github.com/sharkdp/bat/releases/download/v0.26.1/bat_0.26.1_amd64.deb
 dpkg -i ~/bat.deb
 rm ~/bat.deb
 
