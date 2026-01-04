@@ -44,6 +44,13 @@ install -D -m 0755 restic /usr/local/bin
 rm ~/restic
 restic generate --zsh-completion /usr/share/zsh/vendor-completions/_restic
 
+curl -fsSLo ~/uv.tgz https://github.com/astral-sh/uv/releases/download/0.9.21/uv-x86_64-unknown-linux-gnu.tar.gz
+tar -xzf ~/uv.tgz
+install -D -m 0755 ~/uv-x86_64-unknown-linux-gnu/uv /usr/local/bin
+install -D -m 0755 ~/uv-x86_64-unknown-linux-gnu/uvx /usr/local/bin
+rm -rf ~/uv.tgz ~/uv-x86_64-unknown-linux-gnu
+uv generate-shell-completion zsh > /usr/share/zsh/vendor-completions/_uv
+
 # curl -fsSL https://rclone.org/install.sh | zsh
 
 # typeset -U fpath
