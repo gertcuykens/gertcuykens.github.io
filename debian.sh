@@ -57,6 +57,9 @@ install -D -m 0755 ~/uv-x86_64-unknown-linux-gnu/uvx /usr/local/bin
 rm -rf ~/uv.tgz ~/uv-x86_64-unknown-linux-gnu
 uv generate-shell-completion zsh > /usr/share/zsh/vendor-completions/_uv
 
+ZIG_VERSION=0.0.0
+curl -fsSLo /usr/share/zsh/vendor-completions/_zig https://raw.githubusercontent.com/ziglang/shell-completions/master/_zig
+
 # curl -fsSL https://rclone.org/install.sh | zsh
 
 # typeset -U fpath
