@@ -30,7 +30,6 @@ curl -fsSLo ~/ripgrep.deb https://github.com/BurntSushi/ripgrep/releases/downloa
 dpkg -i ~/ripgrep.deb
 rm ~/ripgrep.deb
 
-# curl -fsSL https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r .tag_name
 BAT_VERSION=0.26.1
 curl -fsSLo ~/bat.deb https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/bat_${BAT_VERSION}_amd64.deb
 dpkg -i ~/bat.deb
@@ -60,6 +59,13 @@ uv generate-shell-completion zsh > /usr/share/zsh/vendor-completions/_uv
 
 ZIG_VERSION=0.0.0
 curl -fsSLo /usr/share/zsh/vendor-completions/_zig https://raw.githubusercontent.com/ziglang/shell-completions/master/_zig
+
+# curl -fsSL https://api.github.com/repos/sharkdp/fd/releases/latest | jq -r .tag_name
+# curl -fsSL https://api.github.com/repos/BurntSushi/ripgrep/releases/latest | jq -r .tag_name
+# curl -fsSL https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r .tag_name
+# curl -fsSL https://api.github.com/repos/junegunn/fzf/releases/latest | jq -r .tag_name
+# curl -fsSL https://api.github.com/repos/restic/restic/releases/latest | jq -r .tag_name
+# curl -fsSL https://api.github.com/repos/astral-sh/uv/releases/latest | jq -r .tag_name
 
 # curl -fsSL https://rclone.org/install.sh | zsh
 
