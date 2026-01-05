@@ -20,31 +20,37 @@ set -eEuxo pipefail
 
 # chsh -s /bin/zsh root
 
-curl -fsSLo ~/fd.deb https://github.com/sharkdp/fd/releases/download/v10.3.0/fd_10.3.0_amd64.deb
+FD_VERSION=10.3.0
+curl -fsSLo ~/fd.deb https://github.com/sharkdp/fd/releases/download/v${FD_VERSION}/fd_${FD_VERSION}_amd64.deb
 dpkg -i ~/fd.deb
 rm ~/fd.deb
 
-curl -fsSLo ~/ripgrep.deb https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep_15.1.0-1_amd64.deb
+RG_VERSION=15.1.0
+curl -fsSLo ~/ripgrep.deb https://github.com/BurntSushi/ripgrep/releases/download/${RG_VERSION}/ripgrep_${RG_VERSION}-1_amd64.deb
 dpkg -i ~/ripgrep.deb
 rm ~/ripgrep.deb
 
-curl -fsSLo ~/bat.deb https://github.com/sharkdp/bat/releases/download/v0.26.1/bat_0.26.1_amd64.deb
+BAT_VERSION=0.26.1
+curl -fsSLo ~/bat.deb https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/bat_${BAT_VERSION}_amd64.deb
 dpkg -i ~/bat.deb
 rm ~/bat.deb
 
-curl -fsSLo ~/fzf.tgz https://github.com/junegunn/fzf/releases/download/v0.67.0/fzf-0.67.0-linux_amd64.tar.gz
+FZF_VERSION=0.67.0
+curl -fsSLo ~/fzf.tgz https://github.com/junegunn/fzf/releases/download/v${FZF_VERSION}/fzf-${FZF_VERSION}-linux_amd64.tar.gz
 tar -xzf ~/fzf.tgz fzf
 install -D -m 0755 fzf /usr/local/bin
 rm -f ~/fzf.tgz ~/fzf
 fzf --zsh > /usr/share/zsh/vendor-completions/_fzf
 
-curl -fsSLo ~/restic.bz2 https://github.com/restic/restic/releases/download/v0.18.1/restic_0.18.1_linux_amd64.bz2
+RESTIC_VERSION=0.18.1
+curl -fsSLo ~/restic.bz2 https://github.com/restic/restic/releases/download/v${RESTIC_VERSION}/restic_${RESTIC_VERSION}_linux_amd64.bz2
 bunzip2 ~/restic.bz2
 install -D -m 0755 restic /usr/local/bin
 rm ~/restic
 restic generate --zsh-completion /usr/share/zsh/vendor-completions/_restic
 
-curl -fsSLo ~/uv.tgz https://github.com/astral-sh/uv/releases/download/0.9.21/uv-x86_64-unknown-linux-gnu.tar.gz
+UV_VERSION=0.9.21
+curl -fsSLo ~/uv.tgz https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-x86_64-unknown-linux-gnu.tar.gz
 tar -xzf ~/uv.tgz
 install -D -m 0755 ~/uv-x86_64-unknown-linux-gnu/uv /usr/local/bin
 install -D -m 0755 ~/uv-x86_64-unknown-linux-gnu/uvx /usr/local/bin
