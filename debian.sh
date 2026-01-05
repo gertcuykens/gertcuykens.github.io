@@ -30,6 +30,7 @@ curl -fsSLo ~/ripgrep.deb https://github.com/BurntSushi/ripgrep/releases/downloa
 dpkg -i ~/ripgrep.deb
 rm ~/ripgrep.deb
 
+# curl -fsSL https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r .tag_name
 BAT_VERSION=0.26.1
 curl -fsSLo ~/bat.deb https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/bat_${BAT_VERSION}_amd64.deb
 dpkg -i ~/bat.deb
