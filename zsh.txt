@@ -9,6 +9,21 @@ rm -f fzf.tgz fzf
 
 lsof -nP -iTCP:5432 -sTCP:LISTEN
 
+confirm() {
+    echo -n "continue?: "
+    read -r response
+    case "$response" in
+        [yY])
+            echo "Continuing..."
+            return 0
+            ;;
+        *)
+            echo "Exiting..."
+            exit 1
+            ;;
+    esac
+}
+
 # fzf --zsh > ~/.local/share/zsh/site-functions/_fzf
 # restic generate --zsh-completion ~/.local/share/zsh/site-functions/_restic
 # rg --generate complete-zsh > ~/.local/share/zsh/site-functions/_rg
