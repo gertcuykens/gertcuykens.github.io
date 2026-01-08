@@ -1,7 +1,6 @@
 #!/bin/zsh
 set -eEuxo pipefail
 
-# https://wiki.debian.org/SourcesList
 # /etc/apt/sources.list.d/debian.sources
 # Types: deb deb-src
 # URIs: http://deb.debian.org/debian
