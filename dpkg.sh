@@ -40,6 +40,9 @@ fd . /etc -t f --full-path --hidden \
   dpkg -S "$file" > /dev/null 2>&1 || echo "$file"
 done
 
+# update-alternatives --display awk
+# update-alternatives --config iptables
+
 # https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-13.2.0-amd64-netinst.iso
 # https://wiki.debian.org/SourcesList
 # https://packages.debian.org/name

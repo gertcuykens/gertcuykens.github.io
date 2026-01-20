@@ -10,9 +10,9 @@ git clone --depth 1 https://github.com/vim-airline/vim-airline airline
 git clone --depth 1 https://tpope.io/vim/fugitive
 git clone --depth 1 https://github.com/tomasiser/vim-code-dark code
 
-vim -u NONE -c "helptags commentary/doc" -c q
-vim -u NONE -c "helptags airline/doc" -c q
-vim -u NONE -c "helptags fugitive/doc" -c q
+vim -u NONE -c "helptags commentary/doc" -c q < /dev/tty
+vim -u NONE -c "helptags airline/doc" -c q < /dev/tty
+vim -u NONE -c "helptags fugitive/doc" -c q < /dev/tty
 
 cd ~
 mkdir -p ~/.config/vim
