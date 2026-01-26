@@ -1,12 +1,12 @@
-# cp backup.timer /etc/systemd/system
-# cp backup.service /etc/systemd/system
+# cp restic.timer /etc/systemd/system
+# cp restic.service /etc/systemd/system
 # systemctl daemon-reload
-# systemctl enable backup.timer
-# systemctl start backup.timer
-# systemctl status backup.timer
+# systemctl enable restic.timer
+# systemctl start restic.timer
+# systemctl status restic.timer
 # systemctl list-timers
-# systemd-analyze verify backup.timer
-# journalctl -u backup.timer
+# systemd-analyze verify restic.timer
+# journalctl -u restic.timer
 # timedatectl list-timezones
 # timedatectl set-timezone Europe/Brussels
 # loginctl enable-linger

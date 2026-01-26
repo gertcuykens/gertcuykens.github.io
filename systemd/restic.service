@@ -1,0 +1,30 @@
+[Unit]
+Description=Restic
+Documentation=https://restic.readthedocs.io
+After=network.target
+
+[Service]
+User=gert
+Group=gert
+Type=oneshot
+WorkingDirectory=/home/gert
+LoadCredential=restic:/etc/restic
+ExecStart=/bin/zsh -c 'set -a; source "${CREDENTIALS_DIRECTORY}/restic"; set +a; exec /home/gert/restic.sh'
+StandardOutput=journal
+StandardError=journal
+
+# restic generate --zsh-completion /usr/local/share/zsh/site-functions/_restic
+# restic init
+# restic backup --tag ... /home/...
+# restic forget --keep-daily 90
+# restic prune
+# restic check
+
+# pg_dump -U postgres -O -Z 6 ... | restic backup --stdin --stdin-filename=...sql.gz
+# restic dump latest ...sql.gz | gzip -d | psql -U odoo mydb
+
+# AWS_ACCESS_KEY_ID=...
+# AWS_SECRET_ACCESS_KEY=...
+# RESTIC_REPOSITORY=s3:http://...
+# RESTIC_PASSWORD="..."
+
