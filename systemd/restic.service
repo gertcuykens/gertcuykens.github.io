@@ -13,17 +13,3 @@ ExecStart=/bin/zsh -c 'set -a; source "${CREDENTIALS_DIRECTORY}/restic"; set +a;
 StandardOutput=journal
 StandardError=journal
 
-# restic init
-# restic backup --tag ... /home/...
-# restic forget --keep-daily 90
-# restic prune
-# restic check
-
-# pg_dump -U postgres -O -Z 6 ... | restic backup --stdin --stdin-filename=...sql.gz
-# restic dump latest ...sql.gz | gzip -d | psql -U odoo mydb
-
-# AWS_ACCESS_KEY_ID=...
-# AWS_SECRET_ACCESS_KEY=...
-# RESTIC_REPOSITORY=s3:http://...
-# RESTIC_PASSWORD="..."
-
