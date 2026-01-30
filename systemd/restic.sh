@@ -20,6 +20,7 @@ for DB ("$PG[@]") {
 # restic prune
 # restic check
 
+# restic snapshots --latest 1
 # pg_dump -U postgres -O -Z 6 ... | restic backup --stdin --stdin-filename=/home/...sql.gz
 # restic dump latest /home/...sql.gz --path /home/...sql.gz latest | gzip -d | psql ...
 # restic restore latest --include /home/...sql.gz --target /home/...sql.gz
