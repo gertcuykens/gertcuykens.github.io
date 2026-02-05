@@ -161,7 +161,7 @@ alias chrome="open -a 'Google Chrome'"
 # start / end =>  Ctrl-A / Ctrl-E
 # stty -ixon => disable Ctrl-S / Ctrl-Q
 
-bindkey -e
+# bindkey -e -L
 bindkey ${terminfo[kcuu1]} history-substring-search-up
 bindkey ${terminfo[kcud1]} history-substring-search-down
 
