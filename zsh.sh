@@ -10,10 +10,12 @@ mkdir -p ~/.local/state/zsh
 # source                                                                      #
 ###############################################################################
 
-rm -rf ~/.local/share/zsh/autosuggestions
 rm -rf ~/.local/share/zsh/syntax-highlighting
-git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions.git ~/.local/share/zsh/autosuggestions
+rm -rf ~/.local/share/zsh/autosuggestions
+rm -rf ~/.local/share/zsh/history-substring-search
 git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.local/share/zsh/syntax-highlighting
+git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions.git ~/.local/share/zsh/autosuggestions
+git clone --depth 1 https://github.com/zsh-users/zsh-history-substring-search.git ~/.local/share/zsh/history-substring-search
 curl -fsSLo ~/.local/share/zsh/key-bindings.zsh https://raw.githubusercontent.com/junegunn/fzf/refs/heads/master/shell/key-bindings.zsh
 curl -fsSLo ~/.local/share/zsh/completion.zsh https://raw.githubusercontent.com/junegunn/fzf/refs/heads/master/shell/completion.zsh
 

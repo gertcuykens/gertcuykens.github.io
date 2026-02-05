@@ -136,8 +136,9 @@ HISTFILE=~/.local/state/zsh/history
 PROMPT='%n@%m %~%F{blue}$(_b)%F{none} %# '
 
 fpath=(~/.local/share/zsh/site-functions $fpath)
-source ~/.local/share/zsh/autosuggestions/zsh-autosuggestions.zsh
 source ~/.local/share/zsh/syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.local/share/zsh/autosuggestions/zsh-autosuggestions.zsh
+source ~/.local/share/zsh/history-substring-search/zsh-history-substring-search.zsh
 source ~/.local/share/zsh/key-bindings.zsh
 source ~/.local/share/zsh/completion.zsh
 [ -f ~/.local/bin/env ] && source ~/.local/bin/env
@@ -157,5 +158,10 @@ alias egrep='egrep --color=auto'
 alias chrome="open -a 'Google Chrome'"
 
 # undo => Ctrl-U
+# start / end =>  Ctrl-A / Ctrl-E
 # stty -ixon => disable Ctrl-S / Ctrl-Q
+
+bindkey -e
+bindkey ${terminfo[kcuu1]} history-substring-search-up
+bindkey ${terminfo[kcud1]} history-substring-search-down
 
