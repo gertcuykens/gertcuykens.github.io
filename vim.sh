@@ -18,3 +18,5 @@ cd ~
 mkdir -p ~/.config/vim
 curl -fsSLo ~/.config/vim/vimrc https://gert.ovh/.config/vim/vimrc
 
+mkdir -p ~/.cache/vim
+
