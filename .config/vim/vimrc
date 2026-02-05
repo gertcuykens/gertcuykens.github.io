@@ -15,6 +15,7 @@ set autochdir
 set list
 set listchars=trail:·,tab:»·,extends:›,precedes:‹,nbsp:␣
 set packpath^=~/.local/share/vim
+set viminfofile=~/.cache/vim/info
 let g:fzf_layout={'window': 'enew'}
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
