@@ -8,8 +8,8 @@ User=gert
 Group=gert
 Type=oneshot
 WorkingDirectory=/home/gert
-LoadCredential=restic:/etc/restic
-ExecStart=/bin/zsh -c 'set -a; source "${CREDENTIALS_DIRECTORY}/restic"; set +a; exec /home/gert/restic.sh'
+LoadCredential=env:/root/.zshenv
+ExecStart=/bin/zsh -c 'set -a; source "${CREDENTIALS_DIRECTORY}/env"; set +a; exec /home/gert/restic.sh'
 StandardOutput=journal
 StandardError=journal
 
