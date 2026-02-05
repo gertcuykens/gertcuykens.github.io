@@ -36,21 +36,21 @@ rm ~/bat.deb
 
 FZF_VERSION=0.67.0
 curl -fsSLo ~/fzf.tgz https://github.com/junegunn/fzf/releases/download/v${FZF_VERSION}/fzf-${FZF_VERSION}-linux_amd64.tar.gz
-tar -xzf ~/fzf.tgz fzf
-install -D -m 0755 fzf /usr/local/bin
+tar -xzf ~/fzf.tgz fzf -C ~
+install -D -m 0755 ~/fzf /usr/local/bin
 rm -f ~/fzf.tgz ~/fzf
 fzf --zsh > /usr/share/zsh/vendor-completions/_fzf
 
 RESTIC_VERSION=0.18.1
 curl -fsSLo ~/restic.bz2 https://github.com/restic/restic/releases/download/v${RESTIC_VERSION}/restic_${RESTIC_VERSION}_linux_amd64.bz2
 bunzip2 ~/restic.bz2
-install -D -m 0755 restic /usr/local/bin
+install -D -m 0755 ~/restic /usr/local/bin
 rm ~/restic
 restic generate --zsh-completion /usr/share/zsh/vendor-completions/_restic
 
 UV_VERSION=0.9.21
 curl -fsSLo ~/uv.tgz https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-x86_64-unknown-linux-gnu.tar.gz
-tar -xzf ~/uv.tgz
+tar -xzf ~/uv.tgz -C ~
 install -D -m 0755 ~/uv-x86_64-unknown-linux-gnu/uv /usr/local/bin
 install -D -m 0755 ~/uv-x86_64-unknown-linux-gnu/uvx /usr/local/bin
 rm -rf ~/uv.tgz ~/uv-x86_64-unknown-linux-gnu
