@@ -8,7 +8,7 @@ User=root
 Group=root
 Type=oneshot
 WorkingDirectory=/root
-ExecStart=/root/system/restic.sh'
+ExecStart=/root/system/restic.sh
 StandardOutput=journal
 StandardError=journal
 
