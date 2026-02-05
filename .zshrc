@@ -107,6 +107,14 @@ tmux() {
   fi
 }
 
+# function psql() {
+#   if [ -t 0 ]; then
+#     docker exec -it postgres psql "$@"
+#   else
+#     docker exec -i postgres psql "$@"
+#   fi
+# }
+
 png() {
   # https://sw.kovidgoyal.net/kitty/graphics-protocol
   # local data=$(openssl base64 -in "$1" | tr -d '\n\r')
