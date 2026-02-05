@@ -36,7 +36,7 @@ rm ~/bat.deb
 
 FZF_VERSION=0.67.0
 curl -fsSLo ~/fzf.tgz https://github.com/junegunn/fzf/releases/download/v${FZF_VERSION}/fzf-${FZF_VERSION}-linux_amd64.tar.gz
-tar -xzf ~/fzf.tgz fzf -C ~
+tar -C ~ -xzf ~/fzf.tgz fzf
 install -D -m 0755 ~/fzf /usr/local/bin
 rm -f ~/fzf.tgz ~/fzf
 fzf --zsh > /usr/share/zsh/vendor-completions/_fzf
@@ -50,7 +50,7 @@ restic generate --zsh-completion /usr/share/zsh/vendor-completions/_restic
 
 UV_VERSION=0.9.21
 curl -fsSLo ~/uv.tgz https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-x86_64-unknown-linux-gnu.tar.gz
-tar -xzf ~/uv.tgz -C ~
+tar -C ~ -xzf ~/uv.tgz
 install -D -m 0755 ~/uv-x86_64-unknown-linux-gnu/uv /usr/local/bin
 install -D -m 0755 ~/uv-x86_64-unknown-linux-gnu/uvx /usr/local/bin
 rm -rf ~/uv.tgz ~/uv-x86_64-unknown-linux-gnu
