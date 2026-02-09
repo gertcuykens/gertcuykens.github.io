@@ -6,6 +6,12 @@ route:
   group_interval: 15s
   repeat_interval: 1h
   receiver: '...'
+  routes:
+  - receiver: clubit
+    matchers:
+    - alertname = "node:network"
+    mute_time_intervals:
+    - restic
 
 receivers:
 - name: '...'
@@ -24,4 +30,12 @@ inhibit_rules:
 - source_matchers: [severity="critical"]
   target_matchers: [severity="warning"]
   equal: ['alertname','job']
+
+time_intervals:
+- name: restic
+  time_intervals:
+  - location: 'Europe/Brussels'
+    times:
+    - start_time: '02:00'
+      end_time: '03:00'
 
