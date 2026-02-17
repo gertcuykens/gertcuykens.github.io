@@ -13,18 +13,19 @@ for DB ("$PG[@]") {
     backup $DB
 }
 
-# restic backup --tag ... /home/...
+# restic backup --tag ... /home/...sql.gz
 # pg_dump -U postgres -O -Z 6 ... | restic backup --stdin --stdin-filename=/home/...sql.gz
 
-# restic forget --path /home/...sql.gz --unsafe-allow-remove-all latest
+# restic forget latest --path /home/...sql.gz --unsafe-allow-remove-all
 # restic forget --keep-daily 90
 # restic prune
 # restic check
 
-# restic snapshots --path /home/...sql.gz --latest 1 latest
-# restic ls --path /home/...sql.gz latest:/home/... /...sql.gz
-# restic dump --path /home/...sql.gz latest:/home/... /...sql.gz | gzip -d | head
-# restic restore --path /home/...sql.gz --include /...sql.gz --target . latest:/home/...
+# restic snapshots latest --path /home/...sql.gz --latest 1
+# restic ls latest --path /home/...sql.gz /home/...sql.gz
+# restic dump latest --path /home/...sql.gz /home/...sql.gz | gzip -d | head
+# restic restore latest:/home/.../ --path /home/...sql.gz --include ...sql.gz --target . 
+
 ###############################################################################
 
 # AWS_ACCESS_KEY_ID=...

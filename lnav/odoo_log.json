@@ -1,0 +1,22 @@
+{
+  "$schema": "https://lnav.org/schemas/format-v1.schema.json",
+  "odoo_log": {
+    "title": "Odoo Log Format",
+    "regex": {
+      "std": {
+        "pattern": "^(?<timestamp>\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3} (?<timezone>[A-Z]{3,4})) \\[(?<module>[\\w\\.]+)\\] (?<user>[^@]+)@(?<database>[^ ]+) (?<level>\\w+): (?<body>.*)$"
+      }
+    },
+    "value": {
+      "module": { "kind": "string" },
+      "user": { "kind": "string", "identifier": true },
+      "database": { "kind": "string", "identifier": true }
+    },
+    "sample": [
+      {
+        "line": "2026-02-12 11:03:06.825 CET [odoo.sql_db] user@db INFO: login success"
+      }
+    ]
+  }
+}
+
