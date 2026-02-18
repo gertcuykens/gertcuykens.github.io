@@ -110,6 +110,9 @@ CREATE INDEX CONCURRENTLY idx_mytable_id ON mytable (id);
 
 -------------------------------------------------------------------------------
 
+CREATE EXTENSION IF NOT EXISTS vector WITH SCHEMA public;
+
+-------------------------------------------------------------------------------
 -- tsvector : text search vector
 -- tsquery : text search query
 -- to_tsvector : function that converts text into a text search vector
@@ -154,4 +157,16 @@ WHERE vector @@ search.query
 ORDER BY rank DESC;
 
 -------------------------------------------------------------------------------
+
+-- \du
+-- pg_dump -U odoo -d ... -t ... --data-only --column-inserts
+
+CREATE EXTENSION IF NOT EXISTS dblink;
+SELECT dblink_connect('conn', 'host=localhost port=5432 dbname=... user=...');
+
+UPDATE y
+SET x = t.x
+FROM dblink('conn', 'SELECT id, x FROM y')
+AS t(id int, x int)
+WHERE y.id = t.id;
 
