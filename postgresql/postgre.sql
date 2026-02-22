@@ -170,3 +170,17 @@ FROM dblink('conn', 'SELECT id, x FROM y')
 AS t(id int, x int)
 WHERE y.id = t.id;
 
+-- psql -d ... -c "\copy ... FROM STDIN WITH (FORMAT CSV, HEADER)" < <(gzip -dc ...csv.gz)
+-- psql -d ... -c "\copy ... TO STDOUT WITH (FORMAT CSV, HEADER, FORCE_QUOTE *)" | gzip > ...csv.gz
+
+-- \copy is the client side COPY is the server side and needs superuser
+
+-------------------------------------------------------------------------------
+
+SELECT pg_terminate_backend(pid)
+FROM pg_stat_activity
+WHERE datname = '...'
+  AND pid <> pg_backend_pid();
+
+-------------------------------------------------------------------------------
+
