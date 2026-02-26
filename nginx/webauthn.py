@@ -6,7 +6,7 @@ from blake3 import blake3
 from hmac import compare_digest
 
 app = FastAPI()
-
+# openssl rand -base64 32 | tr -dc 'A-Za-z0-9' | head -c 32; echo
 BLAKE3_KEY = b"................................" # 32 byte
 signin_challenges = {}
 registration_challenges = {}
