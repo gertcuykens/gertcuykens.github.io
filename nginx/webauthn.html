@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebAuthn</title>
+    <script src="https://unpkg.com/@simplewebauthn/browser/dist/bundle/index.umd.min.js"></script>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f4f7f6; }
+        .card { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; }
+        button { background: #007bff; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-size: 1rem; transition: background 0.3s; }
+        button:hover { background: #0056b3; }
+        #status { margin-top: 1rem; color: #666; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>...</h2>
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
+                <input type="text" id="remote_user" placeholder="User ID" required
+                       style="padding: 10px; border: 1px solid #ddd; border-radius: 6px; outline: none;">
+                <input type="text" id="remote_username" placeholder="User name" required
+                       style="padding: 10px; border: 1px solid #ddd; border-radius: 6px; outline: none;">
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+                <button id="signinBtn" style="background: #28a745;">Sign In</button>
+                <button id="registrationBtn" style="background: #6c757d;">Register</button>
+        </div>
+        <p id="status">Press a Button.</p>
+    </div>
+
+    <script>
+        const { startRegistration, startAuthentication } = SimpleWebAuthnBrowser;
+        const userInp = document.getElementById('remote_user');
+        const usernameInp = document.getElementById('remote_username');
+        const status = document.getElementById('status');
+
+        document.getElementById('registrationBtn').onclick = async () => {
+
+            userInp.style.border = "1px solid #ddd";
+            usernameInp.style.border = "1px solid #ddd";
+
+            const remote_user = userInp.value.trim();
+            if (!remote_user){
+                userInp.style.border = "2px solid #dc3545";
+                userInp.focus();
+                status.innerText = "No user id.";
+                return;
+            }
+
+            const remote_username = usernameInp.value.trim();
+            if (!remote_username){
+                usernameInp.style.border = "2px solid #dc3545";
+                usernameInp.focus();
+                status.innerText = "No user name.";
+                return
+            }
+
+            status.innerText = "Registering device...";
+            try {
+                const opts = await fetch(`/webauthn/registration-options?remote_user=${encodeURIComponent(remote_user)}&remote_username=${encodeURIComponent(remote_username)}`).then(r => r.json());
+                const regResp = await startRegistration({optionsJSON:opts});
+
+                const verify = await fetch(`/webauthn/registration-verify?remote_user=${encodeURIComponent(remote_user)}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(regResp)
+                });
+
+                if (verify.ok) status.innerText = "Device Registered.";
+                else status.innerText = "Registration Failed.";
+            } catch (err) {
+                status.innerText = "Error: " + err.message;
+            }
+        };
+
+        document.getElementById('signinBtn').onclick = async () => {
+
+            userInp.style.border = "1px solid #ddd";
+            usernameInp.style.border = "1px solid #ddd";
+
+            const remote_user = userInp.value.trim();
+            if (!remote_user){
+                userInp.style.border = "2px solid #dc3545";
+                userInp.focus();
+                status.innerText = "No user id.";
+                return;
+            }
+
+            status.innerText = "Authenticating...";
+            try {
+                const opts = await fetch(`/webauthn/signin-options?remote_user=${encodeURIComponent(remote_user)}`).then(r => r.json());
+                const authResp = await startAuthentication({optionsJSON:opts});
+
+                const verify = await fetch(`/webauthn/signin-verify?remote_user=${encodeURIComponent(remote_user)}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(authResp)
+                });
+
+                if (verify.ok) {
+                   status.innerText = "SignIn Ok.";
+                   window.location.href = "/";
+                } else status.innerText = "SignIn Invalid.";
+            } catch (err) {
+                status.innerText = "Error: " + err.message;
+            }
+        };
+    </script>
+
+</body>
+</html>
+
