@@ -18,16 +18,16 @@
     <div class="card">
         <h2>...</h2>
         <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
-                <input type="text" id="remote_user" placeholder="User ID" required
+                <input type="hidden" id="remote_user" placeholder="User ID" required
                        style="padding: 10px; border: 1px solid #ddd; border-radius: 6px; outline: none;">
-                <input type="text" id="remote_username" placeholder="User name" required
+                <input type="hidden" id="remote_username" placeholder="User name" required
                        style="padding: 10px; border: 1px solid #ddd; border-radius: 6px; outline: none;">
         </div>
         <div style="display: flex; gap: 10px; justify-content: center;">
                 <button id="signinBtn" style="background: #28a745;">Sign In</button>
                 <button id="registrationBtn" style="background: #6c757d;">Register</button>
         </div>
-        <p id="status">Press a Button.</p>
+        <p id="status"></p>
     </div>
 
     <script>
@@ -36,10 +36,21 @@
         const usernameInp = document.getElementById('remote_username');
         const status = document.getElementById('status');
 
+        const urlParams = new URLSearchParams(window.location.search);
+        userInp.value = urlParams.get('id');
+        if (!userInp.value) userInp.type="text";
+
         document.getElementById('registrationBtn').onclick = async () => {
 
             userInp.style.border = "1px solid #ddd";
             usernameInp.style.border = "1px solid #ddd";
+            if(usernameInp.type === "hidden"){
+               usernameInp.type = "text";
+               document.getElementById('registrationBtn').style.background = "#28a745";
+               document.getElementById('signinBtn').style.background = "#6c757d";
+               status.innerText = "Fill in your name.";
+               return
+            }
 
             const remote_user = userInp.value.trim();
             if (!remote_user){
@@ -68,7 +79,12 @@
                     body: JSON.stringify(regResp)
                 });
 
-                if (verify.ok) status.innerText = "Device Registered.";
+                if (verify.ok) {
+                    status.innerText = `${usernameInp.value} Registered.`;
+                    usernameInp.type = "hidden";
+                    document.getElementById('registrationBtn').style.background = "#6c757d";
+                    document.getElementById('signinBtn').style.background = "#28a745";
+                }
                 else status.innerText = "Registration Failed.";
             } catch (err) {
                 status.innerText = "Error: " + err.message;
@@ -79,6 +95,9 @@
 
             userInp.style.border = "1px solid #ddd";
             usernameInp.style.border = "1px solid #ddd";
+            usernameInp.type = "hidden";
+            document.getElementById('registrationBtn').style.background = "#6c757d";
+            document.getElementById('signinBtn').style.background = "#28a745";
 
             const remote_user = userInp.value.trim();
             if (!remote_user){
