@@ -58,6 +58,7 @@ async def registration_verify(request: Request, remote_user: str | None = None):
             "credential_id": verification.credential_id,
             "public_key": verification.credential_public_key,
             "sign_count": verification.sign_count,
+            "aaguid": str(verification.aaguid),
             "transports": body.get("response", {}).get("transports", [])
         }
 
