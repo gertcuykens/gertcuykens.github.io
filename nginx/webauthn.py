@@ -4,19 +4,26 @@ from webauthn.helpers.structs import RegistrationCredential, AuthenticationCrede
 from webauthn.helpers import parse_authentication_credential_json, parse_registration_credential_json
 from blake3 import blake3
 from hmac import compare_digest
+from starlette.middleware.sessions import SessionMiddleware
+from base64 import b64encode, b64decode
 
 app = FastAPI()
+app.add_middleware(
+    SessionMiddleware,
+    secret_key="...",
+    session_cookie="webauthn",
+    max_age=300
+)
+
 # openssl rand -base64 32 | tr -dc 'A-Za-z0-9' | head -c 32; echo
 BLAKE3_KEY = b"................................" # 32 byte
-signin_challenges = {}
-registration_challenges = {}
 user_db = {}
-origin="https://..."
-rp_id="..."
+origin="https://signin...cloud"
+rp_id="...cloud"
 rp_name="..."
 
 @app.get("/webauthn/registration-options")
-async def registration_options(remote_user: str | None = None, remote_username: str | None = None):
+async def registration_options(request: Request, remote_user: str | None = None, remote_username: str | None = None):
     options = generate_registration_options(
         rp_id=rp_id,
         rp_name=rp_name,
@@ -34,7 +41,7 @@ async def registration_options(remote_user: str | None = None, remote_username: 
         "credentials": []
     }
 
-    registration_challenges[remote_user] = options.challenge
+    request.session["registration"] = b64encode(options.challenge).decode('utf-8')
 
     return Response(
         content=options_to_json(options),
@@ -44,11 +51,17 @@ async def registration_options(remote_user: str | None = None, remote_username: 
 @app.post("/webauthn/registration-verify")
 async def registration_verify(request: Request, remote_user: str | None = None):
     body = await request.json()
+    encoded_challenge = request.session.pop("registration", None)
+
+    if not encoded_challenge:
+        return {"error": "Challenge not found"}
+
+    expected_challenge = b64decode(encoded_challenge)
 
     try:
         verification = verify_registration_response(
             credential=body,
-            expected_challenge=registration_challenges.get(remote_user),
+            expected_challenge=expected_challenge,
             expected_origin=origin,
             expected_rp_id=rp_id,
             require_user_verification=True
@@ -63,7 +76,6 @@ async def registration_verify(request: Request, remote_user: str | None = None):
         }
 
         user_db[remote_user]["credentials"].append(new_credential)
-        del registration_challenges[remote_user]
 
         return {"status": "success", "message": "Passkey registered!"}
 
@@ -72,17 +84,24 @@ async def registration_verify(request: Request, remote_user: str | None = None):
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.get("/webauthn/signin-options")
-async def signin_options(remote_user: str | None = None):
+async def signin_options(request: Request, remote_user: str | None = None):
     options = generate_authentication_options(
         rp_id = rp_id,
         user_verification = UserVerificationRequirement.PREFERRED,
     )
 
-    signin_challenges[remote_user] = options.challenge
+    request.session["signin"] = b64encode(options.challenge).decode('utf-8')
     return Response(content = options_to_json(options), media_type = "application/json")
 
 @app.post("/webauthn/signin-verify")
 async def signin_verify(request: Request, response: Response, remote_user: str | None = None):
+    encoded_challenge = request.session.pop("signin", None)
+
+    if not encoded_challenge:
+        return {"error": "Challenge not found"}
+
+    expected_challenge = b64decode(encoded_challenge)
+
     credential = parse_authentication_credential_json(await request.json())
     remote_credential = None
 
@@ -98,14 +117,13 @@ async def signin_verify(request: Request, response: Response, remote_user: str |
     try:
         verification = verify_authentication_response(
             credential=credential,
-            expected_challenge=signin_challenges.get(remote_user),
+            expected_challenge=expected_challenge,
             expected_origin=origin,
             expected_rp_id=rp_id,
             credential_public_key=remote_credential["public_key"],
             credential_current_sign_count=remote_credential["sign_count"]
         )
         remote_credential["sign_count"] = verification.new_sign_count
-        del signin_challenges[remote_user]
 
     except Exception as e:
         print(f"WebAuthn Error: {e}")
