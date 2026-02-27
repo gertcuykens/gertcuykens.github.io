@@ -6,6 +6,14 @@ from blake3 import blake3
 from hmac import compare_digest
 from starlette.middleware.sessions import SessionMiddleware
 from base64 import b64encode, b64decode
+import asyncpg
+
+# openssl rand -base64 32 | tr -dc 'A-Za-z0-9' | head -c 32; echo
+BLAKE3_KEY = b"................................" # 32 byte
+user_db = {}
+origin="https://signin...cloud"
+rp_id="...cloud"
+rp_name="..."
 
 app = FastAPI()
 app.add_middleware(
@@ -15,12 +23,19 @@ app.add_middleware(
     max_age=300
 )
 
-# openssl rand -base64 32 | tr -dc 'A-Za-z0-9' | head -c 32; echo
-BLAKE3_KEY = b"................................" # 32 byte
-user_db = {}
-origin="https://signin...cloud"
-rp_id="...cloud"
-rp_name="..."
+@app.on_event("startup")
+async def startup():
+    app.state.pool = await asyncpg.create_pool(
+        user='root',
+        database='webauthn',
+        host='/run/postgresql',
+        min_size=1,
+        max_size=10
+    )
+
+@app.on_event("shutdown")
+async def shutdown():
+    await app.state.pool.close()
 
 @app.get("/webauthn/registration-options")
 async def registration_options(request: Request, remote_user: str | None = None, remote_username: str | None = None):
