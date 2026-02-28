@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Response, Header, Cookie, HTTPException
+from fastapi import FastAPI, Request, Response, Header, Cookie, HTTPException, Depends
 from webauthn import verify_authentication_response, verify_registration_response, options_to_json, generate_authentication_options, generate_registration_options
 from webauthn.helpers.structs import RegistrationCredential, AuthenticationCredential, AuthenticatorSelectionCriteria, UserVerificationRequirement
 from webauthn.helpers import parse_authentication_credential_json, parse_registration_credential_json
@@ -6,16 +6,36 @@ from blake3 import blake3
 from hmac import compare_digest
 from starlette.middleware.sessions import SessionMiddleware
 from base64 import b64encode, b64decode
-import asyncpg
+from contextlib import asynccontextmanager
+from sqlmodel import SQLModel, select
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 
+# alembic init -t async schema
+# alembic revision --autogenerate -m "init"
+# alembic upgrade head
+# target_metadata = SQLModel.metadata
 # openssl rand -base64 32 | tr -dc 'A-Za-z0-9' | head -c 32; echo
-BLAKE3_KEY = b"................................" # 32 byte
-user_db = {}
-origin="https://signin...cloud"
-rp_id="...cloud"
-rp_name="..."
 
-app = FastAPI()
+BLAKE3_KEY = b"................................" # 32 byte
+origin = "https://signin...cloud"
+rp_id = "...cloud"
+rp_name = "..."
+DATABASE_URL = "postgresql+asyncpg://root@/webauthn?host=/run/postgresql"
+engine = create_async_engine(DATABASE_URL, echo=True)
+
+user_db = {}
+
+async def get_session() -> AsyncSession:
+    async with AsyncSession(engine, expire_on_commit=False) as session:
+        yield session
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    yield
+    await engine.dispose()
+
+app = FastAPI(lifespan=lifespan)
+
 app.add_middleware(
     SessionMiddleware,
     secret_key="...",
@@ -23,22 +43,9 @@ app.add_middleware(
     max_age=300
 )
 
-@app.on_event("startup")
-async def startup():
-    app.state.pool = await asyncpg.create_pool(
-        user='root',
-        database='webauthn',
-        host='/run/postgresql',
-        min_size=1,
-        max_size=10
-    )
-
-@app.on_event("shutdown")
-async def shutdown():
-    await app.state.pool.close()
-
 @app.get("/webauthn/registration-options")
-async def registration_options(request: Request, remote_user: str | None = None, remote_username: str | None = None):
+async def registration_options(request: Request, remote_user: str | None = None, remote_username: str | None = None, session: AsyncSession = Depends(get_session)):
+
     options = generate_registration_options(
         rp_id=rp_id,
         rp_name=rp_name,
@@ -50,6 +57,9 @@ async def registration_options(request: Request, remote_user: str | None = None,
             # authenticator_attachment=AuthenticatorAttachment.PLATFORM,
         )
     )
+
+    # result = await session.execute(select(Hero))
+    # return result.scalars().all()
 
     user_db[remote_user] = {
         "username": remote_username,
@@ -154,8 +164,6 @@ async def signin_verify(request: Request, response: Response, remote_user: str |
     )
     return {"status": "authenticated"}
 
-###############################################################################
-
 @app.get("/user")
 async def user(remote_user: str | None = Cookie(None)):
     if not remote_user or "." not in remote_user:
@@ -175,6 +183,4 @@ async def user(remote_user: str | None = Cookie(None)):
 @app.get("/")
 async def uid(remote_user: str | None = Header(None)):
     return {"user": remote_user}
-
-# https://webauthn.io
 
