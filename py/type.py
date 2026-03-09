@@ -38,11 +38,11 @@ def test_type():
     with pytest.raises(TypeError):
         issubclass(int, 42)
 
-    assert isinstance(MyClass, type)
     assert isinstance(MyClass, object)
+    assert issubclass(MyClass, object)
+    assert isinstance(MyClass, type)
     assert not isinstance(MyClass, MyClass) # MyClass is not a metaclass of itself
     assert not issubclass(MyClass, type)
-    assert issubclass(MyClass, object)
     assert issubclass(MyClass, MyClass)
 
     assert isinstance([], object)
