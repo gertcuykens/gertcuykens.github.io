@@ -33,6 +33,7 @@ def test_subclass():
     assert not issubclass(MyClass, type)
     assert issubclass(MyClass, object)
     assert issubclass(MyClass, MyClass)
+    assert issubclass(type, type)
     assert issubclass(type, object)
     assert not issubclass(object, type)
     assert issubclass(int, object)
