@@ -8,29 +8,31 @@ class MyClass:
 def test_type():
     """'type' metaclass."""
     assert isinstance(MyClass, type)
+    assert not isinstance(MyClass, MyClass)
     assert isinstance(object, type)
-    assert isinstance(type, type)
+    assert isinstance(type, type) # hardcoded circular in python
+    assert not isinstance(int, int) # int creates a int object not a int class
     assert isinstance(int, type)
     assert not isinstance(42, type)
-    assert not isinstance([], type)
     assert isinstance(list, type)
+    assert not isinstance([], type)
     # a class can only have one metaclass
 
 def test_object_class():
     """'object' class"""
     assert isinstance(MyClass, object)
     assert isinstance(object, object)
-    assert isinstance(type, object) # hardcoded circular in python
-    assert isinstance(int, object)
-    assert isinstance(42, object)
-    assert isinstance(42, int)
+    assert isinstance(type, object)
     assert isinstance([], object)
-    assert not isinstance(int, int) # int creates a int object not a int class
+    assert isinstance(int, object)
+    assert isinstance(42, int)
+    assert isinstance(42, object)
 
 def test_subclass():
     """inheritance"""
     assert not issubclass(MyClass, type)
     assert issubclass(MyClass, object)
+    assert issubclass(MyClass, MyClass)
     assert issubclass(type, object)
     assert not issubclass(object, type)
     assert issubclass(int, object)
