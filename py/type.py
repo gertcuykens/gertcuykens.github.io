@@ -10,7 +10,9 @@ def test_type():
     assert isinstance(MyClass, type)
     assert not isinstance(MyClass, MyClass)
     assert isinstance(object, type)
-    assert isinstance(type, type) # hardcoded circular in python
+    assert isinstance(type, object)
+    assert isinstance(object, object)
+    assert isinstance(type, type) # !!! hardcoded circular in python
     assert not isinstance(int, int) # int creates a int object not a int class
     assert isinstance(int, type)
     assert not isinstance(42, type)
@@ -21,8 +23,6 @@ def test_type():
 def test_object_class():
     """'object' class"""
     assert isinstance(MyClass, object)
-    assert isinstance(object, object)
-    assert isinstance(type, object)
     assert isinstance([], object)
     assert isinstance(int, object)
     assert isinstance(42, int)
@@ -33,8 +33,9 @@ def test_subclass():
     assert not issubclass(MyClass, type)
     assert issubclass(MyClass, object)
     assert issubclass(MyClass, MyClass)
-    assert issubclass(type, type)
+    assert issubclass(type, type) # !!!
     assert issubclass(type, object)
+    assert issubclass(object, object)
     assert not issubclass(object, type)
     assert issubclass(int, object)
     assert issubclass(int, int)
