@@ -30,20 +30,21 @@ def test_type():
     assert not issubclass(int, type)
     assert not isinstance(int, int) # int creates a int object not a int class
 
-    assert not isinstance(42, type)
-    assert isinstance(42, int)
-    assert isinstance(42, object)
-    with pytest.raises(TypeError):
-        issubclass(42, object)
-    with pytest.raises(TypeError):
-        issubclass(int, 42)
-
     assert isinstance(MyClass, object)
     assert issubclass(MyClass, object)
     assert isinstance(MyClass, type)
-    assert not isinstance(MyClass, MyClass) # MyClass is not a metaclass of itself
-    assert not issubclass(MyClass, type)
     assert issubclass(MyClass, MyClass)
+    assert not issubclass(MyClass, type)
+    assert not isinstance(MyClass, MyClass) # MyClass is not a metaclass of itself
+
+    assert isinstance(42, object)
+    with pytest.raises(TypeError):
+        assert not issubclass(42, object)
+    assert not isinstance(42, type)
+    assert isinstance(42, int)
+    with pytest.raises(TypeError):
+        assert issubclass(int, 42)
+    assert isinstance(42, int)
 
     assert isinstance([], object)
     assert not isinstance([], type)
