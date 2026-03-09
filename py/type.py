@@ -15,13 +15,13 @@ def test_type():
     """
 
     assert isinstance(object, type)
-    assert isinstance(type, object) # !!!
+    assert isinstance(type, object)
     assert issubclass(type, object)
-    assert isinstance(object, object) # !!!
+    assert isinstance(object, object)
     assert issubclass(object, object)
-    assert issubclass(type, type) # !!!
     assert not issubclass(object, type)
-    assert isinstance(type, type) # !!! hardcoded circular in python
+    assert issubclass(type, type) # !!!
+    assert isinstance(type, type) # !!!
 
     assert isinstance(int, object)
     assert issubclass(int, object)
