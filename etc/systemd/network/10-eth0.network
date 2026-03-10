@@ -1,0 +1,16 @@
+# /etc/systemd/network/10-eth0.network
+
+[Match]
+Name=eth0
+
+[Network]
+Address=.../64
+IPv6SendRA=yes
+DHCPv6PrefixDelegation=yes
+
+[IPv6SendRA]
+Managed=yes
+OtherInformation=yes
+
+# systemctl restart systemd-networkd
+
