@@ -5,6 +5,11 @@ import pytest
 class MyClass:
     pass
 
+class MyMetaClass(type):
+    def __new__(cls, name, bases, dct):
+        dct['custom_id'] = "META-123"
+        return super().__new__(cls, name, bases, dct)
+
 def test_type():
     """
     'object' class.
@@ -26,7 +31,7 @@ def test_type():
     assert isinstance(type, type)
     assert issubclass(type, type)
     assert isinstance(type, type) # !!!
-    assert issubclass(type, type) # !!!
+    assert issubclass(type, type)
 
     assert isinstance(int, object)
     assert issubclass(int, object)
@@ -41,6 +46,13 @@ def test_type():
     assert issubclass(MyClass, MyClass)
     assert not isinstance(MyClass, MyClass) # MyClass is not a metaclass of itself
     assert not issubclass(MyClass, type)
+
+    assert isinstance(MyMetaClass, object)
+    assert issubclass(MyMetaClass, object)
+    assert isinstance(MyMetaClass, type)
+    assert issubclass(MyMetaClass, MyMetaClass)
+    assert not isinstance(MyMetaClass, MyMetaClass)
+    assert issubclass(MyMetaClass, type)
 
     assert isinstance(42, object)
     assert not isinstance(42, type)
