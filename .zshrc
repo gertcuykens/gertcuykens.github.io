@@ -1,3 +1,5 @@
+setopt histignorealldups sharehistory prompt_subst
+
 export CLICOLOR=1
 export VISUAL="vim"
 export EDITOR="vim"
@@ -11,18 +13,7 @@ export TZ="Europe/Brussels"
 # export MOZ_ENABLE_WAYLAND=1
 # export OZONE_PLATFORM=wayland
 export SHELL_SESSION_DISABLE=1
-
-setopt histignorealldups sharehistory prompt_subst
-
-_b() {
-  # git rev-parse --abbrev-ref HEAD 2>/dev/null
-  local b="$(git symbolic-ref --short HEAD 2>/dev/null)"
-  if [[ "${b}" != "" ]]; then
-    echo " ${b}"
-  else
-    echo ""
-  fi
-}
+export ZSH=~/.local/share/oh-my-zsh
 
 fdf() {
   local d="${2:-.}"
@@ -40,7 +31,7 @@ fdf() {
           tree -N -C {} -I ".git|.venv|__pycache__|node_modules" | head -500
         else
           bat --color=always --style=plain --line-range=:500 {}
-        fi') 
+        fi')
   if [[ -n $p ]]; then
     if [[ -d $p ]]; then
       cd "$p"
@@ -107,14 +98,6 @@ tmux() {
   fi
 }
 
-# function psql() {
-#   if [ -t 0 ]; then
-#     docker exec -it postgres psql "$@"
-#   else
-#     docker exec -i postgres psql "$@"
-#   fi
-# }
-
 png() {
   # https://sw.kovidgoyal.net/kitty/graphics-protocol
   # local data=$(openssl base64 -in "$1" | tr -d '\n\r')
@@ -141,9 +124,9 @@ png() {
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.local/state/zsh/history
-PROMPT='%n@%m %~%F{blue}$(_b)%F{none} %# '
-
+FORGE_HISTORY_FILE=~/.local/state/forge/history
 fpath=(~/.local/share/zsh/site-functions $fpath)
+
 source ~/.local/share/zsh/syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.local/share/zsh/autosuggestions/zsh-autosuggestions.zsh
 source ~/.local/share/zsh/history-substring-search/zsh-history-substring-search.zsh
@@ -152,10 +135,10 @@ source ~/.local/share/zsh/completion.zsh
 [ -f ~/.local/bin/env ] && source ~/.local/bin/env
 
 zmodload zsh/complist
-autoload -Uz compinit && compinit -d "~/.cache/zsh/zcompdump"
+autoload -Uz compinit && compinit -d ~/.cache/zsh/zcompdump
 
 zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path "~/.cache/zsh/zcompcache"
+zstyle ':completion:*' cache-path ~/.cache/zsh/zcompcache
 
 alias ls='ls --color=auto'
 alias dir='dir --color=auto'
@@ -172,4 +155,34 @@ alias chrome="open -a 'Google Chrome'"
 # bindkey -e -L
 bindkey ${terminfo[kcuu1]} history-substring-search-up
 bindkey ${terminfo[kcud1]} history-substring-search-down
+
+if [[ -z "$_FORGE_PLUGIN_LOADED" ]]; then
+    eval "$(forge zsh plugin)"
+fi
+
+if [[ -z "$_FORGE_THEME_LOADED" ]]; then
+    eval "$(forge zsh theme)"
+fi
+
+###############################################################################
+
+_b() {
+  # git rev-parse --abbrev-ref HEAD 2>/dev/null
+  local b="$(git symbolic-ref --short HEAD 2>/dev/null)"
+  if [[ "${b}" != "" ]]; then
+    echo " ${b}"
+  else
+    echo ""
+  fi
+}
+
+PROMPT='%n@%m %~%F{blue}$(_b)%F{none} %# '
+
+# function psql() {
+#   if [ -t 0 ]; then
+#     docker exec -it postgres psql "$@"
+#   else
+#     docker exec -i postgres psql "$@"
+#   fi
+# }
 
