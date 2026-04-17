@@ -65,10 +65,11 @@ rm ~/lnav.zip ~/lnav-${LNAV_VERSION}
 ZIG_VERSION=0.0.0
 curl -fsSLo /usr/share/zsh/vendor-completions/_zig https://raw.githubusercontent.com/ziglang/shell-completions/master/_zig
 
-mkdir -p ~/.config/ctags
-curl -fsSLo ~/.config/ctags/py.ctags https://gert.ovh/.config/ctags/py.ctags
-ctags --list-kinds-full=Python
-ctags --verbose
+# TODO: install ctags
+# mkdir -p ~/.config/ctags
+# curl -fsSLo ~/.config/ctags/py.ctags https://gert.ovh/.config/ctags/py.ctags
+# ctags --list-kinds-full=Python
+# ctags --verbose
 
 # curl -fsSL https://api.github.com/repos/sharkdp/fd/releases/latest | jq -r .tag_name
 # curl -fsSL https://api.github.com/repos/BurntSushi/ripgrep/releases/latest | jq -r .tag_name

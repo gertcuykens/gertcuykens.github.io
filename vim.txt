@@ -37,9 +37,7 @@
 " :tags :tnext :tprev :tfirst :tlast
 " ^] go to
 " ^t go back to tag
-
-" !ctags -R .
-" !ctags --list-languages
+" !ctags .
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " :jumps
@@ -55,13 +53,21 @@
 " ^r redo
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" :set omnifunc?
-" ^x ^o
+:set omnifunc?
 
-" ^d complete options
+:...^d
 
-" ^p complete previous txt
-" ^n complete next txt
+^x ^]    tag
+^x ^o    omni
+^x ^f    file
+^x ^l    line
+^x ^k    dictionary
+^x ^d    defenition
+
+^n    next
+^p    previous
+^y    yes
+^e    exit
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " :set spelllang=en
@@ -140,14 +146,15 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " completion
 
-^x ^]
-^x ^o
-^x ^f
-^x ^l
-^x ^k
+^x ^]    tag
+^x ^o    omni
+^x ^f    file
+^x ^l    line
+^x ^k    dictionary
+^x ^d    defention
 
-^n
-^p
-^y
-^e
+^n  next
+^p  previous
+^y  yes
+^e  exit
 
