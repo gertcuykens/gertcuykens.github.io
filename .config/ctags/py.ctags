@@ -1,0 +1,11 @@
+--recurse=yes
+--languages=Python
+# --python-kinds=-i
+--exclude=__pycache__
+--exclude=.mypy_cache
+--exclude=.venv
+--exclude=.git
+--exclude=build
+--exclude=node_modules
+# --extras=-{subparser}
+
