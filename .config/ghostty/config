@@ -1,6 +1,14 @@
 # ~/.config/ghostty/config
-font-family = "JetBrains Mono, Symbols Nerd Font Mono"
+
+# brew install --cask font-0xProto-nerd-font font-Symbols-Only-nerd-font font-jetbrains-mono-nerd-font font-jetbrains-maple-mono-nf
+# ~/.local/share/fonts, /usr/share/fonts, fc-cache -f -v, fc-list
+# ghostty +list-fonts | grep -i "JetBrains"
+# ghostty +show-face --string="->!="
+
+# font-family = "JetBrains Mono, Symbols Nerd Font Mono"
+font-family = "JetBrainsMono Nerd Font"
 font-size = 16
+# font-feature = ["calt", "liga"]
 mouse-hide-while-typing = true
 
 # keybind ctrl+v paste
@@ -9,3 +17,5 @@ mouse-hide-while-typing = true
 # unbind ctrl+shift+v
 # unbind ctrl+shift+c
 
+# ghostty +validate-config
+# ghostty +show-config --default --docs
