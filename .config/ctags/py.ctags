@@ -8,4 +8,5 @@
 --exclude=build
 --exclude=node_modules
 # --extras=-{subparser}
+--fields=+nS
 
