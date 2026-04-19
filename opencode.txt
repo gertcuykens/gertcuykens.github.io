@@ -1,0 +1,6 @@
+opencode mcp add
+opencode debug paths
+opencode debug lsp diagnostics label/main.py --print-logs --log-level DEBUG
+opencode debug config
+jq . ~/.config/opencode/opencode.json
+
