@@ -1,6 +1,6 @@
 {
-  "$schema": "https://opencode.ai",
-  "plugin": ["@astral-sh/opencode-plugin"],
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [],
   "lsp": {
     "ty": { "command": ["ty", "server"], "extensions": [".py", ".pyi"] },
     "ruff": { "command": ["ruff", "server"], "extensions": [".py", ".pyi"] },
@@ -10,6 +10,6 @@
     "python": { "command": ["ruff", "format", "-"], "extensions": [".py", ".pyi"] }
   },
   "mcp": {
-    "odoo": { "type": "remote", "url": "https://.../sse" }
+    "odoo": { "type": "remote", "url": "https://.../sse", "headers": { "Authorization": "Basic ..." }, "enabled": true }
   }
 }
