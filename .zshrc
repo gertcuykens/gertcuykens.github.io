@@ -177,12 +177,3 @@ _b() {
 }
 
 PROMPT='%n@%m %~%F{blue}$(_b)%F{none} %# '
-
-# function psql() {
-#   if [ -t 0 ]; then
-#     docker exec -it postgres psql "$@"
-#   else
-#     docker exec -i postgres psql "$@"
-#   fi
-# }
-

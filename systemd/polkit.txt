@@ -1,4 +1,5 @@
-// cp /root/sysem/polkit.txt /etc/polkit-1/rules.d/40-allow-restart-service.rules
+// apt install polkitd
+// cp polkit.txt /etc/polkit-1/rules.d/40-allow-restart-service.rules
 // systemctl restart polkit
 
 polkit.addRule(function(action, subject) {
