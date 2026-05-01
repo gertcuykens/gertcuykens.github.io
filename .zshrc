@@ -12,8 +12,8 @@ export LC_ALL="C.UTF-8"
 export TZ="Europe/Brussels"
 # export MOZ_ENABLE_WAYLAND=1
 # export OZONE_PLATFORM=wayland
-export SHELL_SESSION_DISABLE=1
-export ZSH=~/.local/share/oh-my-zsh
+# export SHELL_SESSION_DISABLE=1
+# export ZSH=~/.local/share/oh-my-zsh
 
 fdf() {
   local d="${2:-.}"
@@ -124,7 +124,6 @@ png() {
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.local/state/zsh/history
-FORGE_HISTORY_FILE=~/.local/state/forge/history
 fpath=(~/.local/share/zsh/site-functions $fpath)
 
 source ~/.local/share/zsh/syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -148,21 +147,13 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias chrome="open -a 'Google Chrome'"
 
-# undo => Ctrl-U
-# start / end =>  Ctrl-A / Ctrl-E
-# stty -ixon => disable Ctrl-S / Ctrl-Q
-
 # bindkey -e -L
 bindkey ${terminfo[kcuu1]} history-substring-search-up
 bindkey ${terminfo[kcud1]} history-substring-search-down
 
-if [[ -z "$_FORGE_PLUGIN_LOADED" ]]; then
-    eval "$(forge zsh plugin)"
-fi
-
-if [[ -z "$_FORGE_THEME_LOADED" ]]; then
-    eval "$(forge zsh theme)"
-fi
+# undo => Ctrl-U
+# start / end =>  Ctrl-A / Ctrl-E
+# stty -ixon => disable Ctrl-S / Ctrl-Q
 
 ###############################################################################
 
