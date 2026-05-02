@@ -55,6 +55,8 @@ install -D -m 0755 ~/uv-x86_64-unknown-linux-gnu/uv /usr/local/bin
 install -D -m 0755 ~/uv-x86_64-unknown-linux-gnu/uvx /usr/local/bin
 rm -rf ~/uv.tgz ~/uv-x86_64-unknown-linux-gnu
 uv generate-shell-completion zsh > /usr/share/zsh/vendor-completions/_uv
+# curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR=/usr/local/bin sh
+
 
 LNAV_VERSION=0.14.0
 curl -fsSLo ~/lnav.zip https://github.com/tstack/lnav/releases/download/v${LNAV_VERSION}-beta2/lnav-${LNAV_VERSION}-beta2-linux-musl-x86_64.zip
