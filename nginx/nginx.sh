@@ -14,6 +14,7 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/nginx.g
 apt update
 apt policy nginx
 apt install nginx
+apt install nginx-module-njs
 
 # https://github.com/tsenart/vegeta
 
