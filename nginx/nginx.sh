@@ -17,4 +17,4 @@ apt install nginx
 apt install nginx-module-njs
 
 # https://github.com/tsenart/vegeta
-
+# echo -n "username:" && openssl passwd -6 "your_password"
