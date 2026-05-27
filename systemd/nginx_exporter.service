@@ -15,12 +15,12 @@ After=network.target
 [Service]
 User=root
 Group=root
-ExecStart=/usr/local/bin/nginx_exporter --web.listen-address=127.0.0.1:9113 --nginx.scrape-uri=http://127.0.0.1/.metrics
+ExecStart=/usr/local/bin/nginx_exporter --web.listen-address=127.0.0.1:9113 --nginx.scrape-uri=http://127.0.0.1/metrics
 Restart=always
 RestartSec=3
 
 [Install]
 WantedBy=multi-user.target
 
-# curl -sSLO https://github.com/nginx/nginx-prometheus-exporter/releases/download/v1.4.2/nginx-prometheus-exporter_1.4.2_linux_amd64.tar.gz
-
+# curl -sSLO https://github.com/nginx/nginx-prometheus-exporter/releases/download/v1.5.1/nginx-prometheus-exporter_1.5.1_linux_amd64.tar.gz
+# curl -sSLO https://github.com/nginx/nginx-prometheus-exporter/releases/download/v1.5.1/nginx-prometheus-exporter_1.5.1_linux_arm64.tar.gz
