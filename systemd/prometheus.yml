@@ -33,7 +33,7 @@ scrape_configs:
 
 - job_name: "node"
   scheme: https
-  metrics_path: "/.metrics-node"
+  metrics_path: "/metrics-node"
   basic_auth:
     username: "admin"
     password: "..."
@@ -44,7 +44,7 @@ scrape_configs:
 
 - job_name: "nginx"
   scheme: https
-  metrics_path: "/.metrics-nginx"
+  metrics_path: "/metrics-nginx"
   basic_auth:
     username: "..."
     password: "..."
@@ -55,7 +55,7 @@ scrape_configs:
 
 - job_name: "postgres"
   scheme: https
-  metrics_path: "/.metrics-postgres"
+  metrics_path: "/metrics-postgres"
   basic_auth:
     username: "admin"
     password: "..."

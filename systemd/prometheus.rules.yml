@@ -74,6 +74,25 @@ groups:
       summary: "Instance {{ $labels.instance }} is down"
       description: "Instance {{ $labels.instance }} has been down for more than 1 minute."
 
+- name: health-alerts
+  rules:
+  - alert: health:slow
+    expr: rate(http_request_duration_seconds_sum[5m]) / rate(http_request_duration_seconds_count[5m]) > 1
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: "slow"
+      description: "Health check is taking more than 1 second on average."
+  - alert: health:up
+    expr: health_up == 0
+    for: 2m
+    labels:
+      severity: critical
+    annotations:
+      summary: "health down"
+      description: "Health check is down for more than 2 minutes."
+
 - name: odoo-alerts
   rules:
   - alert: odoo:server
