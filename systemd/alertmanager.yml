@@ -5,16 +5,16 @@ route:
   group_wait: 0s
   group_interval: 15s
   repeat_interval: 1h
-  receiver: '...'
+  receiver: 'gert'
   routes:
-  - receiver: clubit
+  - receiver: 'gert'
     matchers:
     - alertname = "node:network"
     mute_time_intervals:
     - restic
 
 receivers:
-- name: '...'
+- name: 'gert'
   email_configs:
   - smarthost: 'smtp.tem.scaleway.com:587'
     from: '...'
@@ -24,6 +24,9 @@ receivers:
     send_resolved: true
   discord_configs:
   - webhook_url: 'https://discord.com/api/webhooks/...'
+    send_resolved: true
+  webhook_configs:
+  - url: http://127.0.0.1:8006/debug
     send_resolved: true
 
 inhibit_rules:
