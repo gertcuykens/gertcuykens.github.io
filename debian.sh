@@ -11,7 +11,7 @@ set -eEuxo pipefail
 # apt update
 # apt upgrade
 # apt install ca-certificates && update-ca-certificates
-# apt install zsh vim curl git universal-ctags tree gnupg bzip2 smartmontools nvme-cli
+# apt install zsh vim curl git universal-ctags tree gnupg bzip2 smartmontools nvme-cli jq
 # apt autoremove --purge
 # apt clean
 
@@ -48,7 +48,7 @@ install -D -m 0755 ~/restic /usr/local/bin
 rm ~/restic
 restic generate --zsh-completion /usr/share/zsh/vendor-completions/_restic
 
-UV_VERSION=0.9.21
+UV_VERSION=0.11.16
 curl -fsSLo ~/uv.tgz https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-x86_64-unknown-linux-gnu.tar.gz
 tar -C ~ -xzf ~/uv.tgz
 install -D -m 0755 ~/uv-x86_64-unknown-linux-gnu/uv /usr/local/bin
