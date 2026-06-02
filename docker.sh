@@ -22,3 +22,5 @@ systemctl restart docker.service
 #     fi
 # }
 
+# usermod -aG docker ...
+
