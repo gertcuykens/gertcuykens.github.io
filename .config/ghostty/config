@@ -19,3 +19,5 @@ mouse-hide-while-typing = true
 
 # ghostty +validate-config
 # ghostty +show-config --default --docs
+# infocmp -x xterm-ghostty | ssh YOUR-SERVER -- tic -x -
+
