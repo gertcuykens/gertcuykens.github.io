@@ -1,17 +1,25 @@
 #!/bin/zsh
-# set -eEuxo pipefail
+set -eEuxo pipefail
 
 backup() {
-    print -r -- $1 $(date +'%y-%m-%d %H:%M:%S')
-    restic backup --tag "$1" --stdin-filename "/home/gert/$1.sql.gz" --stdin-from-command -- pg_dump -O -Z 6 "$1"
+    print -r -- "$1 $(date +'%y-%m-%d %H:%M:%S')"
+    restic backup --tag "$1" --stdin-filename "/home/odoo/$1.dump" --stdin-from-command -- pg_dump -F c -b -O -x "$1"
     restic backup --tag "$1" "/home/gert/filestore/$1"
 }
 
-# typeset -a PG
-PG=(...)
-for DB ("$PG[@]") {
-    backup $DB
-}
+if [[ -z "${1:-}" ]]; then
+    typeset -a PG
+    PG=()
+    for DB in "$PG[@]"; do
+        backup "$DB"
+    done
+    # print -r "Error: Missing database name argument." >&2
+    # exit 1
+else
+    backup "$1"
+fi
+
+# PG=( $(psql -Atc "SELECT datname FROM pg_database WHERE datistemplate = false AND datname != 'postgres';") )
 
 # restic backup --tag ... /home/...sql.gz
 # pg_dump -U postgres -O -Z 6 ... | restic backup --stdin --stdin-filename=/home/...sql.gz
@@ -21,6 +29,7 @@ for DB ("$PG[@]") {
 # restic prune
 # restic check
 
+# restic snapshots --latest 1 --group-by host
 # restic snapshots latest --path /home/...sql.gz --latest 1
 # restic ls latest --path /home/...sql.gz /home/...sql.gz
 # restic dump latest --path /home/...sql.gz /home/...sql.gz | gzip -d | head

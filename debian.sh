@@ -48,14 +48,14 @@ install -D -m 0755 ~/restic /usr/local/bin
 rm ~/restic
 restic generate --zsh-completion /usr/share/zsh/vendor-completions/_restic
 
-UV_VERSION=0.11.16
-curl -fsSLo ~/uv.tgz https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-x86_64-unknown-linux-gnu.tar.gz
-tar -C ~ -xzf ~/uv.tgz
-install -D -m 0755 ~/uv-x86_64-unknown-linux-gnu/uv /usr/local/bin
-install -D -m 0755 ~/uv-x86_64-unknown-linux-gnu/uvx /usr/local/bin
-rm -rf ~/uv.tgz ~/uv-x86_64-unknown-linux-gnu
+# UV_VERSION=0.11.16
+# curl -fsSLo ~/uv.tgz https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-x86_64-unknown-linux-gnu.tar.gz
+# tar -C ~ -xzf ~/uv.tgz
+# install -D -m 0755 ~/uv-x86_64-unknown-linux-gnu/uv /usr/local/bin
+# install -D -m 0755 ~/uv-x86_64-unknown-linux-gnu/uvx /usr/local/bin
+# rm -rf ~/uv.tgz ~/uv-x86_64-unknown-linux-gnu
+curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR=/usr/local/bin sh
 uv generate-shell-completion zsh > /usr/share/zsh/vendor-completions/_uv
-# curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR=/usr/local/bin sh
 
 
 LNAV_VERSION=0.14.0
