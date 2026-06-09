@@ -28,6 +28,8 @@ fi
 # restic forget --keep-daily 90
 # restic prune
 # restic check
+# restic repair index
+# restic repair snapshots --forget
 
 # restic snapshots --latest 1 --group-by host
 # restic snapshots latest --path /home/...sql.gz --latest 1
