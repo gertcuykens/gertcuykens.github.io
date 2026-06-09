@@ -1,0 +1,44 @@
+/var/log/wireguard.err
+/var/log/wireguard.log
+
+plutil -lint /Library/LaunchDaemons/com.wireguard.wg0.plist
+
+sudo chown root:wheel /Library/LaunchDaemons/com.wireguard.wg0.plist
+sudo chmod 644 /Library/LaunchDaemons/com.wireguard.wg0.plist
+
+sudo launchctl bootstrap system /Library/LaunchDaemons/com.wireguard.wg0.plist
+sudo launchctl enable system/com.wireguard.wg0
+sudo wg show
+
+sudo launchctl bootout system /Library/LaunchDaemons/com.wireguard.wg0.plist
+sudo launchctl print system/com.wireguard.wg0
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://apple.com">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.wireguard.wg0</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/bash</string>
+        <string>/opt/homebrew/bin/wg-quick</string>
+        <string>up</string>
+        <string>wg0</string>
+    </array>
+    <key>KeepAlive</key>
+    <true/>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/var/log/wireguard.log</string>
+    <key>StandardErrorPath</key>
+    <string>/var/log/wireguard.err</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+</dict>
+</plist>
+
