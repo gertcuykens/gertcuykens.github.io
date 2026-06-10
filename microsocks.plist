@@ -1,0 +1,54 @@
+# /etc/newsyslog.d/microsocks.conf
+# logfilename                      [owner:group]    mode count size when  flags
+/var/log/microsocks.err            root:wheel       644  5     1024 *     J
+/var/log/microsocks.log            root:wheel       644  5     1024 *     J
+# sudo newsyslog -vF
+
+plutil -lint /Library/LaunchDaemons/com.microsocks.wg0.plist
+
+sudo chown root:wheel /Library/LaunchDaemons/com.microsocks.wg0.plist
+sudo chmod 644 /Library/LaunchDaemons/com.microsocks.wg0.plist
+
+sudo launchctl bootstrap system /Library/LaunchDaemons/com.microsocks.wg0.plist
+sudo launchctl enable system/com.microsocks.wg0
+
+sudo launchctl bootout system /Library/LaunchDaemons/com.microsocks.wg0.plist
+sudo launchctl print system/com.microsocks.wg0
+
+# system or gui/$(id -u)
+# LaunchDaemons or LaunchAgents
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://apple.com">
+<plist version="1.0">
+<dict>
+
+    <key>Label</key>
+    <string>com.microsocks.wg0</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/microsocks.sh</string>
+    </array>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>/var/log/microsocks.out</string>
+
+    <key>StandardErrorPath</key>
+    <string>/var/log/microsocks.err</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+
+</dict>
+</plist>
+

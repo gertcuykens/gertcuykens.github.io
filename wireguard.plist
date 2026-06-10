@@ -1,5 +1,8 @@
-/var/log/wireguard.err
-/var/log/wireguard.log
+# /etc/newsyslog.d/wireguard.conf
+# logfilename                      [owner:group]    mode count size when  flags
+/var/log/wireguard.err            root:wheel       644  5     1024 *     J
+/var/log/wireguard.log            root:wheel       644  5     1024 *     J
+# sudo newsyslog -vF
 
 plutil -lint /Library/LaunchDaemons/com.wireguard.wg0.plist
 
