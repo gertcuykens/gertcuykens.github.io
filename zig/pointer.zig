@@ -53,3 +53,14 @@ test "" {
     const slice: []const i32 = &.{ 1, 2, 3, 4 };
 }
 
+const Point = struct { x: i32, y: i32 };
+
+var pt = Point{ .x = 10, .y = 20 };
+var ptr = &pt;
+ptr.x = 30; 
+pt.x = 30;
+
+var value: i32 = 5;
+const ptr = &value;
+ptr.* = 10; 
+
