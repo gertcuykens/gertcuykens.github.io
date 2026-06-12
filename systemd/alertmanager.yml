@@ -30,8 +30,8 @@ receivers:
     send_resolved: true
 
 inhibit_rules:
-- source_matchers: [severity="critical"]
-  target_matchers: [severity="warning"]
+- source_matchers: [severity='critical']
+  target_matchers: [severity='warning']
   equal: ['instance','job']
 
 time_intervals:
