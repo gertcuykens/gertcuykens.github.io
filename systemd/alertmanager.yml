@@ -32,7 +32,7 @@ receivers:
 inhibit_rules:
 - source_matchers: [severity="critical"]
   target_matchers: [severity="warning"]
-  equal: ['alertname','job']
+  equal: ['instance','job']
 
 time_intervals:
 - name: restic
