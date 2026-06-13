@@ -15,3 +15,5 @@ const array = [_]i32{ 1, 2, 3, 4 };
 
 // []{} slices
 const slice: *const [4]i32 = &.{ 1, 2, 3, 4 };
+
+// {} void
