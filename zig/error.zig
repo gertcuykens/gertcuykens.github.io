@@ -57,7 +57,6 @@ fn GenericMaybe(comptime T: type, comptime E: type) type {
                 .err => |err| return fallback_func(err),
             }
         }
-
     };
 }
 
@@ -135,8 +134,8 @@ test "andThen chaining" {
 fn handleDivisionByZero(err: MathErrors) GenericMaybe(u8, MathErrors) {
     const Container = GenericMaybe(u8, MathErrors);
     switch (err) {
-        .DivisionByZero => return Container{ .ok = 0 },
-        .Overflow => return Container{ .err = MathErrors.Overflow },
+        MathErrors.DivisionByZero => return Container{ .ok = 0 },
+        MathErrors.Overflow => return Container{ .err = MathErrors.Overflow },
     }
 }
 
@@ -161,4 +160,3 @@ test "orElse recovery" {
 
     try expectEqual(@as(u8, 42), try bypassed.unwrap());
 }
-

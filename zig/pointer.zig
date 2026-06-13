@@ -1,7 +1,7 @@
 const std = @import("std");
 const expectEqual = std.testing.expectEqual;
 
-test "" {
+test "a" {
     var arr = [_]u8{ 10, 20, 30, 40 };
 
     // Coerce a slice's pointer directly into a multi-item pointer
@@ -15,20 +15,17 @@ test "" {
     std.debug.print("Shifted Index 0: {}\n", .{shifted_ptr[0]}); // Prints 20
 }
 
-test "" {
+test "b" {
     const arr = [4]u8{ 10, 20, 30, 40 };
     // Address:  0x...1 0x...2 0x...3 0x...4
     // Value:    [ 10 ] [ 20 ] [ 30 ] [ 40 ]
 
-
     const slc1 = arr[1..3];
-    const slc2: []const u8 = .{ .ptr = &arr[1], .len = 2 };
+    const slc2 = arr[1..3];
+    // const slc2: []const u8 = .{ .ptr = &arr[1], .len = 2 };
 
-    // 1. Assert they point to the exact same memory address
     try expectEqual(slc1.ptr, slc2.ptr);
-
-    // 2. Assert they have the exact same length
-    try expectEqual((slc1.len, slc2.len);
+    try expectEqual(slc1.len, slc2.len);
 
     std.debug.print("Both slices are completely identical in memory!\n", .{});
 }
@@ -45,22 +42,25 @@ test "" {
 // | [:0]T          | Sentinel-slice      | Multi-ptr + Len + 0 tail. | Safe indexing + safe len read.  |
 // +----------------+---------------------+---------------------------+---------------------------------+
 
-test "" {
+test "c" {
     var array = [_]i32{ 1, 2, 3, 4 };
     var known_at_runtime_zero: usize = 0;
     _ = &known_at_runtime_zero;
     const slice = array[known_at_runtime_zero..array.len];
-    const slice: []const i32 = &.{ 1, 2, 3, 4 };
+    const ptr: *const [4]i32 = &.{ 1, 2, 3, 4 };
+    try expectEqual(slice[0], ptr[0]);
+    std.debug.print(" {} - {}\n", .{ slice[0], ptr[0] });
 }
 
-const Point = struct { x: i32, y: i32 };
+test "d" {
+    const Point = struct { x: i32, y: i32 };
+    var p = Point{ .x = 10, .y = 20 };
+    p.x = 30;
 
-var pt = Point{ .x = 10, .y = 20 };
-var ptr = &pt;
-ptr.x = 30; 
-pt.x = 30;
+    var ptr1 = &p;
+    ptr1.x = 30;
 
-var value: i32 = 5;
-const ptr = &value;
-ptr.* = 10; 
-
+    var value: i32 = 5;
+    const ptr2 = &value;
+    ptr2.* = 10;
+}
