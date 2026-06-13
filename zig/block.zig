@@ -6,3 +6,7 @@
 //     }
 // }.go;
 // run();
+
+// zig run hello.zig
+// zig test error2.zig
+// zig build ...
