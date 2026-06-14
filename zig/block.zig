@@ -6,3 +6,9 @@
 //     }
 // }.go;
 // run();
+
+// NO Type inference
+// var x T = .{}
+
+// Type inference
+// var x T = .f()
