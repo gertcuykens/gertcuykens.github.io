@@ -1,16 +1,17 @@
 // zig run hello.zig
-// zig build run
-
 // zig test error2.zig
-// zig build test --summary all --verbose
+// zig fetch --save "git+https://github.com/karlseguin/http.zig#master"
 
-// zig fetch --save git+https://github.com/zigzap/zap
+// zig build hello
+// zig build ... --summary all --verbose
 
 const std = @import("std");
 
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     const exe1 = b.addExecutable(.{
         .name = "hello",
@@ -20,24 +21,16 @@ pub fn build(b: *std.Build) void {
             .optimize = optimize,
         }),
     });
+
     b.installArtifact(exe1);
 
     const run_cmd1 = b.addRunArtifact(exe1);
     run_cmd1.step.dependOn(b.getInstallStep());
-    if (b.args) |args| {
-        run_cmd1.addArgs(args);
-    }
-    const run_step1 = b.step("run", "Run the app");
+
+    const run_step1 = b.step("hello", "Run the app");
     run_step1.dependOn(&run_cmd1.step);
 
-    const unit_tests = b.addTest(.{
-        .root_module = exe1.root_module,
-    });
-    const run_unit_tests = b.addRunArtifact(unit_tests);
-    const test_step = b.step("test", "Run unit tests");
-    test_step.dependOn(&run_unit_tests.step);
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     const exe2 = b.addExecutable(.{
         .name = "httpd",
@@ -48,18 +41,30 @@ pub fn build(b: *std.Build) void {
         }),
     });
 
-    const dep = b.dependency("zap", .{
+    const dep = b.dependency("httpz", .{
         .target = target,
         .optimize = optimize,
     });
-    exe2.root_module.addImport("zap", dep.module("zap"));
+    exe2.root_module.addImport("httpz", dep.module("httpz"));
 
     b.installArtifact(exe2);
 
     const run_cmd2 = b.addRunArtifact(exe2);
     run_cmd2.step.dependOn(b.getInstallStep());
+    if (b.args) |args| {
+        run_cmd2.addArgs(args);
+    }
 
     const run_step = b.step("httpd", "Run HTTP server");
     run_step.dependOn(&run_cmd2.step);
-}
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    const unit_tests = b.addTest(.{
+        .root_module = exe1.root_module,
+    });
+    const run_unit_tests = b.addRunArtifact(unit_tests);
+
+    const test_step = b.step("test", "Run unit tests");
+    test_step.dependOn(&run_unit_tests.step);
+}
