@@ -3,6 +3,7 @@ const std = @import("std");
 test "h" {
     var gpa: std.heap.DebugAllocator(.{}) = .init;
     defer std.testing.expect(gpa.deinit() == .ok) catch @panic("leak");
+    // defer _ = gpa.deinit();
     const allocator = gpa.allocator();
 
     var threaded: std.Io.Threaded = .init(allocator, .{});

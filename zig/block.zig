@@ -12,3 +12,4 @@
 
 // Type inference
 // var x T = .f()
+// var x T = .v

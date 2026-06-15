@@ -1,6 +1,7 @@
 // zig run hello.zig
 // zig test error2.zig
 // zig fetch --save "git+https://github.com/karlseguin/http.zig#master"
+// zig fetch --save "git+https://github.com/karlseguin/pg.zig#master"
 
 // zig build hello
 // zig build ... --summary all --verbose
@@ -59,9 +60,18 @@ pub fn build(b: *std.Build) void {
     run_step.dependOn(&run_cmd2.step);
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
+    const pg_module = b.dependency("pg", .{}).module("pg");
 
     const unit_tests = b.addTest(.{
-        .root_module = exe1.root_module,
+        .name = "test",
+        .root_module = b.createModule(.{
+            .root_source_file = b.path("db.zig"),
+            .target = target,
+            .optimize = optimize,
+            .imports = &.{
+                .{ .name = "pg", .module = pg_module },
+            },
+        }),
     });
     const run_unit_tests = b.addRunArtifact(unit_tests);
 
