@@ -13,3 +13,6 @@ apt policy clickhouse-client
 # apt install clickhouse-server
 # apt install clickhouse-keeper
 
+# curl https://clickhouse.com/ | CLICKHOUSE_ONLY=1 sh
+# sudo xattr -d com.apple.quarantine /opt/homebrew/bin/clickhouse
+

@@ -10,6 +10,10 @@
             .url = "git+https://github.com/karlseguin/pg.zig?ref=master#6884ec9703e541001825c48829d70115c515080b",
             .hash = "pg-0.0.0-Wp_7gbj_BgAb_T9wVKymIKU30RJKSr1pznch2S71RV3-",
         },
+        .clickzig = .{
+            .url = "git+https://github.com/JagritGumber/clickzig?ref=main#2a6a23c96b880624a1ef13a097c3e39214513e1d",
+            .hash = "clickzig-0.16.0-Gap7etu2BgBT_FDzoicYfEhRuxbYahwXZvEf90SJGT47",
+        },
     },
     .paths = .{""},
     .fingerprint = 0xc1ce1081d0111e4b,

@@ -2,6 +2,7 @@
 // zig test error2.zig
 // zig fetch --save "git+https://github.com/karlseguin/http.zig#master"
 // zig fetch --save "git+https://github.com/karlseguin/pg.zig#master"
+// zig fetch --save "git+https://github.com/JagritGumber/clickzig#main"
 
 // zig build hello
 // zig build ... --summary all --verbose
@@ -13,7 +14,6 @@ pub fn build(b: *std.Build) void {
     const optimize = b.standardOptimizeOption(.{});
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
-
     const exe1 = b.addExecutable(.{
         .name = "hello",
         .root_module = b.createModule(.{
@@ -32,7 +32,6 @@ pub fn build(b: *std.Build) void {
     run_step1.dependOn(&run_cmd1.step);
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
-
     const exe2 = b.addExecutable(.{
         .name = "httpd",
         .root_module = b.createModule(.{
@@ -61,20 +60,18 @@ pub fn build(b: *std.Build) void {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     const pg_module = b.dependency("pg", .{}).module("pg");
-
-    const unit_tests = b.addTest(.{
-        .name = "test",
-        .root_module = b.createModule(.{
-            .root_source_file = b.path("db.zig"),
-            .target = target,
-            .optimize = optimize,
-            .imports = &.{
-                .{ .name = "pg", .module = pg_module },
-            },
-        }),
+    const clickzig_module = b.dependency("clickzig", .{}).module("clickzig");
+    const test_module = b.createModule(.{
+        .target = target,
+        .optimize = optimize,
+        .root_source_file = b.path("db.zig"),
+        .imports = &.{
+            .{ .name = "pg", .module = pg_module },
+            .{ .name = "clickzig", .module = clickzig_module },
+        },
     });
-    const run_unit_tests = b.addRunArtifact(unit_tests);
 
-    const test_step = b.step("test", "Run unit tests");
-    test_step.dependOn(&run_unit_tests.step);
+    const unit_tests = b.addTest(.{ .name = "test", .root_module = test_module });
+    const run_unit_tests = b.addRunArtifact(unit_tests);
+    b.step("test", "Run unit tests").dependOn(&run_unit_tests.step);
 }
