@@ -72,6 +72,7 @@ test "Dereference * Unwrap ? Adress &" {
         const value = box.*;
         std.debug.print(" {}\n", .{value});
     }
+    // box read only
     if (b) |box| {
         const value = box;
         std.debug.print(" {}\n", .{value});
@@ -107,8 +108,6 @@ test "Dereference * Unwrap ? Adress &" {
 // const ComplexTypeTag = enum {...}
 // const ComplexType = union(ComplexTypeTag) {...}
 // switch (c) {
-//     .ok => |_, tag| {
-//         comptime std.debug.assert(tag == .ok);
-//     },
+//     .ok => |*value, tag| {value.* += 1; comptime std.debug.assert(tag == .ok);},
 //     .not_ok => unreachable,
 // }
