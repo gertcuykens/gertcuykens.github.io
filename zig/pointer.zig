@@ -65,8 +65,14 @@ test "d" {
     ptr2.* = 10;
 }
 
-// *T vs *const T
 // []T vs []const T
+test "*T vs *const T" {
+    var value: i32 = 10;
+    const p1: *i32 = &value;
+    p1.* = 20; // allowed to modify the value
+    // const p2: *const i32 = &value;
+    // p2.* = 30; // error: cannot assign to constant data
+}
 
 test "Dereference * Unwrap ? Adress &" {
     var b: ?i32 = 42;
