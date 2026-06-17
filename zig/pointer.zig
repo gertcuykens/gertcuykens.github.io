@@ -103,3 +103,12 @@ test "Dereference * Unwrap ? Adress &" {
 
 // two values |val, index| or |err, trace| only when using a for loop or a catch block.
 // try built-in shortcut for catch |err| return err;
+// https://ziglang.org/documentation/master/#Tagged-union
+// const ComplexTypeTag = enum {...}
+// const ComplexType = union(ComplexTypeTag) {...}
+// switch (c) {
+//     .ok => |_, tag| {
+//         comptime std.debug.assert(tag == .ok);
+//     },
+//     .not_ok => unreachable,
+// }
