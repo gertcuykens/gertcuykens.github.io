@@ -65,6 +65,9 @@ test "d" {
     ptr2.* = 10;
 }
 
+// *T vs *const T
+// []T vs []const T
+
 test "Dereference * Unwrap ? Adress &" {
     var b: ?i32 = 42;
     // b must be optional
