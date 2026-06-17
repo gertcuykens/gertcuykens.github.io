@@ -64,3 +64,42 @@ test "d" {
     const ptr2 = &value;
     ptr2.* = 10;
 }
+
+test "Dereference * Unwrap ? Adress &" {
+    var b: ?i32 = 42;
+    // b must be optional
+    if (b) |*box| {
+        const value = box.*;
+        std.debug.print(" {}\n", .{value});
+    }
+    if (b) |box| {
+        const value = box;
+        std.debug.print(" {}\n", .{value});
+    }
+    // Panics if b is null
+    std.debug.print(" {}\n", .{b.?});
+
+    const p: *?i32 = &b;
+    if (p.*) |value| {
+        std.debug.print(" {}\n", .{value});
+    }
+
+    var v: i32 = 42;
+    // not valid p must be optional
+    // const p: *i32 = &v;
+    // if (p) |ptr| {
+    //     const value = ptr.*;
+    //     std.debug.print(" {}\n", .{value});
+    // }
+
+    const optr: ?*i32 = &v;
+    if (optr) |ptr| {
+        const value = ptr.*;
+        std.debug.print(" {}\n", .{value});
+    }
+    // ?*i32 no extra byte needed same size as *i32, null = 0x...0
+    // *?i32 extra byte needed 16 bytes (8 for 64bit pointer + 8 for 64 bit data)
+}
+
+// two values |val, index| or |err, trace| only when using a for loop or a catch block.
+// try built-in shortcut for catch |err| return err;
