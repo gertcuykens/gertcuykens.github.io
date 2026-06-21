@@ -11,18 +11,26 @@ set hlsearch
 set encoding=utf-8
 set clipboard=unnamed
 set backspace=indent,eol,start
-set autochdir
 set list
 set listchars=trail:·,tab:»·,extends:›,precedes:‹,nbsp:␣
 set packpath^=~/.local/share/vim
 set viminfofile=~/.cache/vim/info
-set tags=./tags;
 set completeopt+=popup
-let g:fzf_layout={'window': 'enew'}
+
+if executable('rg')
+  set grepprg=rg\ --vimgrep\ --smart-case
+  set grepformat=%f:%l:%c:%m
+endif
+
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
 let g:loaded_netrwPlugin=1
 filetype plugin on
 colorscheme codedark
 syntax on
+
+
+" set autochdir
+" set tags=./tags;
+" let g:fzf_layout={'window': 'enew'}
 
