@@ -6,14 +6,16 @@ rm -rf ~/.local/share/vim
 mkdir -p ~/.local/share/vim/pack/gert/start/commentary
 mkdir -p ~/.local/share/vim/pack/gert/start/airline
 mkdir -p ~/.local/share/vim/pack/gert/start/fugitive
-mkdir -p ~/.local/share/vim/pack/gert/start/code
+mkdir -p ~/.local/share/vim/pack/gert/start/dark
+mkdir -p ~/.local/share/vim/pack/gert/start/zig
 mkdir -p ~/.config/vim
 mkdir -p ~/.cache/vim
 
 curl -fsSL https://github.com/tpope/vim-commentary/tarball/master | tar -xz -C ~/.local/share/vim/pack/gert/start/commentary --strip-components 1
 curl -fsSL https://github.com/vim-airline/vim-airline/tarball/master | tar -xz -C ~/.local/share/vim/pack/gert/start/airline --strip-components 1
 curl -fsSL https://github.com/tpope/vim-fugitive/tarball/master | tar -xz -C ~/.local/share/vim/pack/gert/start/fugitive --strip-components 1
-curl -fsSL https://github.com/tomasiser/vim-code-dark/tarball/master | tar -xz -C ~/.local/share/vim/pack/gert/start/code --strip-components 1
+curl -fsSL https://github.com/tomasiser/vim-code-dark/tarball/master | tar -xz -C ~/.local/share/vim/pack/gert/start/dark --strip-components 1
+curl -fsSL https://codeberg.org/ziglang/zig.vim/archive/master.tar.gz | tar -xz -C ~/.local/share/vim/pack/gert/start/zig --strip-components 1
 
 curl -fsSLo ~/.config/vim/vimrc https://gert.ovh/.config/vim/vimrc
 

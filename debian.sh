@@ -65,7 +65,7 @@ install -D -m 0755 ~/lnav-${LNAV_VERSION}/lnav /usr/local/bin
 rm ~/lnav.zip ~/lnav-${LNAV_VERSION}
 
 ZIG_VERSION=0.0.0
-curl -fsSLo /usr/share/zsh/vendor-completions/_zig https://raw.githubusercontent.com/ziglang/shell-completions/master/_zig
+curl -fsSLo /usr/share/zsh/vendor-completions/_zig https://codeberg.org/ziglang/shell-completions/raw/branch/master/_zig
 
 # TODO: install ctags
 # mkdir -p ~/.config/ctags
