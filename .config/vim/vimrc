@@ -57,6 +57,10 @@ if executable('rg')
   set grepformat=%f:%l:%c:%m
 endif
 
+nnoremap <leader>g :grep! "\b<C-R><C-W>\b"<CR>:copen<CR>
+nnoremap <C-j> :cnext<CR>
+nnoremap <C-k> :cprev<CR>
+
 " set autochdir
 " set tags=./tags;
 " let g:fzf_layout={'window': 'enew'}
