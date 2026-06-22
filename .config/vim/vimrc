@@ -23,7 +23,7 @@ filetype plugin on
 colorscheme codedark
 syntax on
 
-function! FzfQuickfixFilter()
+function! QuickfixFilter()
   let l:qf_list = getqflist()
   if empty(l:qf_list)
     echo "Quickfix list is empty!"
@@ -31,50 +31,63 @@ function! FzfQuickfixFilter()
   endif
 
   let l:lines = []
+  let l:idx = 0
   for item in l:qf_list
     if item.valid
       let l:bufname = bufname(item.bufnr)
-      call add(l:lines, l:bufname . ':' . item.lnum . ':' . item.text)
+      call add(l:lines, l:idx . ' ' . l:bufname . ':' . item.lnum . ':' . item.text)
     endif
+    let l:idx += 1
   endfor
 
-  let l:selection = system('fzf --ansi', join(l:lines, "\n"))
+  let l:selection = system('fzf --ansi -m', join(l:lines, "\n"))
 
   if v:shell_error == 0 && !empty(l:selection)
-    let l:parts = split(l:selection, ':')
-    execute 'edit ' . l:parts[0]
-    execute l:parts[1]
+    let l:filtered_qf = []
+    let l:chosen_lines = split(l:selection, "\n")
+
+    for l:line in l:chosen_lines
+      let l:idx_str = matchstr(l:line, '^\d\+')
+      if !empty(l:idx_str)
+        let l:orig_idx = str2nr(l:idx_str)
+        call add(l:filtered_qf, l:qf_list[l:orig_idx])
+      endif
+    endfor
+
+    " let l:saved_view = winsaveview()
+    call setqflist(l:filtered_qf, 'r')
+    " call winrestview(l:saved_view)
   endif
+
   redraw!
 endfunction
 
+
 if executable('fzf')
-  command! Cfilter call FzfQuickfixFilter()
+  command! Cfilter call QuickfixFilter()
+  augroup Fzf
+    autocmd!
+    autocmd FileType qf nnoremap <buffer> f :Cfilter<CR>
+    autocmd FileType qf nnoremap <buffer> q :cclose<CR>
+  augroup END
 endif
 
-if executable('rg')
-  set grepprg=rg\ --vimgrep\ --smart-case
-  set grepformat=%f:%l:%c:%m
-endif
-
-nnoremap <leader>g :silent grep! 
-vnoremap <leader>g "jy:execute "silent grep! " . shellescape(@j)<CR>
-nnoremap <C-j> :cnext<CR>
-nnoremap <C-k> :cprev<CR>
-
-function! OpenQuickfix()
+function! Search(query)
+  let l:cmd = "rg --vimgrep --smart-case " . shellescape(a:query)
+  cgetexpr system(l:cmd)
   if !empty(getqflist())
     copen
-    redraw!
   else
     redraw | echo "No matches found"
   endif
 endfunction
 
-augroup OpenGrepResults
-  autocmd!
-  autocmd QuickFixCmdPost *grep* call OpenQuickfix()
-augroup END
+if executable('rg')
+  nnoremap <leader>g :call Search(input('Search: '))<CR>
+  vnoremap <leader>g "jy:call Search(@j)<CR>
+  nnoremap <C-j> :cnext<CR>
+  nnoremap <C-k> :cprev<CR>
+endif
 
 
 " set autochdir
