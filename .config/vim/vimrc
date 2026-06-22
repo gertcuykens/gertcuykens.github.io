@@ -16,12 +16,6 @@ set listchars=trail:·,tab:»·,extends:›,precedes:‹,nbsp:␣
 set packpath^=~/.local/share/vim
 set viminfofile=~/.cache/vim/info
 set completeopt+=popup
-
-if executable('rg')
-  set grepprg=rg\ --vimgrep\ --smart-case
-  set grepformat=%f:%l:%c:%m
-endif
-
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
 let g:loaded_netrwPlugin=1
@@ -29,6 +23,39 @@ filetype plugin on
 colorscheme codedark
 syntax on
 
+function! FzfQuickfixFilter()
+  let l:qf_list = getqflist()
+  if empty(l:qf_list)
+    echo "Quickfix list is empty!"
+    return
+  endif
+
+  let l:lines = []
+  for item in l:qf_list
+    if item.valid
+      let l:bufname = bufname(item.bufnr)
+      call add(l:lines, l:bufname . ':' . item.lnum . ':' . item.text)
+    endif
+  endfor
+
+  let l:selection = system('fzf --ansi', join(l:lines, "\n"))
+
+  if v:shell_error == 0 && !empty(l:selection)
+    let l:parts = split(l:selection, ':')
+    execute 'edit ' . l:parts[0]
+    execute l:parts[1]
+  endif
+  redraw!
+endfunction
+
+if executable('fzf')
+  command! Cfilter call FzfQuickfixFilter()
+endif
+
+if executable('rg')
+  set grepprg=rg\ --vimgrep\ --smart-case
+  set grepformat=%f:%l:%c:%m
+endif
 
 " set autochdir
 " set tags=./tags;
