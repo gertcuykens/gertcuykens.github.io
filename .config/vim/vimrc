@@ -57,8 +57,8 @@ if executable('rg')
   set grepformat=%f:%l:%c:%m
 endif
 
-nnoremap <leader>g :grep!<Space>
-vnoremap <leader>g "jy:grep! <C-r>j<CR>
+nnoremap <leader>g :silent grep! 
+vnoremap <leader>g "jy:execute "silent grep! " . shellescape(@j)<CR>
 nnoremap <C-j> :cnext<CR>
 nnoremap <C-k> :cprev<CR>
 
