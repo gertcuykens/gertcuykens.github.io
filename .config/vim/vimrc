@@ -62,7 +62,19 @@ vnoremap <leader>g "jy:grep! <C-r>j<CR>
 nnoremap <C-j> :cnext<CR>
 nnoremap <C-k> :cprev<CR>
 
-autocmd QuickFixCmdPost *grep* copen
+function! OpenQuickfix()
+  if !empty(getqflist())
+    copen
+  else
+    echo "No matches found"
+  endif
+endfunction
+
+augroup OpenGrepResults
+  autocmd!
+  autocmd QuickFixCmdPost *grep* call OpenQuickfix()
+augroup END
+
 
 " set autochdir
 " set tags=./tags;
