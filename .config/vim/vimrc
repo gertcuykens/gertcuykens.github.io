@@ -65,6 +65,7 @@ nnoremap <C-k> :cprev<CR>
 function! OpenQuickfix()
   if !empty(getqflist())
     copen
+    redraw!
   else
     redraw | echo "No matches found"
   endif
