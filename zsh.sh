@@ -24,7 +24,7 @@ curl -fsSL https://github.com/ohmyzsh/ohmyzsh/tarball/master | tar -xz -C ~/.loc
 curl -fsSLo ~/.local/share/zsh/key-bindings.zsh https://raw.githubusercontent.com/junegunn/fzf/refs/heads/master/shell/key-bindings.zsh
 curl -fsSLo ~/.local/share/zsh/completion.zsh https://raw.githubusercontent.com/junegunn/fzf/refs/heads/master/shell/completion.zsh
 
-curl -fsSL https://github.com/zsh-users/zsh-completions/tarball/master | tar -xz -C ~/.local/share/zsh/site-functions --strip-components 2 "*/src/*"
+curl -fsSL https://github.com/zsh-users/zsh-completions/tarball/master | tar -xz -C ~/.local/share/zsh/site-functions --strip-components 2 --wildcards "*/src/*"
 
 curl -fsSLo ~/.local/bin/env https://gert.ovh/.local/bin/env
 curl -fsSLo ~/.zshrc https://gert.ovh/.zshrc
