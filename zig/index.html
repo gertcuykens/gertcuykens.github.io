@@ -31,11 +31,33 @@
             const response = await fetch('math.wasm');
             const { instance } = await WebAssembly.instantiateStreaming(response, importObject);
             window.z = instance.exports;
+            test(instance.exports)
             console.log("WASM z obj created successfully!", instance.exports);
         } catch (err) {
             console.error("Failed to load WASM:", err);
         }
+
+        async function test(obj) {
+            const inputString = "Hello Zig!";
+
+            const encoder = new TextEncoder();
+            const stringBytes = encoder.encode(inputString);
+            const len = stringBytes.length;
+
+            const ptr = obj.alloc(len);
+            if (ptr === 0) {
+                console.error("WASM allocation failed!");
+                return;
+            }
+
+            const wasmMemoryBuffer = new Uint8Array(obj.memory.buffer);
+            wasmMemoryBuffer.set(stringBytes, ptr);
+
+            const result = obj.sumStringChars(ptr, len);
+            console.log(`Sum of ASCII codes for "${inputString}":`, result);
+
+            obj.free(ptr, len);
+        }
     </script>
 </body>
 </html>
-
