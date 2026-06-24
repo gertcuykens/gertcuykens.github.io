@@ -121,6 +121,14 @@ png() {
   printf "\n"
 }
 
+bag() {
+    if [[ -z "$1" || -z "$2" ]]; then
+        echo "Usage: bag <file_path> <search_pattern>"
+        return 1
+    fi
+    tail -f "$1" | rg --line-buffered --color=always "$2" | bat --paging=never --language=log
+}
+
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.local/state/zsh/history
