@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zig WASM</title>
+</head>
+<body>
+    <h1>Zig WASM</h1>
+    <script type="module">
+        // zig build-lib math.zig -target wasm32-freestanding -dynamic -O ReleaseSmall
+        // zig build-lib math.zig -target wasm32-freestanding -dynamic -rdynamic
+        // python -m http.server 8080
+
+        // allocating 1 page = 64KB memory.
+        const wasmMemory = new WebAssembly.Memory({ initial: 1 });
+        const wasmTable = new WebAssembly.Table({ initial: 1, element: 'anyfunc' });
+
+        // Add the base offsets (0 means start at the beginning)
+        const importObject = {
+            env: {
+                memory: wasmMemory,
+                __indirect_function_table: wasmTable,
+                __memory_base: 0,
+                __table_base: 0,
+                abort: (msg, file, line, col) => {
+                    console.error(`WASM aborted ${file}:${line}:${col}`);
+                }
+            }
+        };
+
+        try {
+            const response = await fetch('math.wasm');
+            const { instance } = await WebAssembly.instantiateStreaming(response, importObject);
+            window.z = instance.exports;
+            console.log("WASM z obj created successfully!", instance.exports);
+        } catch (err) {
+            console.error("Failed to load WASM:", err);
+        }
+    </script>
+</body>
+</html>
+
