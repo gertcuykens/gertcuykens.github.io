@@ -15,6 +15,7 @@ export TZ="Europe/Brussels"
 # export SHELL_SESSION_DISABLE=1
 # export ZSH=~/.local/share/oh-my-zsh
 
+# tree -N -C {} -I ".git|.venv|__pycache__|node_modules" | head -500
 fdf() {
   local d="${2:-.}"
   [[ "$d" != */ ]] && d="$d/"
@@ -28,7 +29,7 @@ fdf() {
       --query="${1}" \
       --preview='
         if [[ -d {} ]]; then
-          tree -N -C {} -I ".git|.venv|__pycache__|node_modules" | head -500
+          eza --tree --icons=always --git --git-ignore {}
         else
           bat --color=always --style=plain --line-range=:500 {}
         fi')
