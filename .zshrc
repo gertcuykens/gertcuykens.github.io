@@ -150,7 +150,10 @@ autoload -Uz compinit && compinit -d ~/.cache/zsh/zcompdump
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.cache/zsh/zcompcache
 
-alias ls='ls --color=auto'
+alias ls='eza --icons=always --color=always'
+alias la='eza -a --icons=always'
+alias ll='eza -lF --icons=always --git --git-ignore'
+alias lt='eza --tree --icons=always --git --git-ignore'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'

@@ -84,3 +84,10 @@ mv /usr/local/bin/lib /usr/local/lib/zig
 rm ~/zig.txz
 curl -fsSLo /usr/share/zsh/vendor-completions/_zig https://codeberg.org/ziglang/shell-completions/raw/branch/master/_zig
 
+EZA_VERSION=$(curl -fsSL https://api.github.com/repos/eza-community/eza/releases/latest | jaq -r .tag_name)
+EZA_VERSION=${EZA_VERSION#v}
+curl -fsSLo ~/eza.tgz "https://github.com/eza-community/eza/releases/download/v${EZA_VERSION}/eza_x86_64-unknown-linux-gnu.tar.gz"
+tar -xzf ~/eza.tgz -C /usr/local/bin eza
+chown root:root /usr/local/bin/eza
+rm ~/eza.tgz
+
