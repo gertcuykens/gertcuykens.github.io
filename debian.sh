@@ -96,3 +96,9 @@ tar -xzf ~/starship.tgz -C /usr/local/bin starship
 chown root:root /usr/local/bin/starship
 rm ~/starship.tgz
 
+ZOXIDE_VERSION=$(curl -fsSL https://api.github.com/repos/ajeetdsouza/zoxide/releases/latest | jaq -r .tag_name)
+ZOXIDE_VERSION=${ZOXIDE_VERSION#v}
+curl -fssLo ~/zoxide.deb "https://github.com/ajeetdsouza/zoxide/releases/download/v${ZOXIDE_VERSION}/zoxide_${ZOXIDE_VERSION}-1_amd64.deb"
+dpkg -i ~/zoxide.deb
+rm ~/zoxide.deb 
+

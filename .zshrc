@@ -171,6 +171,7 @@ bindkey ${terminfo[kcud1]} history-substring-search-down
 # stty -ixon => disable Ctrl-S / Ctrl-Q
 
 eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
 
 ###############################################################################
 
