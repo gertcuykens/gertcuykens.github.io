@@ -121,11 +121,14 @@ png() {
   printf "\n"
 }
 
-bag() {
-    if [[ -z "$1" || -z "$2" ]]; then
-        echo "Usage: bag <file_path> <search_pattern>"
-        return 1
+tag() {
+    [[ -z "$1" ]] && { echo "Usage: tag <file_path> [<search_pattern>]"; return 1; }
+
+    if [[ -z "$2" ]]; then
+        tail -f "$1" | bat --paging=never --unbuffered --language=log
+        return 0
     fi
+
     tail -f "$1" | rg --line-buffered --color=always "$2" | bat --paging=never --language=log
 }
 
