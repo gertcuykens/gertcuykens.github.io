@@ -169,16 +169,19 @@ bindkey ${terminfo[kcud1]} history-substring-search-down
 # start / end =>  Ctrl-A / Ctrl-E
 # stty -ixon => disable Ctrl-S / Ctrl-Q
 
+eval "$(starship init zsh)"
+
 ###############################################################################
 
-_b() {
-  # git rev-parse --abbrev-ref HEAD 2>/dev/null
-  local b="$(git symbolic-ref --short HEAD 2>/dev/null)"
-  if [[ "${b}" != "" ]]; then
-    echo " ${b}"
-  else
-    echo ""
-  fi
-}
+# _b() {
+#   # git rev-parse --abbrev-ref HEAD 2>/dev/null
+#   local b="$(git symbolic-ref --short HEAD 2>/dev/null)"
+#   if [[ "${b}" != "" ]]; then
+#     echo " ${b}"
+#   else
+#     echo ""
+#   fi
+# }
 
-PROMPT='%n@%m %~%F{blue}$(_b)%F{none} %# '
+# PROMPT='%n@%m %~%F{blue}$(_b)%F{none} %# '
+
