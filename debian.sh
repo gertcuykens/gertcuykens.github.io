@@ -23,55 +23,47 @@ curl -fsSL https://astral.sh/uv/install.sh | UV_INSTALL_DIR=/usr/local/bin sh
 uv generate-shell-completion zsh > /usr/share/zsh/vendor-completions/_uv
 
 JAQ_VERSION=$(curl -fsSL https://api.github.com/repos/01mf02/jaq/releases/latest | jaq -r .tag_name) || JAQ_VERSION="v3.1.0"
-JAQ_VERSION=${JAQ_VERSION#v}
-curl -fsSLo /usr/local/bin/jaq "https://github.com/01mf02/jaq/releases/download/v${JAQ_VERSION}/jaq-x86_64-unknown-linux-gnu"
+curl -fsSLo /usr/local/bin/jaq "https://github.com/01mf02/jaq/releases/download/${JAQ_VERSION}/jaq-x86_64-unknown-linux-gnu"
 chmod +x /usr/local/bin/jaq
 
 BAT_VERSION=$(curl -fsSL https://api.github.com/repos/sharkdp/bat/releases/latest | jaq -r .tag_name)
-BAT_VERSION=${BAT_VERSION#v}
-curl -fsSLo ~/bat.deb https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/bat_${BAT_VERSION}_amd64.deb
+curl -fsSLo ~/bat.deb https://github.com/sharkdp/bat/releases/download/${BAT_VERSION}/bat_${BAT_VERSION#v}_amd64.deb
 dpkg -i ~/bat.deb
 rm ~/bat.deb
 
 FD_VERSION=$(curl -fsSL https://api.github.com/repos/sharkdp/fd/releases/latest | jaq -r .tag_name)
-FD_VERSION=${FD_VERSION#v}
-curl -fsSLo ~/fd.deb https://github.com/sharkdp/fd/releases/download/v${FD_VERSION}/fd_${FD_VERSION}_amd64.deb
+curl -fsSLo ~/fd.deb https://github.com/sharkdp/fd/releases/download/${FD_VERSION}/fd_${FD_VERSION#v}_amd64.deb
 dpkg -i ~/fd.deb
 rm ~/fd.deb
 
 RG_VERSION=$(curl -fsSL https://api.github.com/repos/BurntSushi/ripgrep/releases/latest | jaq -r .tag_name)
-RG_VERSION=${RG_VERSION#v}
-curl -fsSLo ~/ripgrep.deb https://github.com/BurntSushi/ripgrep/releases/download/${RG_VERSION}/ripgrep_${RG_VERSION}-1_amd64.deb
+curl -fsSLo ~/ripgrep.deb https://github.com/BurntSushi/ripgrep/releases/download/${RG_VERSION}/ripgrep_${RG_VERSION#v}-1_amd64.deb
 dpkg -i ~/ripgrep.deb
 rm ~/ripgrep.deb
 
 FZF_VERSION=$(curl -fsSL https://api.github.com/repos/junegunn/fzf/releases/latest | jaq -r .tag_name)
-FZF_VERSION=${FZF_VERSION#v}
-curl -fsSLo ~/fzf.tgz https://github.com/junegunn/fzf/releases/download/v${FZF_VERSION}/fzf-${FZF_VERSION}-linux_amd64.tar.gz
-tar -xzf ~/fzf.tgz -C /usr/local/bin "fzf"
+curl -fsSLo ~/fzf.tgz https://github.com/junegunn/fzf/releases/download/${FZF_VERSION}/fzf-${FZF_VERSION#v}-linux_amd64.tar.gz
+tar -xf ~/fzf.tgz -C /usr/local/bin "fzf"
 chown root:root /usr/local/bin/fzf
 rm ~/fzf.tgz
 fzf --zsh > /usr/share/zsh/vendor-completions/_fzf
 
 RESTIC_VERSION=$(curl -fsSL https://api.github.com/repos/restic/restic/releases/latest | jaq -r .tag_name)
-RESTIC_VERSION=${RESTIC_VERSION#v}
-curl -fsSLo ~/restic.bz2 https://github.com/restic/restic/releases/download/v${RESTIC_VERSION}/restic_${RESTIC_VERSION}_linux_amd64.bz2
+curl -fsSLo ~/restic.bz2 https://github.com/restic/restic/releases/download/${RESTIC_VERSION}/restic_${RESTIC_VERSION#v}_linux_amd64.bz2
 bunzip2 ~/restic.bz2
 install -D -m 0755 ~/restic /usr/local/bin
 rm ~/restic
 restic generate --zsh-completion /usr/share/zsh/vendor-completions/_restic
 
 NGINX_VERSION=$(curl -fsSL https://api.github.com/repos/nginx/nginx-prometheus-exporter/releases/latest | jaq -r .tag_name)
-NGINX_VERSION=${NGINX_VERSION#v}
-curl -fsSLo ~/nginx_exporter.tgz "https://github.com/nginx/nginx-prometheus-exporter/releases/download/v${NGINX_VERSION}/nginx-prometheus-exporter_${NGINX_VERSION}_linux_amd64.tar.gz"
-tar -xzf ~/nginx_exporter.tgz -C /usr/local/bin nginx-prometheus-exporter
+curl -fsSLo ~/nginx_exporter.tgz "https://github.com/nginx/nginx-prometheus-exporter/releases/download/${NGINX_VERSION}/nginx-prometheus-exporter_${NGINX_VERSION#v}_linux_amd64.tar.gz"
+tar -xf ~/nginx_exporter.tgz -C /usr/local/bin nginx-prometheus-exporter
 chown root:root /usr/local/bin/nginx-prometheus-exporter
 mv /usr/local/bin/nginx-prometheus-exporter /usr/local/bin/nginx_exporter
 rm ~/nginx_exporter.tgz
 
 NODE_VERSION=$(curl -fsSL https://api.github.com/repos/prometheus/node_exporter/releases/latest | jaq -r .tag_name)
-NODE_VERSION=${NODE_VERSION#v}
-curl -fsSLo ~/node_exporter.tgz "https://github.com/prometheus/node_exporter/releases/download/v${NODE_VERSION}/node_exporter-${NODE_VERSION}.linux-amd64.tar.gz"
+curl -fsSLo ~/node_exporter.tgz "https://github.com/prometheus/node_exporter/releases/download/${NODE_VERSION}/node_exporter-${NODE_VERSION#v}.linux-amd64.tar.gz"
 tar -xzf ~/node_exporter.tgz -C /usr/local/bin --strip-components=1 --wildcards "*/node_exporter"
 chown root:root /usr/local/bin/node_exporter
 rm ~/node_exporter.tgz
@@ -86,19 +78,23 @@ curl -fsSLo /usr/share/zsh/vendor-completions/_zig https://codeberg.org/ziglang/
 
 EZA_VERSION=$(curl -fsSL https://api.github.com/repos/eza-community/eza/releases/latest | jaq -r .tag_name)
 curl -fsSLo ~/eza.tgz "https://github.com/eza-community/eza/releases/download/${EZA_VERSION}/eza_x86_64-unknown-linux-gnu.tar.gz"
-tar -xzf ~/eza.tgz -C /usr/local/bin eza
+tar -xf ~/eza.tgz -C /usr/local/bin eza
 chown root:root /usr/local/bin/eza
 rm ~/eza.tgz
 
 STARSHIP_VERSION=$(curl -fsSL https://api.github.com/repos/starship/starship/releases/latest | jaq -r .tag_name)
 curl -fsSLo ~/starship.tgz "https://github.com/starship/starship/releases/download/${STARSHIP_VERSION}/starship-x86_64-unknown-linux-gnu.tar.gz"
-tar -xzf ~/starship.tgz -C /usr/local/bin starship
+tar -xf ~/starship.tgz -C /usr/local/bin starship
 chown root:root /usr/local/bin/starship
 rm ~/starship.tgz
 
 ZOXIDE_VERSION=$(curl -fsSL https://api.github.com/repos/ajeetdsouza/zoxide/releases/latest | jaq -r .tag_name)
-ZOXIDE_VERSION=${ZOXIDE_VERSION#v}
-curl -fssLo ~/zoxide.deb "https://github.com/ajeetdsouza/zoxide/releases/download/v${ZOXIDE_VERSION}/zoxide_${ZOXIDE_VERSION}-1_amd64.deb"
+curl -fsSLo ~/zoxide.deb "https://github.com/ajeetdsouza/zoxide/releases/download/${ZOXIDE_VERSION}/zoxide_${ZOXIDE_VERSION#v}-1_amd64.deb"
 dpkg -i ~/zoxide.deb
 rm ~/zoxide.deb 
+
+HELIX_VERSION=$(curl -fsSL https://api.github.com/repos/helix-editor/helix/releases/latest | jaq -r .tag_name)
+curl -fsSLo ~/hx.deb "https://github.com/helix-editor/helix/releases/download/${HELIX_VERSION}/helix_${HELIX_VERSION//.0/.}-1_amd64.deb"
+dpkg -i ~/hx.deb
+rm ~/hx.deb
 

@@ -9,3 +9,20 @@ CREATE TABLE events
 ENGINE = MergeTree
 ORDER BY (event_date, user_id);
 
+-- CREATE DATABASE testdb;
+USE testdb;
+SELECT currentDatabase();
+-- CREATE TABLE test_table (
+--     id UInt32,
+--     name String
+-- ) ENGINE = MergeTree()
+-- ORDER BY id;
+-- INSERT INTO test_table (id, name) VALUES (0, 'Hello world!');
+SELECT * FROM test_table;
+
+-- https://clickhouse.com/docs/operations/backup
+-- BACKUP DATABASE testdb TO Disk('backups', 'test.tar.gz');
+-- RESTORE DATABASE testdb AS testdb2 FROM Disk('s3_disk', 'test.tar.gz');
+
+-- chc --queries-file /root/system/clickhouse.sql
+
