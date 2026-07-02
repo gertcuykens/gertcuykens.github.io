@@ -10,10 +10,11 @@ font-family = "JetBrainsMono Nerd Font"
 font-size = 16
 # font-feature = ["calt", "liga"]
 mouse-hide-while-typing = true
+macos-option-as-alt = "left"
 
+# keybind = cmd+shift+c=unbind
 # keybind ctrl+v paste
 # keybind ctrl+c copy_or_interrupt
-
 # unbind ctrl+shift+v
 # unbind ctrl+shift+c
 
