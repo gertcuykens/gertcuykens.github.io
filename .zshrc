@@ -1,8 +1,8 @@
 setopt histignorealldups sharehistory prompt_subst
 
 export CLICOLOR=1
-export VISUAL="vim"
-export EDITOR="vim"
+export VISUAL="hx"
+export EDITOR="hx"
 export PYTHONNOUSERSITE=1
 export PYTHONUNBUFFERED=1
 export BAT_STYLE="plain"
@@ -39,7 +39,7 @@ fdf() {
     elif [[ $p == *.png ]]; then
       png "$p"
     else
-      vim "$p"
+      hx "$p"
     fi
   fi
 }
@@ -49,7 +49,7 @@ rgf() {
   : | fzf --no-sort --info=inline --ansi --disabled \
     --bind "start:reload:rg --with-filename --color=always --line-number --no-heading --smart-case \"${1}\" \"$d\" || true" \
     --bind "change:reload:rg --with-filename --color=always --line-number --no-heading --smart-case {q} \"$d\"  || true" \
-    --bind "enter:become(vim {1} +{2})" \
+    --bind "enter:become(hx {1} +{2})" \
     --delimiter ':' \
     --nth 3.. \
     --prompt="$d > " \
@@ -73,7 +73,7 @@ gr() {
   : | fzf --no-sort --info=inline --ansi --disabled \
     --bind "start:reload:git -C \"$d\" grep --color=always --line-number \"${1}\" || true" \
     --bind "change:reload:git -C \"$d\" grep --color=always --line-number {q} || true" \
-    --bind "enter:become(vim \"$d\"{1} +{2})" \
+    --bind "enter:become(hx \"$d\"{1} +{2})" \
     --delimiter : \
     --nth 3.. \
     --prompt="$d > " \
