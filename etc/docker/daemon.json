@@ -1,0 +1,6 @@
+{
+  "log-driver": "journald",
+  "ipv6": true,
+  "ip6tables": true,
+  "fixed-cidr-v6": "2001:...::/64"
+}
