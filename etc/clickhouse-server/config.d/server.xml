@@ -1,0 +1,6 @@
+<!-- /etc/clickhouse-server/config.d/server.xml -->
+<clickhouse>
+    <http_port remove="1"/>
+    <mysql_port remove="1"/>
+    <postgresql_port remove="1"/>
+</clickhouse>
