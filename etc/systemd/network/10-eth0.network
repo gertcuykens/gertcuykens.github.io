@@ -4,7 +4,7 @@
 Name=eth0
 
 [Network]
-Address=.../64
+Address=2001:.../64
 IPv6SendRA=yes
 DHCPv6PrefixDelegation=yes
 
@@ -13,11 +13,10 @@ Managed=yes
 OtherInformation=yes
 
 # systemctl restart systemd-networkd
-# sysctl -w net.ipv6.conf.eno12399np0.accept_ra=2
 # sysctl -w net.ipv6.conf.all.accept_ra=2
 # sysctl -w net.ipv6.conf.default.accept_ra=2
 # ip -6 route show
 # ip -6 route show default
-# ip -6 link set dev eno12399np0 up
-# ip -6 addr add 2001:bc8:1201:51c:b683:51ff:fe06:6c0c/64 dev eno12399np0
+# ip -6 link set dev eth0 up
+# ip -6 addr add 2001:.../64 dev eth0
 # ping6 -c 4 2001:4860:4860::8888
