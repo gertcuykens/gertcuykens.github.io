@@ -13,6 +13,8 @@ apt policy clickhouse-client
 # apt install clickhouse-server
 # apt install clickhouse-keeper
 
+# echo 'CLICKHOUSE_WATCHDOG_ENABLE=0' > /etc/default/clickhouse-server
+
 # curl https://clickhouse.com/ | CLICKHOUSE_ONLY=1 sh
 # sudo xattr -d com.apple.quarantine /opt/homebrew/bin/clickhouse
 
