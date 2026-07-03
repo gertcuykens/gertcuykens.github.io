@@ -4,13 +4,26 @@
 Name=eth0
 
 [Network]
-Address=2001:.../64
-IPv6SendRA=yes
+IPv6AcceptRA=yes
+# Address=2001:.../64
+# Gateway=fe80::...
+
+IPv6SendRA=no
+DHCPServer=no 
 DHCPv6PrefixDelegation=yes
 
+[DHCPv6]
+# WithoutRA=solicit
+RequestAddress=yes
+PrefixDelegation=yes
+
 [IPv6SendRA]
+# DHCPv6 yes / SLAAC no
 Managed=yes
 OtherInformation=yes
+
+[DHCPServer]
+DNS=2001:...
 
 # systemctl restart systemd-networkd
 # sysctl -w net.ipv6.conf.all.accept_ra=2
