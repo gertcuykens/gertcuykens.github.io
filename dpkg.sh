@@ -29,8 +29,11 @@ apt-get download mypackage
 dpkg-deb -x ...deb /tmp/pkg
 diff -u /etc/...conf /tmp/pkg/etc/...conf
 
-apt rdepends sysvinit-utils
+# apt rdepends sysvinit-utils
+
 debsums -c -e  # -c: changed files, -e: config files
+cruft-ng > cruft.txt
+updatedb
 
 fd . /etc -t f --full-path --hidden \
     --exclude .git \
@@ -48,4 +51,13 @@ done
 # https://packages.debian.org/name
 # https://packages.debian.org/src:name
 # https://packages.debian.org/file:path
+
+# /etc/cruft/ignore
+# /etc/letsencrypt
+# /var/lib/docker
+# /var/lib/containerd
+# /var/lib/authn
+# /var/lib/clickhouse
+# /var/log/letsencrypt
+# /usr/local/lib/zig
 
