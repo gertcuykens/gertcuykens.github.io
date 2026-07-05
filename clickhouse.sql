@@ -28,14 +28,12 @@ SELECT * FROM test_table;
 
 --
 
-CREATE ROLE clickhouse WITH LOGIN REPLICATION PASSWORD '...';
+CREATE ROLE clickhouse WITH LOGIN REPLICATION PASSWORD '...' SUPERUSER;
 GRANT CONNECT ON DATABASE ... TO clickhouse;
 GRANT USAGE ON SCHEMA public TO clickhouse;
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO clickhouse;
 ALTER DEFAULT PRIVILEGES FOR ROLE table_creator_role IN SCHEMA public GRANT SELECT ON TABLES TO clickhouse;
-CREATE PUBLICATION ..._ch_publication FOR TABLE public.users;
-SELECT pg_create_logical_replication_slot('..._slot', 'pgoutput');
-ALTER USER clickhouse WITH SUPERUSER;
+\ddp *table_creator_role* \dp \dn \l
 
 REASSIGN OWNED BY clickhouse TO postgres;
 DROP OWNED BY clickhouse;
@@ -43,7 +41,8 @@ DROP ROLE clickhouse;
 ALTER ROLE clickhouse NOSUPERUSER;
 ALTER DEFAULT PRIVILEGES FOR ROLE table_creator_role IN SCHEMA public REVOKE SELECT ON TABLES FROM clickhouse;
 
-ALTER TABLE ... REPLICA IDENTITY FULL;
+CREATE PUBLICATION ..._ch_publication FOR TABLE public.users;
+SELECT pg_create_logical_replication_slot('..._slot', 'pgoutput');
 
 SELECT pg_terminate_backend(active_pid) 
 FROM pg_replication_slots 
@@ -51,6 +50,7 @@ WHERE slot_name = '...' AND active = true;
 
 SELECT pg_drop_replication_slot('...');
 
+ALTER TABLE ... REPLICA IDENTITY FULL;
 ALTER SYSTEM SET wal_level = 'replica';
 
 SELECT
