@@ -1,9 +1,11 @@
 #!/bin/zsh
 
-sort_by_time=false
+sort_by="name"
 for arg in "$@"; do
   if [[ "$arg" == "--time" ]]; then
-    sort_by_time=true
+    sort_by="time"
+  elif [[ "$arg" == "--size" ]]; then
+    sort_by="size"
   fi
 done
 
@@ -11,13 +13,16 @@ restic snapshots \
   --latest 1 \
   --group-by host,tags,paths \
   --json \
-  | jaq --argjson sort_by_time "$sort_by_time" -r '
-      [ "Time", "Host", "Tags", "Paths", "ID" ],
-      [ "----", "----", "----", "-----", "--" ],
+  --no-lock \
+  | jaq --arg sort_by "$sort_by" -r '
+      [ "Time", "Host", "Tags", "Paths", "Size", "ID" ],
+      [ "----", "----", "----", "-----", "----", "--" ],
       (
         sort_by(
-          if $sort_by_time then
+          if $sort_by == "time" then
             [.snapshots[0].time, .group_key.hostname, .group_key.tags, .group_key.paths]
+          elif $sort_by == "size" then
+            [-(.snapshots | map(.summary.total_bytes_processed // 0) | add), .group_key.hostname]
           else
             [.group_key.hostname, .group_key.tags, .group_key.paths]
           end
@@ -28,8 +33,9 @@ restic snapshots \
         | [
             (.time[0:19] | sub("T"; " ")),
             $gk.hostname,
-            ($gk.tags | join(",")),
+            (if $gk.tags then $gk.tags | join(",") else "" end),
             ($gk.paths | join(",")),
+            ((((.summary.total_bytes_processed // 0) / 1024 / 1024 / 1024) * 100 | round / 100) | tostring),
             .short_id
           ]
       )
