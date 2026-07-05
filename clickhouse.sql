@@ -88,3 +88,8 @@ SELECT count() FROM d.t;
 
 DROP DATABASE IF EXISTS ...;
 
+--
+
+ALTER USER default IDENTIFIED WITH sha256_password BY '...';
+clickhouse hash-password --password '...'
+
