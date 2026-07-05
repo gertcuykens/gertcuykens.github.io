@@ -26,6 +26,8 @@ SELECT * FROM test_table;
 
 -- chc --queries-file /root/system/clickhouse.sql
 
+--
+
 CREATE ROLE clickhouse WITH LOGIN REPLICATION PASSWORD '...';
 GRANT CONNECT ON DATABASE ... TO clickhouse;
 GRANT USAGE ON SCHEMA public TO clickhouse;
@@ -43,6 +45,33 @@ ALTER DEFAULT PRIVILEGES FOR ROLE table_creator_role IN SCHEMA public REVOKE SEL
 
 ALTER TABLE ... REPLICA IDENTITY FULL;
 
+SELECT pg_terminate_backend(active_pid) 
+FROM pg_replication_slots 
+WHERE slot_name = '...' AND active = true;
+
+SELECT pg_drop_replication_slot('...');
+
+ALTER SYSTEM SET wal_level = 'replica';
+
+SELECT
+    slot_name, active,
+    pg_size_pretty(pg_wal_lsn_diff(pg_current_wal_lsn(), confirmed_flush_lsn)) AS wal,
+    pg_current_wal_lsn(), confirmed_flush_lsn, restart_lsn
+FROM pg_replication_slots
+WHERE slot_type = 'logical';
+
+SELECT
+    application_name, client_addr, state,
+    pg_wal_lsn_diff(pg_current_wal_lsn(), sent_lsn) AS sent,
+    pg_wal_lsn_diff(sent_lsn, write_lsn) AS write,
+    pg_wal_lsn_diff(write_lsn, flush_lsn) AS flush
+FROM pg_stat_replication;
+
+SELECT pid, age(clock_timestamp(), query_start), xact_start, query, state 
+FROM pg_stat_activity 
+WHERE state != 'idle' AND xact_start IS NOT NULL 
+ORDER BY xact_start ASC;
+
 --
 
 DESCRIBE TABLE postgresql('localhost:5432', 'db_name', 'table_name', 'clickhouse', '...');
@@ -59,6 +88,3 @@ SELECT count() FROM d.t;
 
 DROP DATABASE IF EXISTS ...;
 
-SELECT slot_name, plugin, slot_type, active FROM pg_replication_slots;
-SELECT pg_drop_replication_slot('...');
-ALTER SYSTEM SET wal_level = 'replica';
