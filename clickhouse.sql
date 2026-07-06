@@ -93,3 +93,20 @@ DROP DATABASE IF EXISTS ...;
 ALTER USER default IDENTIFIED WITH sha256_password BY '...';
 clickhouse hash-password --password '...'
 
+--
+
+ALTER TABLE system.metric_log DROP PARTITION tuple();
+ALTER TABLE system.asynchronous_metric_log DROP PARTITION tuple();
+ALTER TABLE system.query_log DROP PARTITION tuple();
+ALTER TABLE system.query_thread_log DROP PARTITION tuple();
+ALTER TABLE system.part_log DROP PARTITION tuple();
+ALTER TABLE system.trace_log DROP PARTITION tuple();
+
+SELECT 
+    table,
+    formatReadableSize(sum(total_bytes)) AS size_on_disk
+FROM system.tables
+WHERE database = 'system'
+GROUP BY table
+ORDER BY sum(total_bytes) DESC;
+
