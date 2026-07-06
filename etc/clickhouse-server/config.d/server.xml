@@ -3,4 +3,13 @@
     <http_port remove="1"/>
     <mysql_port remove="1"/>
     <postgresql_port remove="1"/>
+    <odbc_bridge><disable>true</disable></odbc_bridge>
+    <jdbc_bridge><disable>true</disable></jdbc_bridge>
+    <library_bridge><disable>true</disable></library_bridge>
+    <metric_log><remove>1</remove></metric_log>
+    <asynchronous_metric_log><remove>1</remove></asynchronous_metric_log>
+    <query_log><remove>1</remove></query_log>
+    <query_thread_log><remove>1</remove></query_thread_log>
+    <part_log><remove>1</remove></part_log>
+    <trace_log><remove>1</remove></trace_log>
 </clickhouse>
