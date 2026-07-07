@@ -1,33 +1,3 @@
-CREATE TABLE events
-(
-    event_date Date,
-    user_id    UInt64,
-    event_type String,
-    payload    String,
-    INDEX idx_event_type event_type TYPE set(100) GRANULARITY 1
-)
-ENGINE = MergeTree
-ORDER BY (event_date, user_id);
-
--- CREATE DATABASE testdb;
-USE testdb;
-SELECT currentDatabase();
--- CREATE TABLE test_table (
---     id UInt32,
---     name String
--- ) ENGINE = MergeTree()
--- ORDER BY id;
--- INSERT INTO test_table (id, name) VALUES (0, 'Hello world!');
-SELECT * FROM test_table;
-
--- https://clickhouse.com/docs/operations/backup
--- BACKUP DATABASE testdb TO Disk('backups', 'test.tar.gz');
--- RESTORE DATABASE testdb AS testdb2 FROM Disk('s3_disk', 'test.tar.gz');
-
--- chc --queries-file /root/system/clickhouse.sql
-
---
-
 CREATE ROLE clickhouse WITH LOGIN REPLICATION PASSWORD '...' SUPERUSER;
 GRANT CONNECT ON DATABASE ... TO clickhouse;
 GRANT USAGE ON SCHEMA public TO clickhouse;
@@ -77,30 +47,26 @@ ORDER BY xact_start ASC;
 DESCRIBE TABLE postgresql('localhost:5432', 'db_name', 'table_name', 'clickhouse', '...');
 
 SET allow_experimental_database_materialized_postgresql = 1;
-CREATE DATABASE ...db_name ENGINE = MaterializedPostgreSQL('localhost:5432', 'db_name', 'clickhouse', '...'
-)SETTINGS materialized_postgresql_tables_list = '...,...';
+
+CREATE DATABASE ...db_name ENGINE = MaterializedPostgreSQL('localhost:5432', 'db_name', 'clickhouse', '...')
+SETTINGS materialized_postgresql_tables_list = '...,...';
           -- materialized_postgresql_replication_slot = '..._slot',
           -- materialized_postgresql_snapshot = '..._ch_publication';
 
+--
+
 SELECT name, engine, metadata_path, uuid FROM system.databases WHERE name = '...';
 
-SELECT count() FROM d.t;
-
-DROP DATABASE IF EXISTS ...;
-
---
-
-ALTER USER default IDENTIFIED WITH sha256_password BY '...';
-clickhouse hash-password --password '...'
-
---
-
-ALTER TABLE system.metric_log DROP PARTITION tuple();
-ALTER TABLE system.asynchronous_metric_log DROP PARTITION tuple();
-ALTER TABLE system.query_log DROP PARTITION tuple();
-ALTER TABLE system.query_thread_log DROP PARTITION tuple();
-ALTER TABLE system.part_log DROP PARTITION tuple();
-ALTER TABLE system.trace_log DROP PARTITION tuple();
+SELECT
+    p.database,
+    p.table,
+    formatReadableSize(sum(p.bytes_on_disk)) AS size_on_disk,
+    sum(p.rows) AS total_rows,
+    t.data_paths[1] AS disk_location
+FROM system.parts AS p
+LEFT JOIN system.tables AS t ON p.database = t.database AND p.table = t.name
+WHERE p.database = '...'
+GROUP BY p.database, p.table, t.data_paths;
 
 SELECT 
     table,
@@ -109,4 +75,42 @@ FROM system.tables
 WHERE database = 'system'
 GROUP BY table
 ORDER BY sum(total_bytes) DESC;
+
+--
+
+SELECT count() FROM d.t;
+DROP DATABASE IF EXISTS ...;
+
+ALTER USER default IDENTIFIED WITH sha256_password BY '...';
+clickhouse hash-password --password '...'
+
+--
+
+CREATE TABLE events
+(
+    event_date Date,
+    user_id    UInt64,
+    event_type String,
+    payload    String,
+    INDEX idx_event_type event_type TYPE set(100) GRANULARITY 1
+)
+ENGINE = MergeTree
+ORDER BY (event_date, user_id);
+
+-- CREATE DATABASE testdb;
+USE testdb;
+SELECT currentDatabase();
+-- CREATE TABLE test_table (
+--     id UInt32,
+--     name String
+-- ) ENGINE = MergeTree()
+-- ORDER BY id;
+-- INSERT INTO test_table (id, name) VALUES (0, 'Hello world!');
+SELECT * FROM test_table;
+
+-- https://clickhouse.com/docs/operations/backup
+-- BACKUP DATABASE testdb TO Disk('backups', 'test.tar.gz');
+-- RESTORE DATABASE testdb AS testdb2 FROM Disk('s3_disk', 'test.tar.gz');
+
+-- chc --queries-file /root/system/clickhouse.sql
 

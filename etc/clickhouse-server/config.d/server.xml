@@ -12,6 +12,9 @@
     <text_log remove="1"/>
     <crash_log remove="1"/>
     <session_log remove="1"/>
+    <error_log remove="1"/>
+    <processors_profile_log remove="1"/>
+    <background_schedule_pool_log remove="1"/>
     <odbc_bridge><disable>true</disable></odbc_bridge>
     <jdbc_bridge><disable>true</disable></jdbc_bridge>
     <library_bridge><disable>true</disable></library_bridge>
