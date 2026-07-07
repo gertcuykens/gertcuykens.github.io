@@ -5,4 +5,4 @@ export RESTIC_REPOSITORY=s3:http://...
 export RESTIC_PASSWORD="..."
 export LESSHISTFILE="~/.local/state/less/history"
 export BAT_PAGER="never"
-
+export CLICKHOUSE_PASSWORD="..."
