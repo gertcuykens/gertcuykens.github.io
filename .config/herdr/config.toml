@@ -1,0 +1,8 @@
+[detection]
+auto_scanning = false
+# herdr pane state set --id $HERDR_PANE_ID "working"
+# herdr pane state set --id $HERDR_PANE_ID "blocked"
+# herdr pane state set --id $HERDR_PANE_ID "done"
+
+[update]
+manifest_check = false
