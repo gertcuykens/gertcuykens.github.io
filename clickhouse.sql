@@ -84,6 +84,12 @@ DROP DATABASE IF EXISTS ...;
 ALTER USER default IDENTIFIED WITH sha256_password BY '...';
 clickhouse hash-password --password '...'
 
+CREATE USER superset IDENTIFIED WITH sha256_password BY '...';
+GRANT SELECT, SHOW TABLES ON *.* TO superset;
+ALTER USER superset SETTINGS readonly = 2;
+SHOW GRANTS FOR superset;
+DROP USER IF EXISTS superset;
+
 --
 
 CREATE TABLE events
