@@ -1,3 +1,6 @@
+herdr --remote ssh://... --session default
+herdr server stop
+
 CTRL-T: Paste the selected file path(s) into the command line.
 CTRL-R: Fuzzy search and select from your shell history.
 ALT-C: Change directory to a selected directory.
