@@ -19,5 +19,6 @@ apt install nginx-module-njs
 # curl --fail https://nginx.org/keys/nginx_signing.key | gpg --dearmor > /etc/apt/keyrings/nginx.gpg
 # gpg --dry-run --quiet --no-keyring --import --import-options import-show /etc/apt/keyrings/nginx.gpg
 
+# echo "admin:$(openssl passwd -6)" > /etc/nginx/htpasswd
 # tail -f /var/log/nginx/access.log | rg --line-buffered --color=always "..." | bat --paging=never --language=log
 
