@@ -9,7 +9,7 @@
 # # machinectl shell/login odoo@... /bin/ls -la /var/lib/odoo
 # systemctl enable --now systemd-nspawn@....service
 # systemctl start systemd-nspawn@....service
-# nsenter --target $(systemctl show --property=MainPID --value systemd-nspawn@....service) --mount ls -la /var/lib/odoo
+# nsenter --target $(systemctl show --property=MainPID --value systemd-nspawn@....service) --mount /bin/bash
 
 [Exec]
 User=1000
