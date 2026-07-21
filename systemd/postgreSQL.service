@@ -1,4 +1,4 @@
-# cp /root/postgres.service /etc/systemd/system
+# cp postgres.service /etc/systemd/system
 # systemctl daemon-reload
 # systemctl enable postgres.service
 # systemctl start postgres.service

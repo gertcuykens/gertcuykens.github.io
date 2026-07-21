@@ -1,4 +1,4 @@
-# cp /root/system/odoo.service /etc/systemd/system
+# cp odoo.service /etc/systemd/system
 # systemctl daemon-reload
 # systemctl enable odoo.service
 # systemctl start odoo.service

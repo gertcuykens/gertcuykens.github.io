@@ -1,0 +1,33 @@
+# apt install systemd-container
+# docker create --name temp_export gertcuykens/...
+# docker export temp_export | tar -C /var/lib/machines/... -xf -
+# docker rm -v temp_export
+# /etc/systemd/nspawn/....nspawn
+# systemd-nspawn --machine=... --user=odoo /bin/bash
+# machinectl status ...
+# machinectl top ...
+# # machinectl shell/login odoo@... /bin/ls -la /var/lib/odoo
+# systemctl enable --now systemd-nspawn@....service
+# systemctl start systemd-nspawn@....service
+# nsenter --target $(systemctl show --property=MainPID --value systemd-nspawn@....service) --mount ls -la /var/lib/odoo
+
+[Exec]
+User=1000
+Boot=no
+ProcessTwo=yes
+Parameters=/usr/bin/odoo -c /etc/odoo/odoo.conf
+ResolvConf=replace-host
+
+[Files]
+Bind=/home/odoo/....conf:/etc/odoo/odoo.conf
+Bind=/home/odoo:/var/lib/odoo
+Bind=/run/postgresql:/run/postgresql
+
+[Network]
+VirtualEthernet=no
+
+# systemctl edit systemd-nspawn@....service
+# [Service]
+# ExecStart=
+# ExecStart=systemd-nspawn --quiet --keep-unit --settings=trusted --machine=%I
+# ProtectHome=no

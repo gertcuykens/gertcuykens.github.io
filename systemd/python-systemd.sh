@@ -10,4 +10,3 @@ docker rm python-systemd
 
 # ldd ...so
 # nm -u ...so
-
