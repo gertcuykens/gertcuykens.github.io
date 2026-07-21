@@ -16,6 +16,7 @@ User=1000
 Boot=no
 ProcessTwo=yes
 Parameters=/usr/bin/odoo -c /etc/odoo/odoo.conf
+# Parameters=/usr/bin/odoo -c /etc/odoo/odoo.conf -u all --no-http --workers=0 --stop-after-init
 ResolvConf=replace-host
 
 [Files]
