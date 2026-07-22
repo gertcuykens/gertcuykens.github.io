@@ -91,10 +91,15 @@ rm ~/starship.tgz
 ZOXIDE_VERSION=$(curl -fsSL https://api.github.com/repos/ajeetdsouza/zoxide/releases/latest | jaq -r .tag_name)
 curl -fsSLo ~/zoxide.deb "https://github.com/ajeetdsouza/zoxide/releases/download/${ZOXIDE_VERSION}/zoxide_${ZOXIDE_VERSION#v}-1_amd64.deb"
 dpkg -i ~/zoxide.deb
-rm ~/zoxide.deb 
+rm ~/zoxide.deb
 
 HELIX_VERSION=$(curl -fsSL https://api.github.com/repos/helix-editor/helix/releases/latest | jaq -r .tag_name)
 curl -fsSLo ~/hx.deb "https://github.com/helix-editor/helix/releases/download/${HELIX_VERSION}/helix_${HELIX_VERSION//.0/.}-1_amd64.deb"
 dpkg -i ~/hx.deb
 rm ~/hx.deb
 
+BUILDKIT_VERSION=$(curl -fsSL https://api.github.com/repos/moby/buildkit/releases/latest | jaq -r .tag_name)
+curl -fsSLo ~/buildkit.tgz "https://github.com/moby/buildkit/releases/download/${BUILDKIT_VERSION}/buildkit-${BUILDKIT_VERSION}.linux-amd64.tar.gz"
+tar -xf ~/buildkit.tgz -C /usr/local/bin --strip-components=1 bin/buildctl bin/buildkitd
+chown root:root /usr/local/bin/buildctl /usr/local/bin/buildkitd
+rm ~/buildkit.tgz
