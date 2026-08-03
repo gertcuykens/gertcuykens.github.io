@@ -1,3 +1,5 @@
+# ps -fp 2225356
+# ss -lptn 'sport = :8007'
 
 # mkdir -p ~/.config/ctags
 # curl -fsSLo ~/.config/ctags/py.ctags https://gert.ovh/.config/ctags/py.ctags

@@ -35,6 +35,9 @@ debsums -c -e  # -c: changed files, -e: config files
 cruft-ng > cruft.txt
 updatedb
 
+sync
+echo 3 > /proc/sys/vm/drop_caches
+
 fd . /etc -t f --full-path --hidden \
     --exclude .git \
     --exclude .venv \
