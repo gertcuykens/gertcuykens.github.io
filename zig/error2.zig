@@ -11,6 +11,12 @@ fn double(val: u8) u16 {
     return @as(u16, val) * 2;
 }
 
+// const value = parseNumber("catch is always used for errors") catch 0;
+// const x = try foo();
+// const x = foo() catch |err| { return err; };
+// var optional: ?u8 = 42;
+// if (optional) |*copy| { copy.* += 1;};
+
 test "zig native error and optional handling" {
     const runChain = struct {
         fn go(start: u8) MathErrors!u8 {
