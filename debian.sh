@@ -76,6 +76,11 @@ mv /usr/local/bin/lib /usr/local/lib/zig
 rm ~/zig.txz
 curl -fsSLo /usr/share/zsh/vendor-completions/_zig https://codeberg.org/ziglang/shell-completions/raw/branch/master/_zig
 
+ZLS_VERSION=$(curl -fsSL "https://api.github.com/repos/zigtools/zls/releases/latest" | jaq -r .tag_name)
+curl -fsSLo ~/zls.txz "https://github.com/zigtools/zls/releases/download/${ZLS_VERSION}/zls-x86-linux.tar.xz"
+tar -xf ~/zls.txz -C /usr/local/bin zls
+rm ~/zls.txz
+
 EZA_VERSION=$(curl -fsSL https://api.github.com/repos/eza-community/eza/releases/latest | jaq -r .tag_name)
 curl -fsSLo ~/eza.tgz "https://github.com/eza-community/eza/releases/download/${EZA_VERSION}/eza_x86_64-unknown-linux-gnu.tar.gz"
 tar -xf ~/eza.tgz -C /usr/local/bin eza
