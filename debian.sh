@@ -111,5 +111,5 @@ rm ~/buildkit.tgz
 
 LLVM_VERSION=$(curl -fsSL https://api.github.com/repos/llvm/llvm-project/releases/latest | jaq -r .tag_name)
 curl -fsSLo ~/llvm.txz "https://github.com/llvm/llvm-project/releases/download/${LLVM_VERSION}/LLVM${LLVM_VERSION#llvmorg}-Linux-X64.tar.xz"
-tar -xf ~/llvm.txz -C /usr/local/bin --strip-components=1 bin/lldb-dap
+tar -xf ~/llvm.txz -C /usr/local/bin --strip-components=2 LLVM${LLVM_VERSION#llvmorg}-Linux-X64/bin/lldb-dap
 rm ~/llvm.txz
