@@ -1,8 +1,10 @@
 const std = @import("std");
 
 pub fn main(init: std.process.Init) !void {
+    var x: c_int = 42;
+    x += 1;
     const io = init.io;
-    std.log.info("Application started", .{});
+    std.log.info("Application started {d}", .{x});
     std.debug.print("Simple math debug.\n", .{});
     try std.Io.File.stdout().writeStreamingAll(io, "Hello, World!\n");
 }

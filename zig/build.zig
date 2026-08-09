@@ -28,7 +28,7 @@ pub fn build(b: *std.Build) void {
     const run_cmd1 = b.addRunArtifact(exe1);
     run_cmd1.step.dependOn(b.getInstallStep());
 
-    const run_step1 = b.step("hello", "Run the app");
+    const run_step1 = b.step("hello", "Run hello app");
     run_step1.dependOn(&run_cmd1.step);
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
