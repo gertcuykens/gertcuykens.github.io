@@ -26,7 +26,7 @@ pub fn build(b: *std.Build) void {
         // },
     });
 
-    const exe = b.addExecutable(.{ .name = "nspawn", .root_module = nspawn });
+    const exe = b.addExecutable(.{ .name = "nspawn", .root_module = nspawn, .use_llvm = true });
     b.installArtifact(exe);
 
     // const exe = b.addTest(.{ .name = "test", .root_module = nspawn });

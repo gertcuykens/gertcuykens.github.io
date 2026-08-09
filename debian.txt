@@ -1,4 +1,8 @@
-# xcrun -f lldb-dap
+uv tool install debugpy
+
+uv python install 3.11
+uv python list
+xcrun -f lldb-dap
 
 # ps -fp 2225356
 # ss -lptn 'sport = :8007'

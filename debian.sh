@@ -109,7 +109,9 @@ tar -xf ~/buildkit.tgz -C /usr/local/bin --strip-components=1 bin/buildctl bin/b
 chown root:root /usr/local/bin/buildctl /usr/local/bin/buildkitd
 rm ~/buildkit.tgz
 
-LLVM_VERSION=$(curl -fsSL https://api.github.com/repos/llvm/llvm-project/releases/latest | jaq -r .tag_name)
-curl -fsSLo ~/llvm.txz "https://github.com/llvm/llvm-project/releases/download/${LLVM_VERSION}/LLVM${LLVM_VERSION#llvmorg}-Linux-X64.tar.xz"
-tar -xf ~/llvm.txz -C /usr/local/bin --strip-components=2 LLVM${LLVM_VERSION#llvmorg}-Linux-X64/bin/lldb-dap
-rm ~/llvm.txz
+# LLVM_VERSION=$(curl -fsSL https://api.github.com/repos/llvm/llvm-project/releases/latest | jaq -r .tag_name)
+# curl -fsSLo ~/llvm.txz "https://github.com/llvm/llvm-project/releases/download/${LLVM_VERSION}/LLVM${LLVM_VERSION#llvmorg}-Linux-X64.tar.xz"
+# tar -xf ~/llvm.txz -C /usr/local/bin --strip-components=2 LLVM${LLVM_VERSION#llvmorg}-Linux-X64/bin/lldb-dap LLVM${LLVM_VERSION#llvmorg}-Linux-X64/bin/lldb LLVM${LLVM_VERSION#llvmorg}-Linux-X64/bin/lldb-server
+# rm ~/llvm.txz
+# uv python install 3.11
+# apt install libncurses6

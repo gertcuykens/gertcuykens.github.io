@@ -14,22 +14,22 @@ pub fn build(b: *std.Build) void {
     const optimize = b.standardOptimizeOption(.{});
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
-    const exe1 = b.addExecutable(.{
-        .name = "hello",
-        .root_module = b.createModule(.{
-            .root_source_file = b.path("hello.zig"),
-            .target = target,
-            .optimize = optimize,
-        }),
-    });
+    // const exe1 = b.addExecutable(.{
+    //     .name = "hello",
+    //     .root_module = b.createModule(.{
+    //         .root_source_file = b.path("hello.zig"),
+    //         .target = target,
+    //         .optimize = optimize,
+    //     }),
+    // });
 
-    b.installArtifact(exe1);
+    // b.installArtifact(exe1);
 
-    const run_cmd1 = b.addRunArtifact(exe1);
-    run_cmd1.step.dependOn(b.getInstallStep());
+    // const run_cmd1 = b.addRunArtifact(exe1);
+    // run_cmd1.step.dependOn(b.getInstallStep());
 
-    const run_step1 = b.step("hello", "Run hello app");
-    run_step1.dependOn(&run_cmd1.step);
+    // const run_step1 = b.step("hello", "Run hello app");
+    // run_step1.dependOn(&run_cmd1.step);
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     const exe2 = b.addExecutable(.{

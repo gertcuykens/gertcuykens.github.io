@@ -1,0 +1,5 @@
+#!/bin/zsh
+export PYTHONHOME="/root/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu"
+export PYTHONPATH="$PYTHONHOME/lib/python3.11"
+export LD_LIBRARY_PATH="$PYTHONHOME/lib:$LD_LIBRARY_PATH"
+exec /usr/local/bin/.lldb-dap "$@"
