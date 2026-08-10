@@ -24,7 +24,7 @@ pub fn build(b: *std.Build) void {
     // const pg_module = b.dependency("pg", .{}).module("pg");
     // const clickzig_module = b.dependency("clickzig", .{}).module("clickzig");
 
-    const nspawn = b.createModule(.{
+    const hello = b.createModule(.{
         .target = target,
         .optimize = optimize,
         .link_libc = true,
@@ -35,18 +35,25 @@ pub fn build(b: *std.Build) void {
         // },
     });
 
-    nspawn.addOptions("build_config", build_options);
+    hello.addOptions("build_config", build_options);
 
-    const x = b.addExecutable(.{ .name = "hello", .root_module = nspawn, .use_llvm = true });
+    const x = b.addExecutable(.{ .name = "hello", .root_module = hello, .use_llvm = true });
     b.installArtifact(x);
-    // const r = b.addRunArtifact(x);
-    // b.step("hello", "run hello").dependOn(&r.step);
-    // r.step.dependOn(b.getInstallStep());
-    // if (b.args) |args| {
-    //     r.addArgs(args);
-    // }
 
-    const t = b.addTest(.{ .name = "test", .root_module = nspawn });
+    // const r = b.addRunArtifact(x);
+    // if (b.args) |args| { r.addArgs(args); }
+    // const s = b.step("hello", "run hello")
+    // s.dependOn(&r.step);
+    // s.dependOn(b.getInstallStep());
+
+    const t = b.addTest(.{ .name = "test", .root_module = hello });
+    const a = b.addInstallArtifact(t, .{});
+
     const r = b.addRunArtifact(t);
-    b.step("test", "Run unit tests").dependOn(&r.step);
+    if (b.args) |args| {
+        r.addArgs(args);
+    }
+    const s = b.step("test", "Run unit tests");
+    s.dependOn(&a.step);
+    s.dependOn(&r.step);
 }
