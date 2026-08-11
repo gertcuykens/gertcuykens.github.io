@@ -33,7 +33,6 @@ async def main() -> int:
     from sqlmodel import SQLModel
     from starlette.middleware.sessions import SessionMiddleware
 
-    from lib.main import app
     from run.settings import Settings
 
     settings = Settings()
