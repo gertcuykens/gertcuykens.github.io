@@ -10,7 +10,7 @@ async def main() -> int:
     from sqlalchemy.ext.asyncio import create_async_engine
     from sqlmodel import SQLModel
 
-    from app.main import app
+    from lib.main import app
     from run.settings import Settings
 
     settings = Settings()
@@ -24,7 +24,7 @@ async def main() -> int:
     return 0
 
 
-def run() -> None:
+def app() -> None:
     raise SystemExit(asyncio.run(main()))
 
 

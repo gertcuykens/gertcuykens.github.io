@@ -29,7 +29,7 @@ run = [
 ]
 
 [project.scripts]
-gert = "run.main:run"
+app = "run.main:app"
 
 [dependency-groups]
 tests = [
