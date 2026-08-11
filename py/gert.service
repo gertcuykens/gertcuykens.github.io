@@ -1,0 +1,44 @@
+# cp gert.service /etc/systemd/system
+# systemctl daemon-reload
+# systemctl enable gert.service
+# systemctl start gert.service
+# systemctl status gert.service
+# systemctl show gert.service -p Environment
+# systemd-analyze verify gert.service
+# systemd-analyze security gert.service
+# journalctl -u gert.service
+
+# useradd --system -m --home-dir /var/lib/gert -k /dev/null --shell /sbin/nologin -c "..." gert
+# userdel -r gert
+
+# scp dist/gert-0.1.0-py3-none-any.whl root@...:/var/lib/gert
+# scp gert.html root@...:/usr/share/nginx/html
+
+# HOME=/var/lib/gert uv python install
+# HOME=/var/lib/gert uv venv .venv --python 3.14
+# HOME=/var/lib/gert uv pip install gert-0.1.0-py3-none-any.whl
+# chown -R gert:gert /var/lib/gert
+
+# createuser -P -I -e gert
+# createdb -O gert gert
+
+[Unit]
+Description=gert
+Documentation=https://...
+After=network.target
+
+[Service]
+User=gert
+Group=gert
+Type=simple
+WorkingDirectory=/var/lib/gert
+Environment="DATABASE_URL=postgresql+asyncpg://gert@/gert?host=/run/postgresql"
+Environment="JWKS_URL=https://.../.well-known/jwks.json"
+ExecStart=/var/lib/gert/.venv/bin/gert
+Restart=always
+StandardOutput=journal
+StandardError=journal
+ProtectSystem=full
+
+[Install]
+WantedBy=default.target

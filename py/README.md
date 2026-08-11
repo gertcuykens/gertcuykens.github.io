@@ -12,7 +12,7 @@ uv run --group tests pytest --cov=lib --cov-report=html
 uv run --group tests pytest tests/test_settings.py::test_settings_defaults
 uv run app
 
-# PKG
+# BUILD
 uv build
 uv pip install -e ".[run]
 
