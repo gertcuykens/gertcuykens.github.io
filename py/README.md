@@ -8,7 +8,7 @@ uv venv --python ~/.local/bin/python3.14
 uv sync --upgrade --all-groups --all-extras --reinstall
 
 # RUN
-uv run --group tests pytest --cov=run --cov-report=html
+uv run --group tests pytest --cov=lib --cov-report=html
 uv run --group tests pytest tests/test_settings.py::test_settings_defaults
 uv run app
 
