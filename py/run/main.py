@@ -30,6 +30,8 @@ def configure_loggers(level: int) -> None:
             existing_logger.setLevel(level)
             existing_logger.propagate = True
 
+    logging.getLogger("sqlalchemy.engine").setLevel(logging.WARNING)
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
