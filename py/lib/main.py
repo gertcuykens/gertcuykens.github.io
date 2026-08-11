@@ -1,27 +1,9 @@
-from typing import AsyncGenerator
-
-from fastapi import Depends, FastAPI, Request
-from fastapi.concurrency import asynccontextmanager
+from fastapi import Depends, FastAPI
 
 # from sqlmodel import SQLModel, select
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-
-# todo: move to run/main.py
-async def get_session(request: Request) -> AsyncGenerator[AsyncSession, None]:
-    async with AsyncSession(
-        request.app.state.engine, expire_on_commit=False
-    ) as session:
-        yield session
-
-
-# todo: move to run/main.py
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    app.state.logger.debug("Starting app lifespan")
-    yield
-    app.state.logger.debug("Stopped app lifespan")
-
+from run.main import get_session, lifespan
 
 app = FastAPI(title="Hello World API", lifespan=lifespan)
 

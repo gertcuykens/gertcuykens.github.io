@@ -1,8 +1,27 @@
 import asyncio
 import logging
+from typing import AsyncGenerator
+
+from fastapi import FastAPI, Request
+from fastapi.concurrency import asynccontextmanager
+from sqlmodel.ext.asyncio.session import AsyncSession
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
+async def get_session(request: Request) -> AsyncGenerator[AsyncSession, None]:
+    async with AsyncSession(
+        request.app.state.engine, expire_on_commit=False
+    ) as session:
+        yield session
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    app.state.logger.debug("Starting app lifespan")
+    yield
+    app.state.logger.debug("Stopped app lifespan")
 
 
 async def main() -> int:
