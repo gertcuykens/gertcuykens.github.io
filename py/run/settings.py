@@ -7,7 +7,7 @@ class Settings(BaseSettings):
         "postgresql+asyncpg://postgres@localhost/postgres?host=/run/postgresql"
     )
     # openssl rand -base64 32 | tr -dc 'A-Za-z0-9' | head -c 32; echo
-    private_key: SecretStr = SecretStr("")
+    secret: SecretStr = SecretStr("jnF6I9stGpLhl6lMuIsdfEQZaSHzkGCQ")
     debug: bool = False
 
     model_config = SettingsConfigDict(

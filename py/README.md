@@ -10,8 +10,28 @@ uv sync --upgrade --all-groups --all-extras --reinstall
 # RUN
 uv run --group tests pytest --cov=run --cov-report=html
 uv run --group tests pytest tests/test_settings.py::test_settings_defaults
-uv run uvicorn app.main:app --loop uvloop --http httptools
-uv pip install -e ".[run]"
-uv run gert
+uv run app
+
+# PKG
+uv build
+uv pip install -e ".[run]
 
 # TODO: WebTranspor
+
+# SQL
+alembic init -t async schema
+
+alembic.ini
+script_location = schema
+sqlalchemy.url = postgresql+asyncpg://...@/...?host=/run/postgresql
+
+schema/env.py
+from sqlmodel import SQLModel
+from lib.model import User, Credential
+target_metadata = SQLModel.metadata
+
+schema/script.py.mako
+import sqlmodel
+
+alembic revision --autogenerate -m "create tables"
+alembic upgrade head --sql

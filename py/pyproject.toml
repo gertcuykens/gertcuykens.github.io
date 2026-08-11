@@ -38,7 +38,7 @@ tests = [
   "pytest-aiohttp",
   "pytest-env"
 ]
-schema = ["alembic"]
+model = ["alembic"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
