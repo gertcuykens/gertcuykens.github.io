@@ -14,7 +14,7 @@ uv run app
 
 # BUILD
 uv build
-uv pip install -e ".[run]
+uv pip install -e ".[run]"
 
 # TODO: WebTranspor, uv build
 
