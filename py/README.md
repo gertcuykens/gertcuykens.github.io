@@ -14,9 +14,11 @@ uv run app
 
 # BUILD
 uv build
+cp .env ...
 uv pip install -e ".[run]"
+uv pip install "gert[run] @gert-0.1.0-py3-none-any.whl"
 
-# TODO: WebTranspor, uv build
+# TODO: WebTranspor
 
 # SQL
 alembic init -t async schema
