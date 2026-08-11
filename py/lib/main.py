@@ -7,6 +7,7 @@ from fastapi.concurrency import asynccontextmanager
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 
+# todo: move to run/main.py
 async def get_session(request: Request) -> AsyncGenerator[AsyncSession, None]:
     async with AsyncSession(
         request.app.state.engine, expire_on_commit=False
@@ -14,6 +15,7 @@ async def get_session(request: Request) -> AsyncGenerator[AsyncSession, None]:
         yield session
 
 
+# todo: move to run/main.py
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     app.state.logger.debug("Starting app lifespan")
