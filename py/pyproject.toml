@@ -1,0 +1,63 @@
+[build-system]
+requires = ["uv-build"]
+build-backend = "uv_build"
+
+[project]
+name = "gert"
+version = "0.1.0"
+description = "FastAPI ..."
+readme = "README.md"
+license = "AGPL-3.0-or-later"
+authors = [{ name = "Gert Cuykens" }]
+requires-python = ">=3.14"
+dependencies = [
+  "fastapi",
+  "aiohttp",
+  "sqlmodel",
+  "greenlet",
+  "asyncpg",
+  "itsdangerous",
+  "jwcrypto"
+]
+
+[project.optional-dependencies]
+run = [
+    "uvicorn",
+    "uvloop",
+    "httptools",
+    "pydantic-settings"
+]
+
+[project.scripts]
+gert = "run.main:run"
+
+[dependency-groups]
+tests = [
+  "pytest-asyncio",
+  "pytest-cov",
+  "pytest-aiohttp",
+  "pytest-env"
+]
+schema = ["alembic"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+log_cli = true
+log_cli_level = "INFO"
+
+[tool.pytest_env]
+env_files = ["tests/.env"]
+
+[tool.coverage.report]
+exclude_also = [
+    "def main\\(\\) -> int:",
+    "if __name__ == .__main__.:"
+]
+
+[tool.ruff]
+format.preview = true
+
+[tool.uv.build-backend]
+module-name = []
+module-root = ""
