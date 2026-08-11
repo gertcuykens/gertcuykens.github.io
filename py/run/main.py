@@ -24,6 +24,9 @@ async def lifespan(app: FastAPI):
     app.state.logger.debug("Stopped app lifespan")
 
 
+app = FastAPI(title="Hello World API", lifespan=lifespan)
+
+
 async def main() -> int:
     import uvicorn
     from sqlalchemy.ext.asyncio import create_async_engine
@@ -36,6 +39,7 @@ async def main() -> int:
     settings = Settings()
     logger.level = logging.DEBUG if settings.debug else logging.INFO
     logger.debug("Starting app with settings: %s", settings)
+
     app.state.logger = logger
     app.state.engine = create_async_engine(str(settings.database_url), echo=False)
     app.add_middleware(
@@ -50,7 +54,7 @@ async def main() -> int:
     return 0
 
 
-def app() -> None:
+def exe() -> None:
     raise SystemExit(asyncio.run(main()))
 
 

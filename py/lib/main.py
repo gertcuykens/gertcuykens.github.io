@@ -1,11 +1,9 @@
-from fastapi import Depends, FastAPI
+from fastapi import Depends
 
 # from sqlmodel import SQLModel, select
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-from run.main import get_session, lifespan
-
-app = FastAPI(title="Hello World API", lifespan=lifespan)
+from run.main import app, get_session
 
 
 @app.get("/")
