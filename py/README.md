@@ -16,7 +16,7 @@ uv run app
 uv build
 uv pip install -e ".[run]
 
-# TODO: WebTranspor
+# TODO: WebTranspor, uv build
 
 # SQL
 alembic init -t async schema
