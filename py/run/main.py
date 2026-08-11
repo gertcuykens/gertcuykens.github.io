@@ -1,55 +1,63 @@
 import asyncio
 import logging
-from typing import AsyncGenerator
 
-from fastapi import FastAPI, Request
+import uvicorn
+from fastapi import FastAPI
 from fastapi.concurrency import asynccontextmanager
-from sqlmodel.ext.asyncio.session import AsyncSession
+from sqlalchemy.ext.asyncio import create_async_engine
+from sqlmodel import SQLModel
+from starlette.middleware.sessions import SessionMiddleware
 
-logging.basicConfig(level=logging.INFO)
+from lib.main import router
+from run import dependencies
+from run.settings import Settings
+
 logger = logging.getLogger(__name__)
 
 
-async def get_session(request: Request) -> AsyncGenerator[AsyncSession, None]:
-    async with AsyncSession(
-        request.app.state.engine, expire_on_commit=False
-    ) as session:
-        yield session
+def configure_loggers(level: int) -> None:
+    formatter = logging.Formatter("%(asctime)s %(levelname)s %(name)s: %(message)s")
+    handler = logging.StreamHandler()
+    handler.setFormatter(formatter)
+
+    root_logger = logging.getLogger()
+    root_logger.handlers = [handler]
+    root_logger.setLevel(level)
+
+    for existing_logger in logging.root.manager.loggerDict.values():
+        if isinstance(existing_logger, logging.Logger):
+            existing_logger.handlers.clear()
+            existing_logger.setLevel(level)
+            existing_logger.propagate = True
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    app.state.logger.debug("Starting app lifespan")
+    logger.debug("Starting app lifespan")
     yield
-    app.state.logger.debug("Stopped app lifespan")
+    logger.debug("Stopped app lifespan")
 
 
 app = FastAPI(title="Hello World API", lifespan=lifespan)
+app.include_router(router)
 
 
 async def main() -> int:
-    import uvicorn
-    from sqlalchemy.ext.asyncio import create_async_engine
-    from sqlmodel import SQLModel
-    from starlette.middleware.sessions import SessionMiddleware
-
-    from run.settings import Settings
-
     settings = Settings()
-    logger.level = logging.DEBUG if settings.debug else logging.INFO
+    log_level = logging.DEBUG if settings.debug else logging.INFO
+    configure_loggers(log_level)
     logger.debug("Starting app with settings: %s", settings)
-
-    app.state.logger = logger
-    app.state.engine = create_async_engine(str(settings.database_url), echo=False)
+    engine = create_async_engine(str(settings.database_url), echo=False)
+    dependencies.engine = engine
     app.add_middleware(
         SessionMiddleware, secret_key=settings.secret.get_secret_value(), max_age=300
     )
-    async with app.state.engine.begin() as conn:
+    async with engine.begin() as conn:
         await conn.run_sync(SQLModel.metadata.create_all)
     config = uvicorn.Config(app, loop="uvloop", http="httptools")
     server = uvicorn.Server(config)
     await server.serve()
-    await app.state.engine.dispose()
+    await engine.dispose()
     return 0
 
 
