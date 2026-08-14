@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     )
     # openssl rand -base64 32 | tr -dc 'A-Za-z0-9' | head -c 32; echo
     secret: SecretStr = SecretStr("jnF6I9stGpLhl6lMuIsdfEQZaSHzkGCQ")
+    port: int = 8000
     debug: bool = False
 
     model_config = SettingsConfigDict(

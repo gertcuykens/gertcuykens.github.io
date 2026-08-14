@@ -56,7 +56,9 @@ async def main() -> int:
     )
     async with engine.begin() as conn:
         await conn.run_sync(SQLModel.metadata.create_all)
-    config = uvicorn.Config(app, loop="uvloop", http="httptools")
+    config = uvicorn.Config(
+        app, loop="uvloop", http="httptools", port=settings.port, log_level=log_level
+    )
     server = uvicorn.Server(config)
     await server.serve()
     await engine.dispose()
