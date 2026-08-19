@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb-dap",
+            "request": "launch",
+            "name": "main",
+            "program": "${workspaceFolder}/hello/zig-out/bin/main",
+            "args": [],
+            "env": {},
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "Zig Build Main"
+        },
+        {
+            "type": "lldb-dap",
+            "request": "launch",
+            "name": "test",
+            "program": "${workspaceFolder}/hello/zig-out/bin/test",
+            "args": [],
+            "env": {},
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "Zig Build Test"
+        }
+    ]
+}

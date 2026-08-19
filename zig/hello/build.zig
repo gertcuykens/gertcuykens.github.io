@@ -2,10 +2,10 @@
 // zig fetch --save "git+https://github.com/karlseguin/pg.zig#master"
 // zig fetch --save "git+https://github.com/JagritGumber/clickzig#main"
 
-// zig run --dep build_config -Mroot=hello.zig -Mbuild_config=config.zig
-// zig test hello.zig
+// zig run --dep options -Mroot=main.zig -Moptions=options.zig
+// zig test --dep options -Mroot=main.zig -Moptions=options.zig
 
-// zig build test --summary all --verbose
+// zig build test -Dlog_level=debug --summary all --verbose
 // zig build -Dlog_level=debug
 
 const std = @import("std");
@@ -24,29 +24,29 @@ pub fn build(b: *std.Build) void {
     // const pg_module = b.dependency("pg", .{}).module("pg");
     // const clickzig_module = b.dependency("clickzig", .{}).module("clickzig");
 
-    const hello = b.createModule(.{
+    const main = b.createModule(.{
         .target = target,
         .optimize = optimize,
         .link_libc = true,
-        .root_source_file = b.path("hello.zig"),
+        .root_source_file = b.path("main.zig"),
         // .imports = &.{
         //     .{ .name = "pg", .module = pg_module },
         //     .{ .name = "clickzig", .module = clickzig_module },
         // },
     });
 
-    hello.addOptions("build_config", build_options);
+    main.addOptions("options", build_options);
 
-    const x = b.addExecutable(.{ .name = "hello", .root_module = hello, .use_llvm = true });
+    const x = b.addExecutable(.{ .name = "main", .root_module = main, .use_llvm = true });
     b.installArtifact(x);
 
     // const r = b.addRunArtifact(x);
     // if (b.args) |args| { r.addArgs(args); }
-    // const s = b.step("hello", "run hello")
+    // const s = b.step("main", "run main")
     // s.dependOn(&r.step);
     // s.dependOn(b.getInstallStep());
 
-    const t = b.addTest(.{ .name = "test", .root_module = hello });
+    const t = b.addTest(.{ .name = "test", .root_module = main });
     const a = b.addInstallArtifact(t, .{});
 
     const r = b.addRunArtifact(t);

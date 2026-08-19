@@ -1,8 +1,8 @@
 const std = @import("std");
-const build_config = @import("build_config");
 
 pub const std_options: std.Options = .{
-    .log_level = @enumFromInt(@intFromEnum(build_config.log_level)),
+    .log_level = @enumFromInt(@intFromEnum(@import("options").log_level)),
+    // .logFn = @import("options").myCustomLogFn,
 };
 
 pub fn main(init: std.process.Init) !void {
@@ -39,8 +39,21 @@ pub fn main(init: std.process.Init) !void {
 }
 
 test "hello" {
-    // std.testing.log_level = .info;
-    // std.log.info("log info.", .{});
-    // std.log.debug("log debug.", .{});
+    std.testing.log_level = std_options.log_level;
+    std.log.info("log info.", .{});
+    std.log.debug("log debug.", .{});
     try std.testing.expectEqual(@as(u8, 2), @as(u8, 1) + 1);
+}
+
+test "optional pointer field type" {
+    const T = @Struct(
+        .auto,
+        null,
+        &.{"field"},
+        &.{?*const void},
+        &.{.{ .default_value_ptr = @ptrCast(&&{}) }},
+    );
+
+    const instance: T = .{};
+    std.debug.print("{}\n", .{@TypeOf(instance.field)});
 }
