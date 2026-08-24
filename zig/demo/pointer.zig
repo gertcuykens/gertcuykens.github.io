@@ -34,6 +34,14 @@ test "b" {
 // slice -> std.mem.span(ptr [*:0]T)
 // slice:0 -> ptr[2..5:0]
 
+test "*:0" {
+    var array = [_]u8{ 'H', 'i', 0 };
+    const raw_ptr: [*]u8 = &array;
+    const sentinel_ptr: [*:0]u8 = @ptrCast(raw_ptr);
+    const len = std.mem.indexOfSentinel(u8, 0, sentinel_ptr);
+    try expectEqual(len, 2);
+}
+
 // +----------------+---------------------+---------------------------+---------------------------------+
 // | *T             | Single-item pointer | Exactly one item.         | Dereferencing (ptr.*) only.     |
 // +----------------+---------------------+---------------------------+---------------------------------+
