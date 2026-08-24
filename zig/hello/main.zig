@@ -57,3 +57,28 @@ test "optional pointer field type" {
     const instance: T = .{};
     std.debug.print("{}\n", .{@TypeOf(instance.field)});
 }
+
+test "crash" {
+    var a: [32]u8 = undefined;
+    var b: [32]u8 = undefined;
+    for (&a, &b, 0..) |*x, *y, i| {
+        x.* = @intCast(100 + i);
+        y.* = @intCast(i);
+    }
+    std.mem.doNotOptimizeAway(&a);
+    std.mem.doNotOptimizeAway(&b);
+    const d: [32]u8 = @as(@Vector(32, u8), a) -% @as(@Vector(32, u8), b);
+    try std.testing.expectEqual(@as(u8, 100), d[0]);
+}
+
+test "crash2" {
+    var a: [32]u8 = @splat(1);
+    var b: [32]u8 = @splat(0);
+    std.mem.doNotOptimizeAway(&a);
+    std.mem.doNotOptimizeAway(&b);
+    const d: [32]u8, const over: @Vector(32, u1) = @subWithOverflow(@as(@Vector(32, u8), a), @as(@Vector(32, u8), b));
+    try std.testing.expectEqual(@as(u32, 0), @as(*const u32, @ptrCast(&over)).*);
+    try std.testing.expectEqual(0, @reduce(.Or, over));
+    try std.testing.expectEqual(0, @as(u32, @bitCast(over)));
+    try std.testing.expectEqual(@as(u8, 1), d[0]);
+}

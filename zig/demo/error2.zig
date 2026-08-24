@@ -12,8 +12,10 @@ fn double(val: u8) u16 {
 }
 
 // const value = parseNumber("catch is always used for errors") catch 0;
+
 // const x = try foo();
 // const x = foo() catch |err| { return err; };
+
 // var optional: ?u8 = 42;
 // if (optional) |*copy| { copy.* += 1;};
 

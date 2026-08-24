@@ -1,5 +1,6 @@
 const std = @import("std");
 const expectEqual = std.testing.expectEqual;
+const expect = std.testing.expect;
 
 test "a" {
     var arr = [_]u8{ 10, 20, 30, 40 };
@@ -37,16 +38,29 @@ test "b" {
 // +----------------+---------------------+---------------------------+---------------------------------+
 // | [*:0]T         | Sentinel-multi-ptr  | Sequence ending with 0.   | Arithmetic, indexing, scanning. |
 // +----------------+---------------------+---------------------------+---------------------------------+
-// | []T            | Slice               | Multi-pointer + Length.   | Safe bounds-checked indexing.   |
+// | []T            | Slice m-ptr[0..len] | Multi-pointer + Length.   | Safe bounds-checked indexing.   |
 // +----------------+---------------------+---------------------------+---------------------------------+
 // | [:0]T          | Sentinel-slice      | Multi-ptr + Len + 0 tail. | Safe indexing + safe len read.  |
 // +----------------+---------------------+---------------------------+---------------------------------+
 
+// [*c]T c pointer
+// extern fn process_data(data: [*c]i32) void;
+// export fn add_numbers(a: i32, b: i32) callconv(.C) i32 { return a + b; }
+// export const GLOBAL_VERSION: i32 = 42;
+// export var global_counter: i32 = 0;
+
+// fn naked_system_call() callconv(.Naked) noreturn {
+//     asm volatile (
+//         \\ syscall
+//         \\ ret
+//     );
+// }
+
 test "c" {
     var array = [_]i32{ 1, 2, 3, 4 };
-    var known_at_runtime_zero: usize = 0;
-    _ = &known_at_runtime_zero;
-    const slice = array[known_at_runtime_zero..array.len];
+    var zero: usize = 0;
+    _ = &zero;
+    const slice = array[zero..array.len];
     const ptr: *const [4]i32 = &.{ 1, 2, 3, 4 };
     try expectEqual(slice[0], ptr[0]);
     std.debug.print(" {} - {}\n", .{ slice[0], ptr[0] });
@@ -120,3 +134,13 @@ test "Dereference * Unwrap ? Adress &" {
 //     .ok => |*value, tag| {value.* += 1; comptime std.debug.assert(tag == .ok);},
 //     .not_ok => unreachable,
 // }
+
+test "align" {
+    // const and align are properties of pointers.
+    // const a1: u8 align(8) = 100;
+    // const a2 align(8) = @as(u8, 100);
+    // const b1: u64 align(1) = 100;
+    // const b2 align(1) = @as(u64, 100);
+    const a: u32 align(8) = 5;
+    try expect(@TypeOf(&a) == *align(8) const u32);
+}
