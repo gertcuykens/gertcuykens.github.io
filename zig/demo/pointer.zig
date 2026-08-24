@@ -158,4 +158,5 @@ test "align" {
     // const b2 align(1) = @as(u64, 100);
     const a: u32 align(8) = 5;
     try expect(@TypeOf(&a) == *align(8) const u32);
+    // @alignCast()
 }
