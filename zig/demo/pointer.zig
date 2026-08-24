@@ -31,6 +31,9 @@ test "b" {
     std.debug.print("Both slices are completely identical in memory!\n", .{});
 }
 
+// slice -> std.mem.span(ptr [*:0]T)
+// slice:0 -> ptr[2..5:0]
+
 // +----------------+---------------------+---------------------------+---------------------------------+
 // | *T             | Single-item pointer | Exactly one item.         | Dereferencing (ptr.*) only.     |
 // +----------------+---------------------+---------------------------+---------------------------------+
