@@ -1,0 +1,40 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Zig Build Main",
+            "type": "process",
+            "command": "zig",
+            "args": [
+                "build",
+                "-Dlog_level=debug"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Zig Build Test",
+            "type": "process",
+            "command": "zig",
+            "args": [
+                "build",
+                "test",
+                "-Dlog_level=debug"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}

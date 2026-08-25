@@ -1,0 +1,47 @@
+[build-system]
+requires = ["uv-build<0.13"]
+build-backend = "uv_build"
+
+[project]
+name = "gert"
+version = "0.1.0"
+description = "Zig CFFI"
+license = "AGPL-3.0-or-later"
+authors = [{ name = "Gert Cuykens" }]
+requires-python = ">=3.14"
+dependencies = ["cffi", "numpy"]
+
+[dependency-groups]
+tests = [
+  "pytest-asyncio",
+  "pytest-cov",
+  "pytest-aiohttp",
+  "pytest-env"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+log_cli = true
+log_cli_level = "INFO"
+
+[tool.pytest_env]
+env_files = ["tests/.env"]
+
+[tool.coverage.report]
+exclude_also = [
+    "def main\\(\\) -> int:",
+    "if __name__ == .__main__.:"
+]
+
+[tool.ruff]
+format.preview = true
+
+[tool.uv.build-backend]
+module-name = ["gert"]
+module-root = ""
+
+# uv venv --python ~/.local/bin/python3.14
+# uv sync --upgrade --all-groups --all-extras --reinstall
+# uv build --wheel
+# uv run pytest -v -s
