@@ -1,9 +1,3 @@
-#!/usr/bin/env -S uv run
-# /// script
-# requires-python = ">=3.14"
-# dependencies = ["cffi", "numpy"]
-# ///
-
 import importlib.resources
 
 import cffi
@@ -22,8 +16,7 @@ ffi.cdef("""
     int32_t count_vowels(const char *c_str);
     void uppercase_string(const char *input_ptr, char *output_ptr);
 """)
-# lib_path = os.path.abspath("zig-out/lib/libmath.dylib")
-# print(f"Loading Zig library from: {lib_path}")
+
 with importlib.resources.as_file(
     importlib.resources.files("gert").joinpath("_libmath.dylib")
 ) as so_path:
@@ -68,6 +61,15 @@ def do_somthing():
     result_string = result_bytes.decode("utf-8")
     print(f"Result from Zig: '{result_string}'")
 
+
+#!/usr/bin/env -S uv run
+# /// script
+# requires-python = ">=3.14"
+# dependencies = ["cffi", "numpy"]
+# ///
+
+# lib_path = os.path.abspath("zig-out/lib/libmath.dylib")
+# print(f"Loading Zig library from: {lib_path}")
 
 # DYLD_LIBRARY_PATH=. uv run python math.py
 # if sys.platform.startswith("win32"):
