@@ -44,4 +44,4 @@ module-root = ""
 # uv venv --python ~/.local/bin/python3.14
 # uv sync --upgrade --all-groups --all-extras --reinstall
 # uv build --wheel
-# uv run pytest -v -s
+# uv run pytest -v -s --log-cli-level=DEBUG
