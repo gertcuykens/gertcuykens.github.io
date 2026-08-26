@@ -11,7 +11,8 @@ set -eEuxo pipefail
 apt update
 # apt upgrade
 apt install -y ca-certificates && update-ca-certificates
-apt install -y zsh vim curl git tree bzip2
+apt install -y zsh vim curl git bzip2
+# apt install microsocks
 # apt install smartmontools nvme-cli
 # apt autoremove --purge
 # apt clean
@@ -108,6 +109,8 @@ curl -fsSLo ~/buildkit.tgz "https://github.com/moby/buildkit/releases/download/$
 tar -xf ~/buildkit.tgz -C /usr/local/bin --strip-components=1 bin/buildctl bin/buildkitd
 chown root:root /usr/local/bin/buildctl /usr/local/bin/buildkitd
 rm ~/buildkit.tgz
+
+# BTOP
 
 # LLVM_VERSION=$(curl -fsSL https://api.github.com/repos/llvm/llvm-project/releases/latest | jaq -r .tag_name)
 # curl -fsSLo ~/llvm.txz "https://github.com/llvm/llvm-project/releases/download/${LLVM_VERSION}/LLVM${LLVM_VERSION#llvmorg}-Linux-X64.tar.xz"

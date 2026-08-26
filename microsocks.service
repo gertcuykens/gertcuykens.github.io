@@ -1,0 +1,20 @@
+# cp microsocks.service /etc/systemd/system
+# systemctl daemon-reload
+# systemctl enable --now microsocks.service
+# systemctl status microsocks.service
+# journalctl -eu microsocks.service
+
+[Unit]
+Description=MicroSocks Proxy Server
+After=sys-subsystem-net-devices-wg0.device network-online.target
+BindsTo=sys-subsystem-net-devices-wg0.device
+
+[Service]
+Type=simple
+ExecStartPre=/bin/sleep 2
+ExecStart=/usr/bin/microsocks -i 10.0.0.6 -p 1080
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
