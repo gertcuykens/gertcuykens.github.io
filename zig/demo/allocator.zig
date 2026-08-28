@@ -73,6 +73,15 @@ test "test resize" {
     } else {}
 }
 
+test "pool allocator" {
+    const MySmallStruct = .{};
+    const smp_allocor = std.heap.smp_allocator;
+    var pool = std.heap.MemoryPool(MySmallStruct).init(smp_allocor);
+    const bytes = try pool.alloc(u8, 100);
+    defer pool.free(bytes);
+    try expect(bytes.len == 100);
+}
+
 fn heapPointer(allocator: std.mem.Allocator) !*u8 {
     const ptr = try allocator.create(u8);
     ptr.* = 42;
@@ -82,3 +91,5 @@ fn heapPointer(allocator: std.mem.Allocator) !*u8 {
 fn refPointer(ptr: *u8) void {
     ptr.* = 99;
 }
+
+// SmpAllocator manages multiple, entirely independent pools of pages based on powers-of-two size tiers (e.g., 16-byte, 32-byte, 64-byte, 128-byte, 256-byte, etc.) up to its small bucket limit.

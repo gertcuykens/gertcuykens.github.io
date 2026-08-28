@@ -46,12 +46,14 @@ test "hello" {
 }
 
 test "optional pointer field type" {
+    const p: ?*const void = null;
+    // const p: *const void = &{};
     const T = @Struct(
         .auto,
         null,
         &.{"field"},
         &.{?*const void},
-        &.{.{ .default_value_ptr = @ptrCast(&&{}) }},
+        &.{.{ .default_value_ptr = @ptrCast(&p) }},
     );
 
     const instance: T = .{};
