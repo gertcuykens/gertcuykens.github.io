@@ -138,6 +138,8 @@ test "Dereference * Unwrap ? Adress &" {
     }
     // ?*i32 no extra byte needed same size as *i32, null = 0x...0
     // *?i32 extra byte needed 16 bytes (8 for 64bit pointer + 8 for 64 bit data)
+    // *anyopaque
+    // ?*anyopaque
 }
 
 // two values |val, index| or |err, trace| only when using a for loop or a catch block.
