@@ -10,7 +10,7 @@
                 "-Dlog_level=debug"
             ],
             "options": {
-                "cwd": "${workspaceFolder}/hello"
+                "cwd": "${workspaceFolder}"
             },
             "group": {
                 "kind": "build",
@@ -28,7 +28,7 @@
                 "-Dlog_level=debug"
             ],
             "options": {
-                "cwd": "${workspaceFolder}/hello"
+                "cwd": "${workspaceFolder}"
             },
             "group": {
                 "kind": "build",

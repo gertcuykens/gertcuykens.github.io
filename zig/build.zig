@@ -3,7 +3,8 @@
 // zig fetch --save "git+https://github.com/JagritGumber/clickzig#main"
 
 // zig run --dep options -Mroot=main.zig -Moptions=options.zig
-// zig test --dep options -Mroot=main.zig -Moptions=options.zig
+// zig test --dep options -Mroot=main.zig -Moptions=options.zig --test-filter "hello"
+// zig test main.zig --test-filter "hello"
 
 // zig build test -Dlog_level=debug --summary all --verbose
 // zig build -Dlog_level=debug
