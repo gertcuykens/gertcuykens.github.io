@@ -1,0 +1,56 @@
+network:
+  version: 2
+  renderer: NetworkManager
+
+  wifis:
+
+    wlan0:
+      match:
+        name: "wlan0"
+      dhcp4: true
+      dhcp6: false
+      access-points:
+        "...":
+          auth:
+            key-management: "psk"
+            password: "..."
+        "...":
+          auth:
+            key-management: "psk"
+            password: "..."
+
+  ethernets:
+
+    eth0:
+      match:
+        name: "eth0"
+      dhcp4: true
+      dhcp6: true
+
+    usb0-client:
+      match:
+        name: "usb0"
+      dhcp4: true
+      dhcp6: false
+      dhcp4-overrides:
+        route-metric: 100
+      networkmanager:
+        passthrough:
+          connection.autoconnect: "false"  # Won't start automatically
+          connection.autoconnect-priority: "100"
+
+    usb0-shared:
+      match:
+        name: "usb0"
+      addresses:
+      - 10.12.194.1/28
+      dhcp4: false
+      dhcp6: false
+      networkmanager:
+        passthrough:
+          ipv4.method: "shared"  # Enforces internet sharing
+          connection.autoconnect-priority: "10"  # Default active profile
+
+# rm /etc/netplan/*.yaml
+# rm /etc/NetworkManager/system-connections/*.nmconnection
+

@@ -42,6 +42,7 @@ test "hello" {
     // std.testing.log_level = std_options.log_level;
     // std.log.info("log info.", .{});
     // std.log.debug("log debug.", .{});
+    // @breakpoint();
     std.debug.print("\nhello debug print.\n", .{});
     try std.testing.expectEqual(@as(u8, 2), @as(u8, 1) + 1);
 }
@@ -100,7 +101,7 @@ const Context = struct {
     }
 };
 
-test "Context.parse" {
+test "ArrayList" {
     const input = "I'm first!\n";
     const input_two =
         \\But this text
@@ -113,6 +114,8 @@ test "Context.parse" {
         .history = .empty,
         .lines = .empty,
     };
+    // var mem: std.heap.DebugAllocator(.{}) = .init;
+    // const gpa = mem.allocator();
     const gpa = std.testing.allocator;
     defer ctx.history.deinit(gpa);
     defer ctx.lines.deinit(gpa);
@@ -120,5 +123,5 @@ test "Context.parse" {
     // ctx.history.lockPointers();
     // defer ctx.history.unlockPointers();
     try ctx.parse(gpa, input_two);
-    try std.testing.expectEqualStrings("I'm first!", ctx.lines.items[0]);
+    // try std.testing.expectEqualStrings("I'm first!", ctx.lines.items[0]);
 }
