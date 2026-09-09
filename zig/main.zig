@@ -43,7 +43,7 @@ test "hello" {
     // std.log.info("log info.", .{});
     // std.log.debug("log debug.", .{});
     // @breakpoint();
-    std.debug.print("\nhello debug print.\n", .{});
+    // std.debug.print("\nhello debug print.\n", .{});
     try std.testing.expectEqual(@as(u8, 2), @as(u8, 1) + 1);
 }
 
@@ -59,7 +59,7 @@ test "optional pointer field type" {
     );
 
     const instance: T = .{};
-    std.debug.print("{}\n", .{@TypeOf(instance.field)});
+    std.debug.print("\n{}\n", .{@TypeOf(instance.field)});
 }
 
 test "crash" {

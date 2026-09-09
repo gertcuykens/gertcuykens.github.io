@@ -2,11 +2,11 @@
 // zig fetch --save "git+https://github.com/karlseguin/pg.zig#master"
 // zig fetch --save "git+https://github.com/JagritGumber/clickzig#main"
 
-// zig run --dep options -Mroot=main.zig -Moptions=options.zig
-// zig test --dep options -Mroot=main.zig -Moptions=options.zig --test-filter "hello"
 // zig test main.zig --test-filter "hello"
+// zig test --dep options -Mroot=main.zig -Moptions=options.zig --test-filter "hello"
+// zig run --dep options -Mroot=main.zig -Moptions=options.zig
 
-// zig build test -Dlog_level=debug --summary all --verbose
+// zig build test -Dlog_level=debug -Dtest-filter=hello --summary all --verbose
 // zig build -Dlog_level=debug
 
 const std = @import("std");
@@ -47,7 +47,8 @@ pub fn build(b: *std.Build) void {
     // s.dependOn(&r.step);
     // s.dependOn(b.getInstallStep());
 
-    const t = b.addTest(.{ .name = "test", .root_module = main });
+    const f = b.option([]const []const u8, "test-filter", "Filter tests matching this string") orelse &.{};
+    const t = b.addTest(.{ .name = "test", .root_module = main, .filters = f });
     const a = b.addInstallArtifact(t, .{});
 
     const r = b.addRunArtifact(t);

@@ -25,7 +25,8 @@
             "args": [
                 "build",
                 "test",
-                "-Dlog_level=debug"
+                "-Dlog_level=debug",
+                "-Dtest-filter="
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
