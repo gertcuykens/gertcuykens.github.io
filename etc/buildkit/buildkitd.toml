@@ -1,0 +1,16 @@
+# /etc/buildkit/buildkitd.toml
+insecure-entitlements = [ "security.insecure" ]
+
+[worker.oci]
+enabled = true
+networkMode = "host"
+cdiEnabled = true
+
+[worker.containerd]
+enabled = false
+namespace = "buildkit"
+cdiEnabled = true
+
+[worker.containerd.network]
+mode = "host"
+
