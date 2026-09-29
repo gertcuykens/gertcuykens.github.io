@@ -10,3 +10,5 @@ sleep 2
 echo "starting microsocks"
 exec /opt/homebrew/bin/microsocks -i 10.0.0.5 -p 1080
 
+# curl --socks5-hostname 10.0.0.5:1080 https://...
+
