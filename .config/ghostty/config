@@ -11,6 +11,7 @@ font-size = 16
 # font-feature = ["calt", "liga"]
 mouse-hide-while-typing = true
 macos-option-as-alt = "left"
+shell-integration-features = ssh-env,ssh-terminfo
 
 # keybind = cmd+shift+c=unbind
 # keybind ctrl+v paste

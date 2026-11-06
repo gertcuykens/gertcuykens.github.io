@@ -1,15 +1,17 @@
 setopt histignorealldups sharehistory prompt_subst
 
 export CLICOLOR=1
-export VISUAL="hx"
-export EDITOR="hx"
+export VISUAL="vim"
+export EDITOR="vim"
 export PYTHONNOUSERSITE=1
 export PYTHONUNBUFFERED=1
 export BAT_STYLE="plain"
+export BAT_PAGER="never"
 export LANG="C.UTF-8"
 export LANGUAGE="C.UTF-8"
 export LC_ALL="C.UTF-8"
 export TZ="Europe/Brussels"
+export LESSHISTFILE="~/.local/state/less/history"
 # export MOZ_ENABLE_WAYLAND=1
 # export OZONE_PLATFORM=wayland
 # export SHELL_SESSION_DISABLE=1
@@ -91,12 +93,15 @@ gr() {
     --preview-window=up:11
 }
 
-tmux() {
-  if [ $# -eq 0 ]; then
-    command tmux new -A -s default
-  else
-    command tmux "$@"
-  fi
+tag() {
+    [[ -z "$1" ]] && { echo "Usage: tag <file_path> [<search_pattern>]"; return 1; }
+
+    if [[ -z "$2" ]]; then
+        tail -f "$1" | bat --paging=never --unbuffered --language=log
+        return 0
+    fi
+
+    tail -f "$1" | rg --line-buffered --color=always "$2" | bat --paging=never --language=log
 }
 
 png() {
@@ -120,17 +125,6 @@ png() {
     printf "\\e\\\\"
   done
   printf "\n"
-}
-
-tag() {
-    [[ -z "$1" ]] && { echo "Usage: tag <file_path> [<search_pattern>]"; return 1; }
-
-    if [[ -z "$2" ]]; then
-        tail -f "$1" | bat --paging=never --unbuffered --language=log
-        return 0
-    fi
-
-    tail -f "$1" | rg --line-buffered --color=always "$2" | bat --paging=never --language=log
 }
 
 HISTSIZE=1000
@@ -172,18 +166,4 @@ bindkey ${terminfo[kcud1]} history-substring-search-down
 
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
-
-###############################################################################
-
-# _b() {
-#   # git rev-parse --abbrev-ref HEAD 2>/dev/null
-#   local b="$(git symbolic-ref --short HEAD 2>/dev/null)"
-#   if [[ "${b}" != "" ]]; then
-#     echo " ${b}"
-#   else
-#     echo ""
-#   fi
-# }
-
-# PROMPT='%n@%m %~%F{blue}$(_b)%F{none} %# '
 

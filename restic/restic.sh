@@ -30,6 +30,7 @@ fi
 # restic check
 # restic repair index
 # restic repair snapshots --forget
+# restic unlock --remove-all
 
 # restic snapshots --latest 1 --group-by host
 # restic snapshots latest --path /home/...sql.gz --latest 1
