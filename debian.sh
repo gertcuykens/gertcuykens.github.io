@@ -18,7 +18,6 @@ apt install -y zsh vim curl git bzip2
 # apt clean
 
 # chsh -s /bin/zsh root
-# infocmp -x xterm-ghostty | ssh root@... -- tic -x -
 
 curl -fsSL https://astral.sh/uv/install.sh | UV_INSTALL_DIR=/usr/local/bin sh
 uv generate-shell-completion zsh > /usr/share/zsh/vendor-completions/_uv
@@ -84,7 +83,7 @@ rm ~/zls.txz
 
 EZA_VERSION=$(curl -fsSL https://api.github.com/repos/eza-community/eza/releases/latest | jaq -r .tag_name)
 curl -fsSLo ~/eza.tgz "https://github.com/eza-community/eza/releases/download/${EZA_VERSION}/eza_x86_64-unknown-linux-gnu.tar.gz"
-tar -xf ~/eza.tgz -C /usr/local/bin eza
+tar -xf ~/eza.tgz -C /usr/local/bin ./eza
 chown root:root /usr/local/bin/eza
 rm ~/eza.tgz
 
@@ -99,22 +98,45 @@ curl -fsSLo ~/zoxide.deb "https://github.com/ajeetdsouza/zoxide/releases/downloa
 dpkg -i ~/zoxide.deb
 rm ~/zoxide.deb
 
-HELIX_VERSION=$(curl -fsSL https://api.github.com/repos/helix-editor/helix/releases/latest | jaq -r .tag_name)
-curl -fsSLo ~/hx.deb "https://github.com/helix-editor/helix/releases/download/${HELIX_VERSION}/helix_${HELIX_VERSION//.0/.}-1_amd64.deb"
-dpkg -i ~/hx.deb
-rm ~/hx.deb
-
 BUILDKIT_VERSION=$(curl -fsSL https://api.github.com/repos/moby/buildkit/releases/latest | jaq -r .tag_name)
 curl -fsSLo ~/buildkit.tgz "https://github.com/moby/buildkit/releases/download/${BUILDKIT_VERSION}/buildkit-${BUILDKIT_VERSION}.linux-amd64.tar.gz"
 tar -xf ~/buildkit.tgz -C /usr/local/bin --strip-components=1 bin/buildctl bin/buildkitd
 chown root:root /usr/local/bin/buildctl /usr/local/bin/buildkitd
 rm ~/buildkit.tgz
 
-# BTOP
+BTOP_VERSION=$(curl -fsSL https://api.github.com/repos/aristocratos/btop/releases/latest | jaq -r .tag_name)
+curl -fsSLo ~/btop.tgz "https://github.com/aristocratos/btop/releases/download/${BTOP_VERSION}/btop-x86_64-unknown-linux-musl.tar.gz"
+
+mkdir -p /usr/local/share/btop
+mkdir -p /usr/local/share/applications
+mkdir -p /usr/local/share/icons/hicolor/48x48/apps
+mkdir -p /usr/local/share/icons/hicolor/scalable/apps
+
+tar -xf ~/btop.tgz -C /usr/local/share/btop --strip-components=2 ./btop/README.md
+tar -xf ~/btop.tgz -C /usr/local/share/btop --strip-components=2 ./btop/themes
+tar -xf ~/btop.tgz -C /usr/local/share/applications --strip-components=2 ./btop/btop.desktop
+tar -xf ~/btop.tgz -C /usr/local/share/icons/hicolor/48x48/apps --strip-components=3 --transform='s/icon/btop/' ./btop/Img/icon.png
+tar -xf ~/btop.tgz -C /usr/local/share/icons/hicolor/scalable/apps --strip-components=3 --transform='s/icon/btop/' ./btop/Img/icon.svg
+
+tar -xf ~/btop.tgz -C /usr/local/bin --strip-components=3 ./btop/bin/btop
+chown root:root /usr/local/bin/btop
+chmod u+s /usr/local/bin/btop
+chmod 755 /usr/local/bin/btop
+setcap cap_perfmon=+ep /usr/local/bin/btop
+
+rm ~/btop.tgz
 
 # LLVM_VERSION=$(curl -fsSL https://api.github.com/repos/llvm/llvm-project/releases/latest | jaq -r .tag_name)
 # curl -fsSLo ~/llvm.txz "https://github.com/llvm/llvm-project/releases/download/${LLVM_VERSION}/LLVM${LLVM_VERSION#llvmorg}-Linux-X64.tar.xz"
 # tar -xf ~/llvm.txz -C /usr/local/bin --strip-components=2 LLVM${LLVM_VERSION#llvmorg}-Linux-X64/bin/lldb-dap LLVM${LLVM_VERSION#llvmorg}-Linux-X64/bin/lldb LLVM${LLVM_VERSION#llvmorg}-Linux-X64/bin/lldb-server
 # rm ~/llvm.txz
+
+# HELIX_VERSION=$(curl -fsSL https://api.github.com/repos/helix-editor/helix/releases/latest | jaq -r .tag_name)
+# curl -fsSLo ~/hx.deb "https://github.com/helix-editor/helix/releases/download/${HELIX_VERSION}/helix_${HELIX_VERSION//.0/.}-1_amd64.deb"
+# dpkg -i ~/hx.deb
+# rm ~/hx.deb
+
+# infocmp -x xterm-ghostty | ssh root@... -- tic -x -
 # uv python install 3.11
 # apt install libncurses6
+
