@@ -9,6 +9,7 @@ set noshowmode
 set incsearch
 set hlsearch
 set encoding=utf-8
+set number
 set clipboard=unnamed
 set backspace=indent,eol,start
 set list
