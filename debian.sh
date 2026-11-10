@@ -11,7 +11,7 @@ set -eEuxo pipefail
 apt update
 # apt upgrade
 apt install -y ca-certificates && update-ca-certificates
-apt install -y zsh vim curl git bzip2
+apt install -y zsh curl git bzip2
 # apt install microsocks
 # apt install smartmontools nvme-cli
 # apt autoremove --purge
@@ -72,6 +72,7 @@ ZIG_VERSION=$(curl -fsSL "https://codeberg.org/api/v1/repos/ziglang/zig/tags" | 
 curl -fsSLo ~/zig.txz "https://ziglang.org/download/${ZIG_VERSION}/zig-x86_64-linux-${ZIG_VERSION}.tar.xz"
 tar -xf ~/zig.txz -C /usr/local/bin --strip-components=1 --wildcards "*/zig" "*/lib/*"
 chown -R root:root /usr/local/bin/zig /usr/local/bin/lib
+rm -rf /usr/local/lib/zig 
 mv /usr/local/bin/lib /usr/local/lib/zig
 rm ~/zig.txz
 curl -fsSLo /usr/share/zsh/vendor-completions/_zig https://codeberg.org/ziglang/shell-completions/raw/branch/master/_zig
