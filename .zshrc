@@ -1,8 +1,8 @@
 setopt histignorealldups sharehistory prompt_subst
 
 export CLICOLOR=1
-export VISUAL="vim"
-export EDITOR="vim"
+export VISUAL="nvim"
+export EDITOR="nvim"
 export PYTHONNOUSERSITE=1
 export PYTHONUNBUFFERED=1
 export BAT_STYLE="plain"
@@ -15,7 +15,6 @@ export LESSHISTFILE="~/.local/state/less/history"
 # export MOZ_ENABLE_WAYLAND=1
 # export OZONE_PLATFORM=wayland
 # export SHELL_SESSION_DISABLE=1
-# export ZSH=~/.local/share/oh-my-zsh
 
 # tree -N -C {} -I ".git|.venv|__pycache__|node_modules" | head -500
 fdf() {

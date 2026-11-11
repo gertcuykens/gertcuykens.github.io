@@ -127,10 +127,15 @@ setcap cap_perfmon=+ep /usr/local/bin/btop
 
 rm ~/btop.tgz
 
-# LLVM_VERSION=$(curl -fsSL https://api.github.com/repos/llvm/llvm-project/releases/latest | jaq -r .tag_name)
-# curl -fsSLo ~/llvm.txz "https://github.com/llvm/llvm-project/releases/download/${LLVM_VERSION}/LLVM${LLVM_VERSION#llvmorg}-Linux-X64.tar.xz"
-# tar -xf ~/llvm.txz -C /usr/local/bin --strip-components=2 LLVM${LLVM_VERSION#llvmorg}-Linux-X64/bin/lldb-dap LLVM${LLVM_VERSION#llvmorg}-Linux-X64/bin/lldb LLVM${LLVM_VERSION#llvmorg}-Linux-X64/bin/lldb-server
-# rm ~/llvm.txz
+LLVM_VERSION=$(curl -fsSL https://api.github.com/repos/llvm/llvm-project/releases/latest | jaq -r .tag_name)
+curl -fsSLo ~/llvm.txz "https://github.com/llvm/llvm-project/releases/download/${LLVM_VERSION}/LLVM${LLVM_VERSION#llvmorg}-Linux-X64.tar.xz"
+tar -xf ~/llvm.txz -C /usr/local/bin --strip-components=2 LLVM${LLVM_VERSION#llvmorg}-Linux-X64/bin/lldb-dap LLVM${LLVM_VERSION#llvmorg}-Linux-X64/bin/lldb LLVM${LLVM_VERSION#llvmorg}-Linux-X64/bin/lldb-server
+rm ~/llvm.txz
+
+NEO_VERSION=$(curl -fsSL https://api.github.com/repos/neovim/neovim/releases/latest | jaq -r .tag_name)
+curl -fsSLo ~/neo.tgz "https://github.com/neovim/neovim/releases/download/${NEO_VERSION}/nvim-linux-x86_64.tar.gz"
+tar -xf ~/neo.tgz -C /usr/local --strip-components=1
+rm ~/neo.tgz
 
 # HELIX_VERSION=$(curl -fsSL https://api.github.com/repos/helix-editor/helix/releases/latest | jaq -r .tag_name)
 # curl -fsSLo ~/hx.deb "https://github.com/helix-editor/helix/releases/download/${HELIX_VERSION}/helix_${HELIX_VERSION//.0/.}-1_amd64.deb"
