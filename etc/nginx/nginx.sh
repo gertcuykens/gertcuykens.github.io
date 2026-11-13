@@ -3,7 +3,7 @@ set -eEuxo pipefail
 
 curl -fsSL https://nginx.org/keys/nginx_signing.key > /etc/apt/keyrings/nginx.asc
 
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/nginx.asc] http://nginx.org/packages/debian $(. /etc/os-release && echo "$VERSION_CODENAME") nginx" > /etc/apt/sources.list.d/nginx.list
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/nginx.asc] https://nginx.org/packages/debian $(. /etc/os-release && echo "$VERSION_CODENAME") nginx" > /etc/apt/sources.list.d/nginx.list
 
 # echo -e "Package: *\nPin: origin nginx.org\nPin: release o=nginx\nPin-Priority: 900\n" > /etc/apt/preferences.d/99nginx
 
